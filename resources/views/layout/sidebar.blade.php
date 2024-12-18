@@ -95,6 +95,10 @@
                     <div class="collapse menu-dropdown" id="purchase">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
+                                <a onclick="newWindow('{{ route('purchase.create') }}')" class="nav-link"
+                                    data-key="t-chat">Create Purchase</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('purchase.index', ['start' => firstDayOfMonth(), 'end' => now()->toDateString()]) }}" class="nav-link" data-key="t-chat"> Purchase
                                     History </a>
                             </li>
@@ -117,7 +121,7 @@
                         </ul>
                     </div>
                 </li> --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#products" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-apps-2-line"></i> <span data-key="t-apps">Products</span>
@@ -142,8 +146,8 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+               {{--  <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarFinance" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarFinance">
                         <i class="ri-file-list-3-line"></i> <span data-key="t-forms">Finance</span>
@@ -172,10 +176,7 @@
                                 <a href="{{ route('deposit_withdraw.index') }}" class="nav-link"
                                     data-key="t-input-masks">Deposit / Withdraw</a>
                             </li>
-                           {{-- <li class="nav-item">
-                                <a href="{{ route('receivings.index') }}" class="nav-link"
-                                    data-key="t-input-masks">Payment Receiving</a>
-                            </li> --}}
+
                             <li class="nav-item">
                                 <a href="{{ route('transfers.index') }}" class="nav-link"
                                     data-key="t-advanced">Transfer</a>
@@ -186,8 +187,8 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
+                </li>  --}}
+               {{--  <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarOtherUsers" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarOtherUsers">
                         <i class="ri-file-list-3-line"></i> <span data-key="t-forms">Other Users</span>
@@ -240,7 +241,7 @@
                         </ul>
                     </div>
                 </li>
-
+ --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarReports" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarReports">

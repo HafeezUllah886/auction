@@ -13,15 +13,23 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vendorID')->constrained('accounts', 'id');
-            $table->foreignId('warehouseID')->constrained('warehouses', 'id');
-            $table->date('orderdate');
-            $table->date('recdate');
-            $table->string("inv")->nullable();
-            $table->string("bilty")->nullable();
-            $table->string("transporter")->nullable();
+            $table->string("year")->nullable();
+            $table->string("maker")->nullable();
+            $table->string("model")->nullable();
+            $table->string("chassis")->nullable();
+            $table->string("engine")->nullable();
+            $table->string("cno")->nullable();
+            $table->date('date')->nullable();
+            $table->string("auction")->nullable();
+            $table->float("price")->default(0);
+            $table->float("tax")->default(0);
+            $table->float("rikuso")->default(0);
+            $table->float("total")->default(0);
+            $table->float("recycle")->default(0);
+            $table->date('adate')->nullable();
+            $table->date('sdate')->nullable();
             $table->text('notes')->nullable();
-            $table->float('net')->default(0);
+            $table->string("status")->default("Available");
             $table->bigInteger('refID');
             $table->timestamps();
         });

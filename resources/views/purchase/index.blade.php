@@ -40,20 +40,26 @@
                     <table class="table" id="buttons-datatables">
                         <thead>
                             <th>#</th>
-                            <th>Inv #</th>
-                            <th>Vendor</th>
-                            <th>Receving Date</th>
-                            <th>Amount</th>
+                            <th>P_Date</th>
+                            <th>Year</th>
+                            <th>Maker</th>
+                            <th>Model</th>
+                            <th>Chassis</th>
+                            <th>Total</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
                             @foreach ($purchases as $key => $purchase)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $purchase->inv }}</td>
-                                    <td>{{ $purchase->vendor->title }}</td>
-                                    <td>{{ date('d M Y', strtotime($purchase->recdate)) }}</td>
-                                    <td>{{ number_format($purchase->net) }}</td>
+                                    <td>{{ date('d M Y', strtotime($purchase->date)) }}</td>
+                                    <td>{{ $purchase->year }}</td>
+                                    <td>{{ $purchase->maker }}</td>
+                                    <td>{{ $purchase->model }}</td>
+                                    <td>{{ $purchase->chassis }}</td>
+                                    <td>{{ $purchase->total }}</td>
+                                    <td><span class="badge {{$purchase->status == "Available" ? "bg-success" : "bg-danger"}}">{{$purchase->status}}</span></td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -68,12 +74,12 @@
                                                         View
                                                     </button>
                                                 </li>
-                                                <li>
+                                                {{-- <li>
                                                     <a class="dropdown-item" onclick="newWindow('{{route('purchase.edit', $purchase->id)}}')">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit
                                                     </a>
-                                                </li>
+                                                </li> --}}
                                                 <li>
                                                     <a class="dropdown-item text-danger" href="{{route('purchases.delete', $purchase->id)}}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>
@@ -94,33 +100,7 @@
     </div>
     <!-- Default Modals -->
 
-    <div id="new" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Select Vendor</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-                </div>
-                <form action="{{ route('purchase.create') }}" method="get">
-                  @csrf
-                         <div class="modal-body">
-                                <div class="form-group">
-                                       <label for="vendorID">Vendor</label>
-                                       <select name="vendorID" id="vendorID" class="form-control">
-                                        @foreach ($vendors as $vendor)
-                                            <option value="{{$vendor->id}}">{{$vendor->title}}</option>
-                                        @endforeach
-                                       </select>
-                                </div>
-                         </div>
-                         <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                         </div>
-                  </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+
 @endsection
 
 @section('page-css')

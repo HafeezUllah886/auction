@@ -89,7 +89,7 @@ return [
 
     'domains' => [
         'distribution-2.test',
-        'jaffar-s.test',
+        'auction.test',
         'gs.diamondquetta.com',
         'jaffartest.diamondquetta.com',
         'jaffar.run',
@@ -97,7 +97,7 @@ return [
 
     'databases' => [
         'u788011464_gs',
-        'distribution2',
+        'auction',
         'test',
     ],
 

@@ -147,7 +147,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by Diamond Softwares
+                                Design & Develop by Nexgenpakistan, Quetta
                             </div>
                         </div>
                     </div>
@@ -236,7 +236,6 @@
     {
         var width = screen.width;
         var height = screen.height;
-
         window.open(route, '_blank', `width=${width},height=${height}`);
     }
 
@@ -244,11 +243,8 @@
     {
         var width = 412;
         var height = screen.height;
-
         window.open(route, '_blank', `width=${width},height=${height}`);
     }
-
-
 </script>
 
     @yield('page-js')

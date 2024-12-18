@@ -25,23 +25,17 @@ class PurchaseController extends Controller
         $start = $request->start ?? now()->toDateString();
         $end = $request->end ?? now()->toDateString();
 
-        $purchases = purchase::whereBetween("recdate", [$start, $end])->orderby('id', 'desc')->get();
+        $purchases = purchase::whereBetween("date", [$start, $end])->orderby('id', 'desc')->get();
 
-        $vendors = accounts::vendor()->get();
-        return view('purchase.index', compact('purchases', 'start', 'end', 'vendors'));
+        return view('purchase.index', compact('purchases', 'start', 'end'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
-        $products = products::active()->vendor($request->vendorID)->orderby('name', 'asc')->get();
-        $units = units::all();
-        $vendor = $request->vendorID;
-        $warehouses = warehouses::all();
-        $accounts = accounts::business()->get();
-        return view('purchase.create', compact('products', 'units', 'vendor', 'accounts', 'warehouses'));
+        return view('purchase.create');
     }
 
     /**
@@ -51,75 +45,29 @@ class PurchaseController extends Controller
     {
        try
         {
-            if($request->isNotFilled('id'))
-            {
-                throw new Exception('Please Select Atleast One Product');
-            }
             DB::beginTransaction();
             $ref = getRef();
             $purchase = purchase::create(
                 [
-                  'vendorID'        => $request->vendorID,
-                  'warehouseID'     => $request->warehouseID,
-                  'orderdate'       => $request->orderdate,
-                  'recdate'         => $request->recdate,
-                  'notes'           => $request->notes,
-                  'bilty'           => $request->bilty,
-                  'transporter'     => $request->transporter,
-                  'inv'             => $request->inv,
-                  'refID'           => $ref,
+                    "year"      =>  $request->year,
+                    "maker"     =>  $request->maker,
+                    "model"     =>  $request->model,
+                    "chassis"   =>  $request->chassis,
+                    "engine"    =>  $request->engine,
+                    "cno"       =>  $request->cno,
+                    "date"      =>  $request->date,
+                    "auction"   =>  $request->auction,
+                    "price"     =>  $request->price,
+                    "tax"       =>  $request->tax,
+                    "rikuso"    =>  $request->rikuso,
+                    "total"     =>  $request->total,
+                    "recycle"   =>  $request->recycle,
+                    "adate"     =>  $request->adate,
+                    "sdate"     =>  $request->sdate,
+                    "notes"     =>  $request->notes,
+                    "refID"     =>  $ref,
                 ]
             );
-
-            $ids = $request->id;
-
-            $total = 0;
-            foreach($ids as $key => $id)
-            {
-                $unit = units::find($request->unit[$key]);
-                $qty = ($request->qty[$key] * $unit->value) + $request->bonus[$key];
-                $pc = $request->qty[$key] * $unit->value;
-                $price = $request->price[$key] ;
-                $discount = $request->discount[$key] ;
-                $claim = $request->claim[$key];
-                $discountvalue = $request->price[$key] * $request->discountp[$key] / 100;
-                $netPrice = ($price - $discount - $discountvalue - $claim);
-                $amount = $netPrice * $request->qty[$key];
-                $total += $amount;
-
-                purchase_details::create(
-                    [
-                        'purchaseID'    => $purchase->id,
-                        'productID'     => $id,
-                        'price'         => $price,
-                        'discount'      => $discount,
-                        'discountp'     => $request->discountp[$key],
-                        'discountvalue' => $discountvalue,
-                        'qty'           => $request->qty[$key],
-                        'pc'            => $pc,
-                        'netprice'      => $netPrice,
-                        'amount'        => $amount,
-                        'date'          => $request->recdate,
-                        'bonus'         => $request->bonus[$key],
-                        'labor'         => $request->labor[$key],
-                        'fright'        => $request->fright[$key],
-                        'claim'         => $claim,
-                        'unitID'        => $unit->id,
-                        'refID'         => $ref,
-                    ]
-                );
-                createStock($id, $qty, 0, $request->recdate, "Purchased", $ref, $request->warehouseID);
-            }
-
-            $net = $total;
-
-            $purchase->update(
-                [
-                    'net' => $net,
-                ]
-            );
-
-            createTransaction($request->vendorID, $request->recdate, 0, $net, "Pending Amount of Purchase No. $purchase->id", $ref);
 
             DB::commit();
             return back()->with('success', "Purchase Created");
