@@ -58,7 +58,9 @@ class PurchaseController extends Controller
                     "date"      =>  $request->date,
                     "auction"   =>  $request->auction,
                     "price"     =>  $request->price,
-                    "tax"       =>  $request->tax,
+                    "ptax"      =>  $request->ptax,
+                    "afee"      =>  $request->afee,
+                    "atax"      =>  $request->atax,
                     "rikuso"    =>  $request->rikuso,
                     "total"     =>  $request->total,
                     "recycle"   =>  $request->recycle,
@@ -77,7 +79,6 @@ class PurchaseController extends Controller
             DB::rollback();
             return back()->with('error', $e->getMessage());
         }
-
     }
 
     /**
@@ -141,7 +142,6 @@ class PurchaseController extends Controller
 
             $total = 0;
             $ref = $purchase->refID;
-            dashboard();
             foreach($ids as $key => $id)
             {
                 $unit = units::find($request->unit[$key]);

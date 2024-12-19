@@ -56,7 +56,7 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="date">Purchase Date</label>
-                                    <input type="date" name="date" id="date" class="form-control">
+                                    <input type="date" name="date" id="date" value="{{date("Y-m-d")}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -68,13 +68,19 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="price">Price</label>
-                                    <input type="number" name="price" id="price" oninput="updateChanges()" value="0" class="form-control">
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="price" id="price" oninput="updateChanges()" value="0" class="form-control">
+                                        <input type="number" name="ptax" id="ptax" readonly value="0" class="form-control input-group-text">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="tax">Tax</label>
-                                    <input type="number" name="tax" id="tax" oninput="updateChanges()" value="0" class="form-control">
+                                    <label for="price">Auction Fee</label>
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="afee" id="afee" oninput="updateChanges()" value="0" class="form-control">
+                                        <input type="number" name="atax" id="atax" readonly value="0" class="form-control input-group-text">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -142,91 +148,44 @@
     <script>
         function updateChanges() {
             var price = parseFloat($('#price').val());
-            var tax = parseFloat($('#tax').val());
+            var ptax = parseFloat($('#ptax').val());
+            var afee = parseFloat($('#afee').val());
+            var atax = parseFloat($('#atax').val());
             var rikuso = parseFloat($('#rikuso').val());
 
-            var amount = (price + tax + rikuso);
+            var pTaxValue = price * 10 / 100;
+            var aTaxValue = afee * 10 / 100;
+
+            var amount = (price + pTaxValue + afee + aTaxValue + rikuso);
+
+            $("#ptax").val(pTaxValue.toFixed(2));
+            $("#atax").val(aTaxValue.toFixed(2));
             $("#total").val(amount.toFixed(2));
 
         }
 
-        function updateTotal() {
-            var total = 0;
-            $("input[id^='amount_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                total += parseFloat(inputValue);
-            });
+        $(document).ready(function () {
+    $('input, select, textarea').on('keypress', function (e) {
+        // Check if the Enter key is pressed
+        if (e.which === 13) {
+            e.preventDefault(); // Prevent the default Enter key behavior
 
-            $("#totalAmount").html(total.toFixed(2));
+            // Find all focusable elements in the form
+            const focusable = $(this)
+                .closest('form')
+                .find('input, select, textarea, button')
+                .filter(':visible');
 
-            var totalFright = 0;
-            $("input[id^='frightValue_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                totalFright += parseFloat(inputValue);
-            });
+            // Determine the current element's index
+            const index = focusable.index(this);
 
-            $("#totalFright").html(totalFright.toFixed(2));
-
-            var totalLabor = 0;
-            $("input[id^='laborValue_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                totalLabor += parseFloat(inputValue);
-            });
-
-            $("#totalLabor").html(totalLabor.toFixed(2));
-
-            var totalClaim = 0;
-            $("input[id^='claimValue_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                totalClaim += parseFloat(inputValue);
-            });
-
-            $("#totalClaim").html(totalClaim.toFixed(2));
-
-            var totalDiscount = 0;
-            $("input[id^='discountValue_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                totalDiscount += parseFloat(inputValue);
-            });
-
-            $("#totalDiscount").html(totalDiscount.toFixed(2));
-
-            var totalPDiscount = 0;
-            $("input[id^='discountPValue_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                totalPDiscount += parseFloat(inputValue);
-            });
-
-            $("#totalPDiscount").html(totalPDiscount.toFixed(2));
-
-            var totalQty = 0;
-            $("input[id^='qty_']").each(function() {
-                var inputId = $(this).attr('id');
-                var inputValue = $(this).val();
-                totalQty += parseFloat(inputValue);
-            });
-
-            $("#totalQty").html(totalQty.toFixed(2));
-
-            var claim = $("#claim").val();
-            var net = total - claim;
-
-            $("#net").val(net.toFixed(2));
+            // Move to the next focusable element
+            if (index > -1 && index < focusable.length - 1) {
+                focusable.eq(index + 1).focus();
+            }
         }
-
-        function deleteRow(id) {
-            existingProducts = $.grep(existingProducts, function(value) {
-                return value !== id;
-            });
-            $('#row_'+id).remove();
-            updateTotal();
-        }
+    });
+});
 
 
     </script>

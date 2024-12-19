@@ -259,7 +259,6 @@ class SalesController extends Controller
             $whTax = $total * $request->whTax / 100;
 
             $net = ($total + $whTax + $request->fright1) - ($request->discount1 + $request->fright);
-            dashboard();
             $sale->update(
                 [
 

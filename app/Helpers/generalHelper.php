@@ -19,7 +19,6 @@ function getRef(){
         $ref->ref = 1;
     }
     $ref->save();
-    dashboard();
     return $ref->ref;
 }
 
@@ -147,7 +146,7 @@ function productStockValue($id)
 {
     $stock = getStock($id);
     $price = avgPurchasePrice('all', 'all', $id);
-    dashboard();
+
     return $price * $stock;
 }
 

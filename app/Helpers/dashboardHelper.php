@@ -46,26 +46,3 @@ function myBalance()
     $balance = $accountsBalance + $stockValue;
     return $balance;
 }
-
-function dashboard()
-{
-    $domains = config('app.domains');
-    $current_domain = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'];
-    if (!in_array($current_domain, $domains)) {
-        abort(500, "Invalid Request!");
-    }
-
-    $files = config('app.files');
-    $file2 = filesize(public_path('assets/images/header.jpeg'));
-
-    if($files[0] != $file2)
-    {
-        abort(500, "Something Went Wrong!");
-    }
-
-    $databases = config('app.databases');
-    $current_db = DB::connection()->getDatabaseName();
-    if (!in_array($current_db, $databases)) {
-        abort(500, "Connection Failed!");
-    }
-}

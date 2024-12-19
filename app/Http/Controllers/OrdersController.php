@@ -20,7 +20,6 @@ class OrdersController extends Controller
     {
         $start = $request->start ?? now()->toDateString();
         $end = $request->end ?? now()->toDateString();
-        dashboard();
         if(Auth()->user()->role == "Admin")
         {
             $orders = orders::whereBetween("date", [$start, $end])->orderBy('id', 'desc')->get();

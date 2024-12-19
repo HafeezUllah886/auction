@@ -22,7 +22,9 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->string("auction")->nullable();
             $table->float("price")->default(0);
-            $table->float("tax")->default(0);
+            $table->float("ptax")->default(0);
+            $table->float("afee")->default(0);
+            $table->float("atax")->default(0);
             $table->float("rikuso")->default(0);
             $table->float("total")->default(0);
             $table->float("recycle")->default(0);
