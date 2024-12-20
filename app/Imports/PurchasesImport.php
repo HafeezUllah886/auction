@@ -13,7 +13,7 @@ class PurchasesImport implements ToModel, WithHeadingRow
 
         return new purchase([
             'year' => $row['year'],
-            'model' => $row['yodel'],
+            'model' => $row['model'],
             'chassis' => $row['chassis_no'],
             'engine' => $row['engine_no'],
             'cno' => $row['cno'],
