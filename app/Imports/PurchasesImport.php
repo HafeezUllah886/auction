@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\purchase;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -17,7 +18,7 @@ class PurchasesImport implements ToModel, WithHeadingRow
             'chassis' => $row['chassis_no'],
             'engine' => $row['engine_no'],
             'cno' => $row['cno'],
-            'date' => date("Y-m-d", strtotime($row['p_date'])),
+            'date' => $this->transformDate($row['p_date']),
             'auction' => $row['auction'],
             'price' => $row['price'],
             'ptax' => $row['p_tax'],
@@ -26,10 +27,20 @@ class PurchasesImport implements ToModel, WithHeadingRow
             'rikuso' => $row['rikuso'],
             'total' => $row['total'],
             'recycle' => $row['recycle'],
-            'adate' => date('Y-m-d',strtotime($row['arrival_date'])),
-            'sdate' => date('Y-m-d',strtotime($row['syorui_date'])),
+            'adate' => $this->transformDate($row['arrival_date']),
+            'sdate' => $this->transformDate($row['syorui_date']),
             'notes' => $row['notes'],
             'refID' => getRef(),
         ]);
+    }
+
+    private function transformDate($date)
+    {
+        // Check if the date is numeric (Excel's date format)
+        if (is_numeric($date)) {
+            return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date));
+        }
+        // Otherwise, attempt to parse a normal date string
+        return Carbon::parse($date);
     }
 }
