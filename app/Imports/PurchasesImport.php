@@ -2,7 +2,7 @@
 // filepath: /C:/laragon/www/auction/app/Imports/PurchasesImport.php
 namespace App\Imports;
 
-use App\Models\Purchase;
+use App\Models\purchase;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
@@ -10,7 +10,7 @@ class PurchasesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        return new Purchase([
+        return new purchase([
             'model' => $row['model'],
             'chassis' => $row['chassis'],
             'engine' => $row['engine'],
