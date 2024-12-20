@@ -10,14 +10,14 @@ class PurchasesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        dd($row);
+
         return new purchase([
             'year' => $row['year'],
             'model' => $row['model'],
             'chassis' => $row['chassis_no'],
             'engine' => $row['engine_no'],
             'cno' => $row['cno'],
-            'date' => $row['p_date'],
+            'date' => date("Y-m-d", strtotime($row['p_date'])),
             'auction' => $row['auction'],
             'price' => $row['price'],
             'ptax' => $row['p_tax'],
@@ -26,8 +26,8 @@ class PurchasesImport implements ToModel, WithHeadingRow
             'rikuso' => $row['rikuso'],
             'total' => $row['total'],
             'recycle' => $row['recycle'],
-            'adate' => $row['arrival_date'],
-            'sdate' => $row['syorui_date'],
+            'adate' => date('Y-m-d',strtotime($row['arrival_date'])),
+            'sdate' => date('Y-m-d',strtotime($row['syorui_date'])),
             'notes' => $row['notes'],
             'refID' => getRef(),
         ]);
