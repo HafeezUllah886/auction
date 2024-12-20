@@ -29,6 +29,7 @@ class PurchasesImport implements ToModel, WithHeadingRow
             'adate' => $row['arrival_date'],
             'sdate' => $row['syorui_date'],
             'notes' => $row['notes'],
+            'refID' => getRef(),
         ]);
     }
 }
