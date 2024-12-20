@@ -10,25 +10,25 @@ class PurchasesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        dd($row);
+
         return new purchase([
-            'year' => $row['Year'],
-            'model' => $row['Model'],
-            'chassis' => $row['Chassis'],
-            'engine' => $row['Engine'],
-            'cno' => $row['Cno'],
-            'date' => $row['Purchase Date'],
-            'auction' => $row['Auction'],
-            'price' => $row['Price'],
-            'ptax' => $row['P_Tax'],
-            'afee' => $row['Auction Fee'],
-            'atax' => $row['Fee Tax'],
-            'rikuso' => $row['Rikuso'],
-            'total' => $row['Total'],
-            'recycle' => $row['Recycle'],
-            'adate' => $row['Arrival Date'],
-            'sdate' => $row['Syorui Date'],
-            'notes' => $row['Notes'],
+            'year' => $row['year'],
+            'model' => $row['yodel'],
+            'chassis' => $row['chassis_no'],
+            'engine' => $row['engine_no'],
+            'cno' => $row['cno'],
+            'date' => $row['p_date'],
+            'auction' => $row['auction'],
+            'price' => $row['price'],
+            'ptax' => $row['p_tax'],
+            'afee' => $row['auction_fee'],
+            'atax' => $row['fee_tax'],
+            'rikuso' => $row['rikuso'],
+            'total' => $row['total'],
+            'recycle' => $row['recycle'],
+            'adate' => $row['arrival_date'],
+            'sdate' => $row['syorui_date'],
+            'notes' => $row['notes'],
         ]);
     }
 }
