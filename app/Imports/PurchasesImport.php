@@ -10,8 +10,6 @@ class PurchasesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-
-        dd($row);
         return new Purchase([
             'model' => $row['model'],
             'chassis' => $row['chassis'],
