@@ -14,6 +14,9 @@ use App\Models\warehouses;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Imports\PurchasesImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PurchaseController extends Controller
 {
@@ -263,5 +266,27 @@ class PurchaseController extends Controller
     {
         $product = products::with('units')->find($id);
         return $product;
+    }
+
+    public function import(Request $request)
+    {
+        try
+        {
+            $file = $request->file('excel');
+        $extension = $file->getClientOriginalExtension();
+        if($extension == "xlsx")
+        {
+            Excel::import(new PurchasesImport, $file);
+            return back()->with("success", "Successfully imported");
+        }
+        else
+        {
+            return back()->with("error", "Invalid file extension");
+        }
+        }
+        catch(\Exception $e)
+        {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

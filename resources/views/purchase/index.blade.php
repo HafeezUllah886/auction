@@ -7,13 +7,13 @@
                     <div class="col-md-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">From</span>
-                            <input type="date" class="form-control" placeholder="Username" name="start" value="{{$start}}" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="date" class="form-control" id="start" placeholder="Username" name="start" value="{{$start}}" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">To</span>
-                            <input type="date" class="form-control" placeholder="Username" name="end" value="{{$end}}" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="date" class="form-control" id="end" placeholder="Username" name="end" value="{{$end}}" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -24,7 +24,13 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Purchases</h3>
+                    <div>
+                        <a href="{{route('download.sample')}}" class="btn btn-info ">Download Sample File</a>
+                        <a id="export-btn" class="btn btn-info">Export to Excel</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">Import from Excel</button>
                     <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create New</button>
+                    </div>
+
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
@@ -98,6 +104,27 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import Purchases</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('purchases.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Choose Excel File</label>
+                            <input type="file" required name="excel" id="excel" accept=".xlsx" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Default Modals -->
 
 
@@ -122,5 +149,16 @@
     <script src="{{ asset('assets/libs/datatable/jszip.min.js')}}"></script>
 
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#export-btn').click(function() {
+                var start = $('#start').val();
+                var end = $('#end').val();
+                var url = '{{ route("purchases.export") }}' + '?start=' + start + '&end=' + end;
+                window.open(url, '_blank');
+            });
+        });
+    </script>
 @endsection
 

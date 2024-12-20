@@ -72,7 +72,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Karachi'),
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,25 +86,6 @@ return [
     */
 
     'locale' => env('APP_LOCALE', 'en'),
-
-    'domains' => [
-        'distribution-2.test',
-        'auction.test',
-        'gs.diamondquetta.com',
-        'jaffartest.diamondquetta.com',
-        'jaffar.run',
-    ],
-
-    'databases' => [
-        'u788011464_gs',
-        'auction',
-        'test',
-    ],
-
-    'files' =>
-    [
-        '67372',
-    ],
 
     /*
     |--------------------------------------------------------------------------
