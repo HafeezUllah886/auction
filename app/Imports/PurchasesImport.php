@@ -37,6 +37,9 @@ class PurchasesImport implements ToModel, WithHeadingRow
 
     private function transformDate($date)
     {
+        if (empty($date)) {
+            return null; // Return null for empty or null dates
+        }
         // Check if the date is numeric (Excel's date format)
         if (is_numeric($date)) {
             return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($date));
