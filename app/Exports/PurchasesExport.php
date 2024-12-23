@@ -21,7 +21,7 @@ class PurchasesExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         return Purchase::select('year', 'maker', 'model', 'chassis', 'engine', 'cno', 'date', 'auction', 'price', 'ptax', 'afee', 'atax', 'rikuso', 'total', 'recycle', 'adate', 'sdate', 'notes')
-            ->whereBetween('created_at', [$this->start, $this->end])
+            ->whereBetween('date', [$this->start, $this->end])
             ->get();
     }
 
