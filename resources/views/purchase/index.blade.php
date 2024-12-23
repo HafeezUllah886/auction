@@ -25,9 +25,8 @@
                 <div class="card-header d-flex justify-content-between">
                     <h3>Purchases</h3>
                     <div>
-                        <a href="{{route('download.sample')}}" class="btn btn-info ">Download Sample File</a>
                         <a id="export-btn" class="btn btn-info">Export to Excel</a>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">Import from Excel</button>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">Import from Excel</button>
                     <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create New</button>
                     </div>
 
@@ -116,7 +115,7 @@
                     <form action="{{ route('purchases.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="file" class="form-label">Choose Excel File</label>
+                            <label for="file" class="form-label">Choose Excel File | <a href="{{route('download.sample')}}">Download Sample File</a></label>
                             <input type="file" required name="excel" id="excel" accept=".xlsx" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary">Import</button>
