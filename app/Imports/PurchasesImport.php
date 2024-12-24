@@ -11,8 +11,8 @@ class PurchasesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        $check = purchase::where('chassis', $row['chassis_no'])->first();
-        if ($check) {
+        $check = purchase::where('chassis', $row['chassis_no'])->count();
+        if ($check > 0) {
             return null;
         }
         return new purchase([
