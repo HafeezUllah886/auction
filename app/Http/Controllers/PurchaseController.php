@@ -48,6 +48,14 @@ class PurchaseController extends Controller
     {
        try
         {
+            $request->validate(
+                [
+                    'chassis'   =>  'required|unique:purchases,chassis',
+                ],
+                [
+                    'chassis.unique' => 'Chassis No. Already Exist',
+                ]
+            );
             DB::beginTransaction();
             $ref = getRef();
             $purchase = purchase::create(

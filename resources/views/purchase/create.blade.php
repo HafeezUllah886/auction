@@ -91,14 +91,14 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="total">Total</label>
-                                    <input type="number" name="total" readonly id="total" class="form-control">
+                                    <label for="recycle">Recycle</label>
+                                    <input type="number" name="recycle"oninput="updateChanges()" value="0" min="0" id="recycle" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="recycle">Recycle</label>
-                                    <input type="number" name="recycle" id="recycle" class="form-control">
+                                    <label for="total">Total</label>
+                                    <input type="number" name="total" readonly id="total" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -152,11 +152,12 @@
             var afee = parseFloat($('#afee').val());
             var atax = parseFloat($('#atax').val());
             var rikuso = parseFloat($('#rikuso').val());
+            var recycle = parseFloat($('#recycle').val());
 
             var pTaxValue = price * 10 / 100;
             var aTaxValue = afee * 10 / 100;
 
-            var amount = (price + pTaxValue + afee + aTaxValue + rikuso);
+            var amount = (price + pTaxValue + afee + aTaxValue + rikuso + recycle);
 
             $("#ptax").val(pTaxValue.toFixed(2));
             $("#atax").val(aTaxValue.toFixed(2));
@@ -170,10 +171,10 @@
         if (e.which === 13) {
             e.preventDefault(); // Prevent the default Enter key behavior
 
-            // Find all focusable elements in the form
+            // Find all focusable elements in the form, excluding readonly fields
             const focusable = $(this)
                 .closest('form')
-                .find('input, select, textarea, button')
+                .find('input:not([readonly]), select:not([readonly]), textarea:not([readonly]), button')
                 .filter(':visible');
 
             // Determine the current element's index

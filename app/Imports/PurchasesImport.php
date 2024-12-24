@@ -11,7 +11,10 @@ class PurchasesImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-
+        $check = purchase::where('chassis', $row['chassis_no'])->first();
+        if ($check) {
+            return null;
+        }
         return new purchase([
             'year' => $row['year'],
             'model' => $row['model'],
