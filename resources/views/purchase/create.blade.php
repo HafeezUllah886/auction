@@ -50,19 +50,19 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="cno">C No.</label>
-                                    <input type="text" name="cno" id="cno" class="form-control">
+                                    <input type="text" name="cno" value="{{ $lastpurchase->cno ?? "" }}" id="cno" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="date">Purchase Date</label>
-                                    <input type="date" name="date" id="date" value="{{date("Y-m-d")}}" class="form-control">
+                                    <input type="date" name="date" id="date" value="{{$lastpurchase->date ? date("Y-m-d", strtotime($lastpurchase->date)) : date("Y-m-d")}}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="auction">Auction</label>
-                                    <input type="text" name="auction" id="auction" class="form-control">
+                                    <input type="text" name="auction" value="{{ $lastpurchase->auction ?? "" }}" id="auction" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">

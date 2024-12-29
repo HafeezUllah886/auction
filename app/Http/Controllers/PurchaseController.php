@@ -38,7 +38,8 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchase.create');
+        $lastpurchase = purchase::orderby('id', 'desc')->first();
+        return view('purchase.create', compact('lastpurchase'));
     }
 
     /**
@@ -83,7 +84,7 @@ class PurchaseController extends Controller
             );
 
             DB::commit();
-            return back()->with('success', "Purchase Created");
+            return to_route('purchase.show', $purchase->id)->with('success', "Purchase Created");
         }
         catch(\Exception $e)
         {
