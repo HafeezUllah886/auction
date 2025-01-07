@@ -97,6 +97,10 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tbody>
+                            <th colspan="6" class="text-end">Total</th>
+                            <th>{{$purchases->sum('total')}}</th>
+                        </tbody>
                     </table>
                 </div>
 

@@ -56,7 +56,7 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="date">Purchase Date</label>
-                                    <input type="date" name="date" id="date" value="{{$lastpurchase->date ? date("Y-m-d", strtotime($lastpurchase->date)) : date("Y-m-d")}}" class="form-control">
+                                    <input type="date" name="date" id="date" value="{{ isset($lastpurchase) && $lastpurchase->date ? date('Y-m-d', strtotime($lastpurchase->date)) : date('Y-m-d') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
