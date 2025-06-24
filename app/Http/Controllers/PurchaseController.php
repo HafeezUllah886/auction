@@ -15,6 +15,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Imports\PurchasesImport;
+use App\Models\auctions;
+use App\Models\yards;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -38,8 +40,12 @@ class PurchaseController extends Controller
      */
     public function create()
     {
+        $yards = yards::all();
+        $auctions = auctions::all();
+
         $lastpurchase = purchase::orderby('id', 'desc')->first();
-        return view('purchase.create', compact('lastpurchase'));
+
+        return view('purchase.create', compact('auctions', 'yards', 'lastpurchase'));
     }
 
     /**
@@ -61,25 +67,25 @@ class PurchaseController extends Controller
             $ref = getRef();
             $purchase = purchase::create(
                 [
-                    "year"      =>  $request->year,
-                    "maker"     =>  $request->maker,
-                    "model"     =>  $request->model,
-                    "chassis"   =>  $request->chassis,
-                    "engine"    =>  $request->engine,
-                    "cno"       =>  $request->cno,
-                    "date"      =>  $request->date,
-                    "auction"   =>  $request->auction,
-                    "price"     =>  $request->price,
-                    "ptax"      =>  $request->ptax,
-                    "afee"      =>  $request->afee,
-                    "atax"      =>  $request->atax,
-                    "rikuso"    =>  $request->rikuso,
-                    "total"     =>  $request->total,
-                    "recycle"   =>  $request->recycle,
-                    "adate"     =>  $request->adate,
-                    "sdate"     =>  $request->sdate,
-                    "notes"     =>  $request->notes,
-                    "refID"     =>  $ref,
+                    "year"                  =>  $request->year,
+                    "maker"                 =>  $request->maker,
+                    "model"                 =>  $request->model,
+                    "chassis"               =>  $request->chassis,
+                    "engine"                =>  $request->engine,
+                    "yard"                  =>  $request->yard,
+                    "date"                  =>  $request->date,
+                    "auction"               =>  $request->auction,
+                    "price"                 =>  $request->price,
+                    "ptax"                  =>  $request->ptax,
+                    "afee"                  =>  $request->afee,
+                    "atax"                  =>  $request->atax,
+                    "transport_charges"     =>  $request->transport_charges,
+                    "total"                 =>  $request->total,
+                    "recycle"               =>  $request->recycle,
+                    "adate"                 =>  $request->adate,
+                    "ddate"                 =>  $request->ddate,
+                    "notes"                 =>  $request->notes,
+                    "refID"                 =>  $ref,
                 ]
             );
 

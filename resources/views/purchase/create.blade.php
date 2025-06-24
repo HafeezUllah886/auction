@@ -20,37 +20,42 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="year">Year</label>
-                                    <input type="text" name="year" id="year" class="form-control">
+                                    <input type="text" name="year" id="year" value="{{ old('year') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="maker">Maker</label>
-                                    <input type="text" name="maker" id="maker" class="form-control">
+                                    <input type="text" name="maker" id="maker" value="{{ old('maker') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="model">Model</label>
-                                    <input type="text" name="model" id="model" class="form-control">
+                                    <input type="text" name="model" id="model" value="{{ old('model') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="chessis">Chassis No.</label>
-                                    <input type="text" name="chassis" id="chessis" class="form-control">
+                                    <input type="text" name="chassis" id="chessis" value="{{ old('chassis') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="engine">Engine No.</label>
-                                    <input type="text" name="engine" id="engine" class="form-control">
+                                    <input type="text" name="engine" id="engine" value="{{ old('engine') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="cno">C No.</label>
-                                    <input type="text" name="cno" value="{{ $lastpurchase->cno ?? "" }}" id="cno" class="form-control">
+                                    <label for="yard">Yard</label>
+                                    <select name="yard" id="yard" class="form-control">
+                                        <option value="">Select Yard</option>
+                                        @foreach ($yards as $yard)
+                                            <option value="{{ $yard->name }}" @selected(old('yard') == $yard->name)>{{ $yard->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -62,15 +67,20 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="auction">Auction</label>
-                                    <input type="text" name="auction" value="{{ $lastpurchase->auction ?? "" }}" id="auction" class="form-control">
+                                    <select name="auction" id="auction" class="form-control">
+                                        <option value="">Select Auction</option>
+                                        @foreach ($auctions as $auction)
+                                            <option value="{{ $auction->name }}" @selected(old('auction') == $auction->name)>{{ $auction->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="price">Price</label>
                                     <div class="input-group mb-3">
-                                        <input type="number" name="price" id="price" oninput="updateChanges()" value="0" class="form-control">
-                                        <input type="number" name="ptax" id="ptax" readonly value="0" class="form-control input-group-text">
+                                        <input type="number" name="price" id="price" oninput="updateChanges()" value="{{ old('price') ?? 0 }}" class="form-control">
+                                        <input type="number" name="ptax" id="ptax" readonly value="{{ old('ptax') ?? 0 }}" class="form-control input-group-text">
                                     </div>
                                 </div>
                             </div>
@@ -78,45 +88,45 @@
                                 <div class="form-group mt-2">
                                     <label for="price">Auction Fee</label>
                                     <div class="input-group mb-3">
-                                        <input type="number" name="afee" id="afee" oninput="updateChanges()" value="0" class="form-control">
-                                        <input type="number" name="atax" id="atax" readonly value="0" class="form-control input-group-text">
+                                        <input type="number" name="afee" id="afee" oninput="updateChanges()" value="{{ old('afee') ?? 0 }}" class="form-control">
+                                        <input type="number" name="atax" id="atax" readonly value="{{ old('atax') ?? 0 }}" class="form-control input-group-text">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="rikuso">Rikuso</label>
-                                    <input type="number" name="rikuso" id="rikuso" oninput="updateChanges()" value="0" class="form-control">
+                                    <label for="transport_charges">Transport Charges</label>
+                                    <input type="number" name="transport_charges" id="transport_charges" oninput="updateChanges()" value="{{ old('transport_charges') ?? 0 }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="recycle">Recycle</label>
-                                    <input type="number" name="recycle"oninput="updateChanges()" value="0" min="0" id="recycle" class="form-control">
+                                    <input type="number" name="recycle"oninput="updateChanges()" value="{{ old('recycle') ?? 0 }}" min="0" id="recycle" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="total">Total</label>
-                                    <input type="number" name="total" readonly id="total" class="form-control">
+                                    <input type="number" name="total" value="{{ old('total') ?? 0 }}" readonly id="total" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="adate">Arrival Date</label>
-                                    <input type="date" name="adate" id="adate" class="form-control">
+                                    <input type="date" name="adate" id="adate" value="{{ old('adate') ? date('Y-m-d' , strtotime(old('adate'))) : '' }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="sdate">Syorui Date</label>
-                                    <input type="date" name="sdate" id="sdate" class="form-control">
+                                    <label for="ddate">Document Received Date</label>
+                                    <input type="date" name="ddate" id="ddate" value="{{ old('ddate') ? date('Y-m-d' , strtotime(old('ddate'))) : '' }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
                                 <div class="form-group mt-2">
                                     <label for="notes">Notes</label>
-                                    <textarea name="notes" id="notes" class="form-control" cols="30" rows="5"></textarea>
+                                    <textarea name="notes" id="notes" class="form-control" cols="30" rows="5">{{ old('notes') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 mt-2">
@@ -151,13 +161,13 @@
             var ptax = parseFloat($('#ptax').val());
             var afee = parseFloat($('#afee').val());
             var atax = parseFloat($('#atax').val());
-            var rikuso = parseFloat($('#rikuso').val());
+            var transport_charges = parseFloat($('#transport_charges').val());
             var recycle = parseFloat($('#recycle').val());
 
             var pTaxValue = price * 10 / 100;
             var aTaxValue = afee * 10 / 100;
 
-            var amount = (price + pTaxValue + afee + aTaxValue + rikuso + recycle);
+            var amount = (price + pTaxValue + afee + aTaxValue + transport_charges + recycle);
 
             $("#ptax").val(pTaxValue.toFixed(2));
             $("#atax").val(aTaxValue.toFixed(2));

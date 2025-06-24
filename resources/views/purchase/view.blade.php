@@ -45,8 +45,8 @@
                                         <h5 class="fs-14 mb-0">{{$purchase->engine}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">C_NO</p>
-                                        <h5 class="fs-14 mb-0">{{$purchase->cno}}</h5>
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Yard</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->yard}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Purchase Date</p>
@@ -67,8 +67,8 @@
                                         <h5 class="fs-14 mb-0">{{number_format($purchase->atax)}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Rikuso</p>
-                                        <h5 class="fs-14 mb-0">{{number_format($purchase->rikuso)}}</h5>
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Transport Charges</p>
+                                        <h5 class="fs-14 mb-0">{{number_format($purchase->transport_charges)}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Recycle</p>
@@ -84,8 +84,8 @@
                                         <h5 class="fs-14 mb-0">{{$purchase->adate == null ? "-" : date("d M Y", strtotime($purchase->adate))}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Syorui Date</p>
-                                        <h5 class="fs-14 mb-0">{{$purchase->sdate == null ? "-" : date("d M Y", strtotime($purchase->sdate))}}</h5>
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Document Received Date</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->ddate ? date("d M Y", strtotime($purchase->ddate)) : "-"}}</h5>
                                     </div>
 
                                 </div>
