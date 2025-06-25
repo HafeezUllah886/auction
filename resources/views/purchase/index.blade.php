@@ -79,13 +79,13 @@
                                                         View
                                                     </button>
                                                 </li>
-                                                {{-- <li>
+                                                @if($purchase->status == "Available")
+                                                <li>
                                                     <a class="dropdown-item" onclick="newWindow('{{route('purchase.edit', $purchase->id)}}')">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit
                                                     </a>
-                                                </li> --}}
-                                                @if($purchase->status == "Available")
+                                                </li>
                                                 <li>
                                                     <a class="dropdown-item text-danger" href="{{route('purchases.delete', $purchase->id)}}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>

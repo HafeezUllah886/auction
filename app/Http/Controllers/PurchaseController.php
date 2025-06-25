@@ -27,8 +27,8 @@ class PurchaseController extends Controller
      */
     public function index(Request $request)
     {
-        $start = $request->start ?? now()->toDateString();
-        $end = $request->end ?? now()->toDateString();
+        $start = $request->start ?? firstDayOfMonth();
+        $end = $request->end ?? lastDayOfMonth();
 
         $purchases = purchase::whereBetween("date", [$start, $end])->orderby('id', 'desc')->get();
 
@@ -110,131 +110,58 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(purchase $purchase)
+    public function edit($id)
     {
-        $products = products::orderby('name', 'asc')->get();
-        $units = units::all();
-        $vendors = accounts::vendor()->get();
-        $accounts = accounts::business()->get();
-        return view('purchase.edit', compact('products', 'units', 'vendors', 'accounts', 'purchase'));
+        $purchase = purchase::find($id);
+        $yards = yards::all();
+        $auctions = auctions::all();
+
+        return view('purchase.edit', compact('purchase', 'yards', 'auctions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, purchase $purchase)
+    public function update(Request $request, $id)
     {
         try
         {
-            if($request->isNotFilled('id'))
-            {
-                throw new Exception('Please Select Atleast One Product');
-            }
-            DB::beginTransaction();
-            foreach($purchase->payments as $payment)
-            {
-                transactions::where('refID', $payment->refID)->delete();
-                $payment->delete();
-            }
-            foreach($purchase->details as $product)
-            {
-                stock::where('refID', $product->refID)->delete();
-                $product->delete();
-            }
-            transactions::where('refID', $purchase->refID)->delete();
-
-            $purchase->update(
+            $request->validate(
                 [
-                    'vendorID'        => $request->vendorID,
-                    'date'            => $request->date,
-                    'notes'           => $request->notes,
-                    'discount'        => $request->discount,
-                    'fright'          => $request->fright,
-                    'fright1'          => $request->fright1,
-                    'wh'              => $request->whTax,
-                    'inv'             => $request->inv,
-                  ]
+                    'chassis'   =>  'required|unique:purchases,chassis,'.$id,
+                ],
+                [
+                    'chassis.unique' => 'Chassis No. Already Exist',
+                ]
             );
-
-            $ids = $request->id;
-
-            $total = 0;
-            $ref = $purchase->refID;
-            foreach($ids as $key => $id)
-            {
-                $unit = units::find($request->unit[$key]);
-                $qty = ($request->qty[$key] * $unit->value) + $request->bonus[$key];
-                $qty1 = $request->qty[$key] * $unit->value;
-                $pprice = $request->pprice[$key];
-                $price = $request->price[$key];
-                $wsprice = $request->wsprice[$key];
-                $tp = $request->tp[$key];
-                $amount = $pprice * $qty1;
-                $total += $amount;
-
-                purchase_details::create(
-                    [
-                        'purchaseID'    => $purchase->id,
-                        'productID'     => $id,
-                        'pprice'        => $pprice,
-                        'price'         => $price,
-                        'wsprice'       => $wsprice,
-                        'tp'            => $tp,
-                        'qty'           => $qty1,
-                        'gstValue'      => $request->gstValue[$key],
-                        'amount'        => $amount,
-                        'date'          => $request->date,
-                        'bonus'         => $request->bonus[$key],
-                        'unitID'        => $unit->id,
-                        'unitValue'     => $unit->value,
-                        'refID'         => $ref,
-                    ]
-                );
-                createStock($id, $qty, 0, $request->date, "Purchased", $ref);
-
-                $product = products::find($id);
-                $product->update(
-                    [
-                        'pprice' => $pprice,
-                        'price'  => $price,
-                        'wsprice' => $wsprice,
-                    ]
-                );
-            }
-
-            $whTax = $total * $request->whTax / 100;
-
-            $net = ($total + $whTax + $request->fright1) - ($request->discount + $request->fright);
-
+            DB::beginTransaction();
+           
+            $purchase = purchase::find($id);
             $purchase->update(
                 [
-
-                    'whValue'   => $whTax,
-                    'net'       => $net,
+                    "year"                  =>  $request->year,
+                    "maker"                 =>  $request->maker,
+                    "model"                 =>  $request->model,
+                    "chassis"               =>  $request->chassis,
+                    "engine"                =>  $request->engine,
+                    "yard"                  =>  $request->yard,
+                    "date"                  =>  $request->date,
+                    "auction"               =>  $request->auction,
+                    "price"                 =>  $request->price,
+                    "ptax"                  =>  $request->ptax,
+                    "afee"                  =>  $request->afee,
+                    "atax"                  =>  $request->atax,
+                    "transport_charges"     =>  $request->transport_charges,
+                    "total"                 =>  $request->total,
+                    "recycle"               =>  $request->recycle,
+                    "adate"                 =>  $request->adate,
+                    "ddate"                 =>  $request->ddate,
+                    "notes"                 =>  $request->notes,
                 ]
             );
 
-            if($request->status == 'paid')
-            {
-                purchase_payments::create(
-                    [
-                        'purchaseID'    => $purchase->id,
-                        'accountID'     => $request->accountID,
-                        'date'          => $request->date,
-                        'amount'        => $net,
-                        'notes'         => "Full Paid",
-                        'refID'         => $ref,
-                    ]
-                );
-
-                createTransaction($request->accountID, $request->date, 0, $net, "Payment of Purchase No. $purchase->id", $ref);
-            }
-            else
-            {
-                createTransaction($request->vendorID, $request->date, 0, $net, "Pending Amount of Purchase No. $purchase->id", $ref);
-            }
             DB::commit();
-            return back()->with('success', "Purchase Updated");
+            return to_route('purchase.show', $purchase->id)->with('success', "Purchase Updated");
         }
         catch(\Exception $e)
         {
