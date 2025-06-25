@@ -253,17 +253,6 @@ class PurchaseController extends Controller
         {
             DB::beginTransaction();
             $purchase = purchase::find($id);
-            foreach($purchase->payments as $payment)
-            {
-                transactions::where('refID', $payment->refID)->delete();
-                $payment->delete();
-            }
-            foreach($purchase->details as $product)
-            {
-                stock::where('refID', $product->refID)->delete();
-                $product->delete();
-            }
-            transactions::where('refID', $purchase->refID)->delete();
             $purchase->delete();
             DB::commit();
             session()->forget('confirmed_password');
@@ -277,11 +266,6 @@ class PurchaseController extends Controller
         }
     }
 
-    public function getSignleProduct($id)
-    {
-        $product = products::with('units')->find($id);
-        return $product;
-    }
 
     public function import(Request $request)
     {

@@ -20,7 +20,7 @@ class PurchasesExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        return Purchase::select('year', 'maker', 'model', 'chassis', 'engine', 'cno', 'date', 'auction', 'price', 'ptax', 'afee', 'atax', 'rikuso', 'recycle','total', 'adate', 'sdate', 'notes')
+        return Purchase::select('year', 'maker', 'model', 'chassis', 'engine', 'yard', 'date', 'auction', 'price', 'ptax', 'afee', 'atax', 'transport_charges', 'recycle','total', 'adate', 'ddate', 'notes')
             ->whereBetween('date', [$this->start, $this->end])
             ->get();
     }
@@ -33,18 +33,18 @@ class PurchasesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Model',
             'Chassis No.',
             'Engine No.',
-            'CNO',
+            'Yard',
             'Purchase Date',
             'Auction',
             'Price',
             'Purchase Tax',
             'Auction Fee',
             'Auction Tax',
-            'Rikuso',
+            'Transport Charges',
             'Recycle',
             'Total',
             'Arrival Date',
-            'Syorui Date',
+            'Document Date',
             'Notes'
         ];
     }
