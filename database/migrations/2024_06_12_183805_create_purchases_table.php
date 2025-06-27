@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("maker")->nullable();
             $table->string("model")->nullable();
             $table->string("chassis")->unique();
-            $table->string("engine")->nullable();
+            $table->string("loot")->nullable();
             $table->string("yard")->nullable();
             $table->date('date')->nullable();
             $table->string("auction")->nullable();
@@ -30,6 +30,8 @@ return new class extends Migration
             $table->float("recycle")->nullable();
             $table->date('adate')->nullable();
             $table->date('ddate')->nullable();
+            $table->string("number_plate")->nullable();
+            $table->date('nvalidity')->nullable();
             $table->text('notes')->nullable();
             $table->string("status")->default("Available");
             $table->bigInteger('refID');

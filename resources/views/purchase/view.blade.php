@@ -41,8 +41,8 @@
                                         <h5 class="fs-14 mb-0">{{$purchase->chassis}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Engine #</p>
-                                        <h5 class="fs-14 mb-0">{{$purchase->engine}}</h5>
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Loot No.</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->loot}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Yard</p>
@@ -86,6 +86,14 @@
                                     <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Document Received Date</p>
                                         <h5 class="fs-14 mb-0">{{$purchase->ddate ? date("d M Y", strtotime($purchase->ddate)) : "-"}}</h5>
+                                    </div>
+                                    <div class="col-lg-3 col-6">
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Number Plate</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->number_plate}}</h5>
+                                    </div>
+                                    <div class="col-lg-3 col-6">
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Number Plate Validity</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->nvalidity ? date("d M Y", strtotime($purchase->nvalidity)) : "-"}}</h5>
                                     </div>
 
                                 </div>

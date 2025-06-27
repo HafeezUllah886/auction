@@ -20,7 +20,7 @@ class PurchasesImport implements ToModel, WithHeadingRow
             'model' => $row['model'],
             'maker' => $row['maker'],
             'chassis' => $row['chassis_no'],
-            'engine' => $row['engine_no'],
+            'loot' => $row['loot_no'],
             'yard' => $row['yard'],
             'date' => $this->transformDate($row['p_date']),
             'auction' => $row['auction'],
@@ -33,6 +33,8 @@ class PurchasesImport implements ToModel, WithHeadingRow
             'recycle' => $row['recycle'],
             'adate' => $this->transformDate($row['arrival_date']),
             'ddate' => $this->transformDate($row['document_date']),
+            'number_plate' => $row['number_plate'],
+            'nvalidity' => $row['number_plate_validity'],
             'notes' => $row['notes'],
             'refID' => getRef(),
         ]);

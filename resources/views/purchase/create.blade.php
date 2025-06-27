@@ -19,47 +19,6 @@
                         <div class="row">
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="year">Year</label>
-                                    <input type="text" name="year" id="year" value="{{ old('year') }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <div class="form-group mt-2">
-                                    <label for="maker">Maker</label>
-                                    <input type="text" name="maker" id="maker" value="{{ old('maker') }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <div class="form-group mt-2">
-                                    <label for="model">Model</label>
-                                    <input type="text" name="model" id="model" value="{{ old('model') }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <div class="form-group mt-2">
-                                    <label for="chessis">Chassis No.</label>
-                                    <input type="text" name="chassis" id="chessis" value="{{ old('chassis') }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <div class="form-group mt-2">
-                                    <label for="engine">Engine No.</label>
-                                    <input type="text" name="engine" id="engine" value="{{ old('engine') }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <div class="form-group mt-2">
-                                    <label for="yard">Yard</label>
-                                    <select name="yard" id="yard" class="form-control">
-                                        <option value="">Select Yard</option>
-                                        @foreach ($yards as $yard)
-                                            <option value="{{ $yard->name }}" @selected(old('yard') == $yard->name)>{{ $yard->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <div class="form-group mt-2">
                                     <label for="date">Purchase Date</label>
                                     <input type="date" name="date" id="date" value="{{ isset($lastpurchase) && $lastpurchase->date ? date('Y-m-d', strtotime($lastpurchase->date)) : date('Y-m-d') }}" class="form-control">
                                 </div>
@@ -77,11 +36,47 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
+                                    <label for="loot">Loot No.</label>
+                                    <input type="text" name="loot" id="loot" value="{{ old('loot') }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="chessis">Chassis No.</label>
+                                    <input type="text" name="chassis" id="chessis" value="{{ old('chassis') }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="maker">Maker</label>
+                                    <input type="text" name="maker" id="maker" value="{{ old('maker') }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="model">Model</label>
+                                    <input type="text" name="model" id="model" value="{{ old('model') }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="year">Year</label>
+                                    <input type="text" name="year" id="year" value="{{ old('year') }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
                                     <label for="price">Price</label>
                                     <div class="input-group mb-3">
                                         <input type="number" name="price" id="price" oninput="updateChanges()" value="{{ old('price') ?? 0 }}" class="form-control">
                                         <input type="number" name="ptax" id="ptax" readonly value="{{ old('ptax') ?? 0 }}" class="form-control input-group-text">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="recycle">Recycle</label>
+                                    <input type="number" name="recycle"oninput="updateChanges()" value="{{ old('recycle') ?? 0 }}" min="0" id="recycle" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -101,14 +96,25 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="recycle">Recycle</label>
-                                    <input type="number" name="recycle"oninput="updateChanges()" value="{{ old('recycle') ?? 0 }}" min="0" id="recycle" class="form-control">
+                                    <label for="total">Total</label>
+                                    <input type="number" name="total" value="{{ old('total') ?? 0 }}" readonly id="total" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="total">Total</label>
-                                    <input type="number" name="total" value="{{ old('total') ?? 0 }}" readonly id="total" class="form-control">
+                                    <label for="yard">Yard</label>
+                                    <select name="yard" id="yard" class="form-control">
+                                        <option value="">Select Yard</option>
+                                        @foreach ($yards as $yard)
+                                            <option value="{{ $yard->name }}" @selected(old('yard') == $yard->name)>{{ $yard->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="ddate">Document Received Date</label>
+                                    <input type="date" name="ddate" id="ddate" value="{{ old('ddate') ? date('Y-m-d' , strtotime(old('ddate'))) : '' }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -119,8 +125,14 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="ddate">Document Received Date</label>
-                                    <input type="date" name="ddate" id="ddate" value="{{ old('ddate') ? date('Y-m-d' , strtotime(old('ddate'))) : '' }}" class="form-control">
+                                    <label for="number_plate">Number Plate</label>
+                                    <input type="text" name="number_plate" id="number_plate" value="{{ old('number_plate') }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="nvalidity">Number Plate Validity</label>
+                                    <input type="date" name="nvalidity" id="nvalidity" value="{{ old('nvalidity') ? date('Y-m-d' , strtotime(old('nvalidity'))) : '' }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 mt-2">

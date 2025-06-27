@@ -71,7 +71,7 @@ class PurchaseController extends Controller
                     "maker"                 =>  $request->maker,
                     "model"                 =>  $request->model,
                     "chassis"               =>  $request->chassis,
-                    "engine"                =>  $request->engine,
+                    "loot"                  =>  $request->loot,
                     "yard"                  =>  $request->yard,
                     "date"                  =>  $request->date,
                     "auction"               =>  $request->auction,
@@ -84,6 +84,8 @@ class PurchaseController extends Controller
                     "recycle"               =>  $request->recycle,
                     "adate"                 =>  $request->adate,
                     "ddate"                 =>  $request->ddate,
+                    "number_plate"          =>  $request->number_plate,
+                    "nvalidity"             =>  $request->nvalidity,
                     "notes"                 =>  $request->notes,
                     "refID"                 =>  $ref,
                 ]
@@ -143,7 +145,7 @@ class PurchaseController extends Controller
                     "maker"                 =>  $request->maker,
                     "model"                 =>  $request->model,
                     "chassis"               =>  $request->chassis,
-                    "engine"                =>  $request->engine,
+                    "loot"                  =>  $request->loot,
                     "yard"                  =>  $request->yard,
                     "date"                  =>  $request->date,
                     "auction"               =>  $request->auction,
@@ -156,6 +158,8 @@ class PurchaseController extends Controller
                     "recycle"               =>  $request->recycle,
                     "adate"                 =>  $request->adate,
                     "ddate"                 =>  $request->ddate,
+                    "number_plate"          =>  $request->number_plate,
+                    "nvalidity"             =>  $request->nvalidity,
                     "notes"                 =>  $request->notes,
                 ]
             );
