@@ -30,50 +30,14 @@
                                 <div class="form-group mt-2">
                                     <label for="type">Type</label>
                                     <select name="type" id="type" class="form-control">
-                                        <option value="Business">Business</option>
-                                        <option value="Customer">Customer</option>
-                                        <option value="Vendor">Vendor</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-2" id="catBox">
-                                <div class="form-group">
-                                    <label for="category">Category</label>
-                                    <select name="category" id="category" class="form-control">
-                                        <option value="Cash">Cash</option>
-                                        <option value="Bank">Bank</option>
-                                        <option value="Cheque">Cheque</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6 mt-2 customer" >
-                                <div class="form-group">
-                                    <label for="cnic">Customer Category</label>
-                                    <select name="c_type" id="c_type" class="form-control">
-                                        <option value="Distributor">Distributor</option>
-                                        <option value="Retailer">Retailer</option>
-                                        <option value="Wholeseller">Wholeseller</option>
-                                        <option value="Super Mart">Super Mart</option>
-                                        <option value="Sub Dealer">Sub Dealer</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6 mt-2 customer">
-                                <div class="form-group ">
-                                    <label for="area">Area</label>
-                                    <select name="area" id="area" class="selectize">
-                                        <option value=""></option>
-                                        @foreach ($areas as $area)
-                                            <option value="{{$area->id}}">{{$area->town->name}} - {{$area->name}}</option>
-                                        @endforeach
+                                        <option value="Consignee">Consignee</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6 mt-2" >
                                 <div class="form-group">
-                                    <label for="contact">Contact #</label>
-                                    <input type="text" name="contact" id="contact" value="{{ old('contact') }}"
+                                    <label for="tel">Tel #</label>
+                                    <input type="text" name="tel" id="tel" value="{{ old('tel') }}"
                                         class="form-control">
                                 </div>
                             </div>
@@ -84,9 +48,38 @@
                                         class="form-control">
                                 </div>
                             </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="address_one">Address Line One</label>
+                                    <input type="text" name="address_one" id="address_one" value="{{ old('address_one') }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="address_two">Address Line Two</label>
+                                    <input type="text" name="address_two" id="address_two" value="{{ old('address_two') }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="license">License #</label>
+                                    <input type="text" name="license" id="license" value="{{ old('license') }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="po_box">PO Box</label>
+                                    <input type="text" name="po_box" id="po_box" value="{{ old('po_box') }}"
+                                        class="form-control">
+                                </div>
+                            </div>
                             <div class="col-12 mt-3">
                                 <button type="submit" class="btn btn-secondary w-100">Create</button>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>

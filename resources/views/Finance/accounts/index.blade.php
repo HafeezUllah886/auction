@@ -11,14 +11,8 @@
                         <thead>
                             <th>#</th>
                             <th>Title</th>
-                            @if ($filter == 'Business')
-                                <th>Category</th>
-                            @endif
-                            @if ($filter == 'Customer')
-                                <th>Area</th>
-                            @endif
-                            <th>Status</th>
-                            <th>Current Balance</th>
+                            <th>Tel</th>
+                            <th>Email</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -26,14 +20,8 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $account->title }}</td>
-                                    @if ($filter == 'Business')
-                                        <td>{{ $account->category }}</td>
-                                    @endif
-                                    @if ($filter == 'Customer')
-                                        <td>{{ $account->area->town->name }} - {{ $account->area->name }}</td>
-                                    @endif
-                                    <td><a href="{{route('account.status', [$account->id])}}" class="badge bg-{{$account->status == "Active" ? "success" : "danger"}}">{{$account->status}}</a></td>
-                                    <td>{{ number_format(getAccountBalance($account->id)) }}</td>
+                                    <td>{{ $account->tel }}</td>
+                                    <td>{{ $account->email }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -42,24 +30,9 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
-                                                    <button class="dropdown-item" href="javascript:void(0);"
-                                                        onclick="ViewStatment({{ $account->id }})"><i
-                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                        View Statment
-                                                    </button>
-                                                </li>
-                                                @if($account->cashable == 'yes')
-                                                <li>
-                                                    <a class="dropdown-item" href="{{route('currency.details', $account->id)}}">
-                                                        <i class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                        Currency Details
-                                                    </a>
-                                                </li>
-                                                @endif
-                                                <li>
                                                     <a class="dropdown-item" href="{{route('account.edit', $account->id)}}">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                        Edits
+                                                        Edit
                                                     </a>
                                                 </li>
 

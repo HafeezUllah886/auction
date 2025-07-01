@@ -19,56 +19,63 @@
                     <form action="{{ route('account.update', $account->id) }}" method="post">
                         @csrf
                         @method('put')
-                        <input type="hidden" name="accountID" value="{{$account->id}}">
                         <input type="hidden" name="type" value="{{$account->type}}">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="title">Account Title</label>
-                                    <input type="text" name="title" value="{{$account->title}}" id="title"
+                                    <input type="text" name="title" id="title" value="{{ $account->title }}"
                                         class="form-control">
                                 </div>
                             </div>
-
-                            <div class="col-12 mt-2 {{$account->type != "Business" ? "d-none" : ""}}"  id="catBox">
+                           
+                            <div class="col-6 mt-2" >
                                 <div class="form-group">
-                                    <label for="category">Category</label>
-                                    <select name="category" id="category" class="form-control">
-                                        <option value="Cash">Cash</option>
-                                        <option value="Bank">Bank</option>
-                                        <option value="Cheque">Cheque</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            @if ($account->type == 'Customer')
-                            <div class="col-6 mt-2 customer" >
-                                <div class="form-group">
-                                    <label for="cnic">Customer Category</label>
-                                    <select name="c_type" id="c_type" class="form-control">
-                                        <option value="Distributor" @selected($account->c_type == "Distributor")>Distributor</option>
-                                        <option value="Retailer" @selected($account->c_type == "Retailer")>Retailer</option>
-                                        <option value="Wholeseller" @selected($account->c_type == "Wholeseller")>Wholeseller</option>
-                                        <option value="Super Mart" @selected($account->c_type == "Super Mart")>Super Mart</option>
-                                        <option value="Sub Dealer" @selected($account->c_type == "Sub Dealer")>Sub Dealer</option>
-                                        <option value="Other" @selected($account->c_type == "Other")>Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6 mt-2 customer" >
-                                <div class="form-group">
-                                    <label for="contact">Contact #</label>
-                                    <input type="text" name="contact" id="contact" value="{{ $account->contact }}"
+                                    <label for="tel">Tel #</label>
+                                    <input type="text" name="tel" id="tel" value="{{ $account->tel }}"
                                         class="form-control">
                                 </div>
                             </div>
-                            @endif
-
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="email">Email #</label>
+                                    <input type="email" name="email" id="email" value="{{ $account->email }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="address_one">Address Line One</label>
+                                    <input type="text" name="address_one" id="address_one" value="{{ $account->address_one }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="address_two">Address Line Two</label>
+                                    <input type="text" name="address_two" id="address_two" value="{{ $account->address_two }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="license">License #</label>
+                                    <input type="text" name="license" id="license" value="{{ $account->license }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2" >
+                                <div class="form-group">
+                                    <label for="po_box">PO Box</label>
+                                    <input type="text" name="po_box" id="po_box" value="{{ $account->po_box }}"
+                                        class="form-control">
+                                </div>
+                            </div>
                             <div class="col-12 mt-3">
                                 <button type="submit" class="btn btn-secondary w-100">Update</button>
                             </div>
+                        </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>

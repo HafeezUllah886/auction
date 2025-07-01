@@ -62,12 +62,7 @@
                         <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->
-               {{--  <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('orders.index', ['start' => firstDayOfMonth(), 'end' => now()->toDateString()])}}">
-                        <i class="ri-shopping-cart-fill"></i><span data-key="t-apps">Orders</span>
-                    </a>
-                </li> --}}
-                @if (auth()->user()->role == "Admin")
+              
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#purchase" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
@@ -86,13 +81,50 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#export" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-shopping-cart-line"></i><span data-key="t-apps">Export</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="export">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a onclick="newWindow('{{ route('export.create') }}')" class="nav-link"
+                                    data-key="t-chat">Create Export</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('export.index')}}" class="nav-link" data-key="t-chat"> Export
+                                    History </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse" role="button"
+                    <a class="nav-link menu-link" href="#accounts" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Accounts</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="accounts">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('account.create') }}" class="nav-link"
+                                    data-key="t-chat">Create Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('accountsList', 'Consignee') }}" class="nav-link"
+                                    data-key="t-chat">Consignee</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#settings" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-settings-2-line"></i><span data-key="t-apps">Settings</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sales">
+                    <div class="collapse menu-dropdown" id="settings">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('yards.index') }}" class="nav-link"
@@ -102,148 +134,14 @@
                                 <a href="{{ route('auctions.index') }}" class="nav-link"
                                     data-key="t-chat">Auctions</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('parts.index') }}" class="nav-link"
+                                    data-key="t-chat">Parts</a>
+                            </li>
                             
                         </ul>
                     </div>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#stock" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-stack-line"></i><span data-key="t-apps">Stocks</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="stock">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('product_stock.index') }}" class="nav-link" data-key="t-chat">Products Stock</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('stockAdjustments.index') }}" class="nav-link" data-key="t-chat">Stock Adjustment</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a class="nav-link menu-link" href="#products" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-apps-2-line"></i> <span data-key="t-apps">Products</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="products">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ url('products/index/') }}/all/all" class="nav-link" data-key="t-chat">Products
-                                    List </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('brands.index') }}" class="nav-link" data-key="t-chat"> Brands </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('categories.index') }}" class="nav-link" data-key="t-chat"> Categories </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('units.index') }}" class="nav-link" data-key="t-chat"> Units </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('product.show', 'all') }}" class="nav-link" data-key="t-chat"> Price List </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
-               {{--  <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarFinance" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarFinance">
-                        <i class="ri-file-list-3-line"></i> <span data-key="t-forms">Finance</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarFinance">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('account.create') }}" class="nav-link"
-                                    data-key="t-basic-elements">Create Account</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('accountsList', 'Business') }}" class="nav-link"
-                                    data-key="t-form-select">
-                                    Business Accounts </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('accountsList', 'Customer') }}" class="nav-link"
-                                    data-key="t-checkboxs-radios">Customer Accounts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('accountsList', 'Vendor') }}" class="nav-link"
-                                    data-key="t-pickers">
-                                    Vendor Accounts </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('deposit_withdraw.index') }}" class="nav-link"
-                                    data-key="t-input-masks">Deposit / Withdraw</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('transfers.index') }}" class="nav-link"
-                                    data-key="t-advanced">Transfer</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('expenses.index') }}" class="nav-link" data-key="t-range-slider">
-                                    Expenses</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>  --}}
-               {{--  <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarOtherUsers" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarOtherUsers">
-                        <i class="ri-file-list-3-line"></i> <span data-key="t-forms">Other Users</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarOtherUsers">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('otherusers.index', ['Order Booker']) }}" class="nav-link"
-                                    data-key="t-form-select">
-                                   Order Bookers </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('otherusers.index', ['Operator']) }}" class="nav-link"
-                                    data-key="t-form-select">
-                                   Operators </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('otherusers.index', ['Accountant']) }}" class="nav-link"
-                                    data-key="t-form-select">
-                                   Accountants </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#warehouses" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-apps-2-line"></i> <span data-key="t-apps">Warehouses</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="warehouses">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('warehouses.index') }}" class="nav-link" data-key="t-chat">Warehouses
-                                    List </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#areas" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-apps-2-line"></i> <span data-key="t-apps">Areas</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="areas">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('areas.index') }}" class="nav-link" data-key="t-chat">Areas
-                                    List </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
- --}}
-                @endif
             </ul>
         </div>
         <!-- Sidebar -->

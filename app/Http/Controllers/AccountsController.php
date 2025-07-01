@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\accounts;
-use App\Models\area;
-use App\Models\customer_area;
 use App\Models\transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +21,7 @@ class AccountsController extends Controller
             $accounts = accounts::Other()->get();
         }
 
-        return view('Finance.accounts.index', compact('accounts', 'filter'));
+        return view('finance.accounts.index', compact('accounts', 'filter'));
     }
 
     /**
@@ -32,8 +30,7 @@ class AccountsController extends Controller
     public function create()
     {
 
-        $areas = area::all();
-        return view('Finance.accounts.create', compact('areas'));
+        return view('finance.accounts.create');
     }
 
     /**
@@ -54,19 +51,19 @@ class AccountsController extends Controller
         try
         {
             DB::beginTransaction();
-
-                $ref = getRef();
-                if($request->type == "Customer")
+                if($request->type == "Consignee")
                 {
                     $account = accounts::create(
                         [
                             'title' => $request->title,
                             'type' => $request->type,
-                            'category' => $request->category,
+                            'address_one' => $request->address_one,
+                            'address_two' => $request->address_two,
+                            'license' => $request->license,
                             'contact' => $request->contact,
-                            'c_type' => $request->c_type,
-                            'cashable' => "no",
-                            'areaID' =>  $request->area,
+                            'email' => $request->email,
+                            'tel' => $request->tel,
+                            'po_box' => $request->po_box,
                         ]
                     );
                 }
@@ -162,20 +159,23 @@ class AccountsController extends Controller
     {
         $request->validate(
             [
-                'title' => "required|unique:accounts,title,". $request->accountID,
+                'title' => "required|unique:accounts,title,". $account->id,
             ],
             [
                 'title.required' => "Please Enter Account Title",
                 'title.unique'  => "Account with this title already exists"
             ]
         );
-        $account = accounts::find($request->accountID)->update(
+        $account = accounts::find($account->id)->update(
             [
                 'title' => $request->title,
-                'category' => $request->category,
-                'contact' => $request->contact ?? null,
-                'c_type' => $request->c_type,
-                'areaID' => $request->area ?? 1,
+                'address_one' => $request->address_one,
+                'address_two' => $request->address_two,
+                'license' => $request->license,
+                'contact' => $request->contact,
+                'email' => $request->email,
+                'tel' => $request->tel,
+                'po_box' => $request->po_box,
             ]
         );
 
