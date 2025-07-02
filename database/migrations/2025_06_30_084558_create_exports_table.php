@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('inv_no');
             $table->foreignId('consignee_id')->constrained('accounts')->cascadeOnDelete();
             $table->foreignId('info_party_id')->constrained('accounts')->cascadeOnDelete();
-            $table->string('date');
+            $table->date('date');
             $table->string('c_no')->nullable();
             $table->string('weight')->nullable();
             $table->float('amount');

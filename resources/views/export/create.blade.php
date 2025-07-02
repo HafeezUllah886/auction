@@ -18,6 +18,7 @@
                 </div><!--end row-->
                 <div class="card-body">
                     <form action="{{ route('export.store') }}" method="post">
+                        @csrf
                        <div class="row">
                         <div class="col-lg-8">
                             <div class="row">
@@ -35,7 +36,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                @csrf
                                 <div class="col-12">
                                     <table class="table table-striped table-hover">
                                         <thead>
@@ -136,7 +136,7 @@
                                         <tbody id="misc_list"></tbody>
                                         <tfoot>
                                             <tr>
-                                                <td colspan="3" class="text-end">Total:</td>
+                                                <td colspan="2" class="text-end">Total:</td>
                                                 <td id="miscTotalPrice" class="text-center">0.00</td>
                                                 <td></td>
                                             </tr>
@@ -145,13 +145,58 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="inv_no">Inv #</label>
+                                <input type="text" class="form-control" name="inv_no" value="">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="c_no">C/No</label>
+                                <input type="text" class="form-control" name="c_no" value="">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="weight">Weight</label>
+                                <input type="number" class="form-control" name="weight" value="">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" class="form-control" required name="date" value="{{ date('Y-m-d') }}">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group mt-2">
+                                <label for="consignee">Consignee</label>
+                                <select name="consignee" required class="selectize1" id="consignee">
+                                    <option value=""></option>
+                                    @foreach ($consignees as $consignee)
+                                        <option value="{{ $consignee->id }}">{{ $consignee->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group mt-2">
+                                <label for="info_party">Info Party</label>
+                                <select name="info_party" required class="selectize1" id="info_party">
+                                    <option value=""></option>
+                                    @foreach ($consignees as $consignee)
+                                        <option value="{{ $consignee->id }}">{{ $consignee->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-12 mt-2">
-                                    <button type="submit" class="btn btn-primary w-100">Create Export</button>
-                                </div>
-                       </div>
-                       
-                    </form>
-                </div>
+                            <button type="submit" class="btn btn-primary w-100">Create Export</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             </div>
             <!--end card-->
         </div>
@@ -203,17 +248,17 @@
                         html += '<td class="no-padding text-start">' + product.chassis + '</td>';
                         html += '<td class="no-padding text-start">' + product.model + '</td>';
                         html +=
-                            '<td class="no-padding"><input type="number" name="price[]" oninput="updateTotal()" required step="any" value="0" min="0" class="form-control text-center" id="price_' +
+                            '<td class="no-padding"><input type="number" name="car_price[]" oninput="updateTotal()" required step="any" value="0" min="0" class="form-control text-center" id="price_' +
                             id + '"></td>';
                         html += `<td class="no-padding">
-                           <select name="remarks[]" class="form-control text-center" id="remarks_${id}">
+                           <select name="car_remarks[]" class="form-control text-center" id="remarks_${id}">
                             <option value="Complete">Complete</option>
                             <option value="Roof Cut">Roof Cut</option>
                            </select>
                         </td>`;
                         html += '<td> <span class="btn btn-sm btn-danger" onclick="deleteRow(' + id +
                             ')">X</span> </td>';
-                        html += '<input type="hidden" name="id[]" value="' + id + '">';
+                        html += '<input type="hidden" name="car_id[]" value="' + id + '">';
                         html += '</tr>';
                         $("#products_list").prepend(html);
                         updateTotal();
@@ -265,23 +310,24 @@
             if (found.length > 0) {
 
             } else {
-                var rowId = 'row_' + rand;
-                var html = '<tr id="' + rowId + '">';
+                var rowId = Math.floor(Math.random() * 100000) + 1;
+                var html = '<tr id="row_' + rowId + '">';
                 html += '<td class="no-padding text-start">' + value + '</td>';
-                html += '<td class="no-padding"><input type="number" name="qty[]" required step="any" value="1" min="0" class="form-control text-center" id="qty_' +
+                html += '<td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="1" min="0" class="form-control text-center" id="qty_' +
                     rowId + '"></td>';
-                html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRow(' + rowId +
+                html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deletePart(' + rowId +
                     ')">X</span> </td>';
-                html += '<input type="hidden" name="part[]" value="' + value + '">';
+                html += '<input type="hidden" name="part_name[]" value="' + value + '">';
                 html += '</tr>';
                 $("#parts_list").prepend(html);
                 existingParts.push(value);
             }
         }
 
-        function deleteRow(id) {
+        function deletePart(id) {
+            var partName = $('#row_' + id + ' input[name="part_name[]"]').val();
             existingParts = $.grep(existingParts, function(value) {
-                return value !== id;
+                return value !== partName;
             });
             $('#row_' + id).remove();
         }

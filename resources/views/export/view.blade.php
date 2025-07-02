@@ -9,169 +9,197 @@
                                 <a href="javascript:window.print()" class="btn btn-primary ml-4"><i class="ri-printer-line mr-4"></i> Print</a>
                             </div>
                             <div class="card-header border-bottom-dashed p-4">
-                                @include('layout.header')
-                            </div>
-                            <!--end card-header-->
-                        </div><!--end col-->
-                        <div class="col-lg-12 ">
-                            <div class="row">
-                                <div class="col-4"></div>
-                                <div class="col-4 text-center"><h2>SALES TAX INVOICE</h2></div>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="row g-3">
-                                    <div class="col-2">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Inv #</p>
-                                        <h5 class="fs-14 mb-0">{{$sale->id}}</h5>
+                               <div class="row">
+                                <div class="col-9">
+                                    <h1>JAN TRADING COMPANY</h1>
+                                </div>
+                                <div class="col-3">
+                                    <h1>NO: {{$export->inv_no}}</h1>
+                                </div>
+                               </div>
+                               <div class="row">    
+                                <div class="col-6">
+                                    <h1>Weight: {{$export->weight ?? "NA"}} Kgs</h1>
+                                </div>
+                               <div class="col-6">
+                                <div class="row border-bottom border-dark pb-0 border-3">
+                                    <div class="col-6">
+                                        <h1 class="mb-0">INVOICE</h1>
                                     </div>
-                                    <div class="col-5">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Customer</p>
-                                        <h5 class="fs-14 mb-0"> <span class="text-muted">M/S :</span> {{$sale->customer->title}}</h5>
-                                        @if ($sale->customerID != 2)
-                                        <h5 class="fs-14 mb-0"> <span class="text-muted">CNIC :</span> {{$sale->customer->cnic ?? "NA"}} | <span class="text-muted">Contact :</span> {{$sale->customer->contact ?? "NA"}}</h5>
-                                        <h5 class="fs-14 mb-0"> <span class="text-muted">Type :</span> {{$sale->customer->c_type}} | NTN #</span> {{$sale->customer->ntn ?? "NA"}} | <span class="text-muted">STRN #</span> {{$sale->customer->strn ?? "NA"}}</h5>
-                                        <h5 class="fs-14 mb-0"> <span class="text-muted">Address :</span> {{$sale->customer->address ?? "NA"}}</h5>
-                                        @endif
+                                    <div class="col-6">
+                                        <h1 class="mb-0">&yen;{{number_format($export->amount)}}</h1>
+                                    </div>
+                                </div>
+                               </div>
+                               </div>
+                               <div class="row">
+                                <div class="col-6">
+                                    <h3>C/NO: {{$export->c_no}}</h3>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <h5>DATE: {{date("d M Y" ,strtotime($export->date))}}</h5>
+                                </div>
+                               </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-lg-12 ">
+                                    <div class="row">
+                                      <div class="col-6">
+                                          <h4 class="ps-4 border-bottom border-top border-dark border-2">CAR COMPLETE</h4>
+                                          <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
+                                              <tbody>
+                                                  @foreach ($export->export_cars as $car)
+                                                      <tr class="p-0 m-0">
+                                                          <td class="p-0 top-border text-uppercase">{{$car->purchase->model}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> {{$car->chassis}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> &yen;{{number_format($car->price)}}</td>
+                                                          <td class="p-0 m-0 border-0 text-uppercase">({{$car->remarks}})</td>
+                                                      </tr>
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      <div class="col-6">
+                                          <h4 class="ps-4 border-bottom border-top border-dark border-2">PARTS</h4>
+                                          <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
+                                              <tbody>
+                                                  @foreach ($export->export_parts as $part)
+                                                      <tr class="p-0 m-0">
+                                                          <td class="p-0 top-border text-uppercase">{{$part->part_name}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> {{$part->qty}}</td>
+                                                      </tr>
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      <div class="col-6 mt-4">
+                                        @if ($export->export_misc->count() > 0)
+                                          <h4 class="ps-4 border-bottom border-top border-dark border-2">MISC ITEMS</h4>
+                                          <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
+                                              <tbody>
+                                                  @foreach ($export->export_misc as $misc)
+                                                      <tr class="p-0 m-0">
+                                                          <td class="p-0 top-border text-uppercase">{{$misc->description}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> {{$misc->qty}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> &yen;{{number_format($misc->price)}}</td>
+                                                      </tr>
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                          @endif
+                                      </div>
+                                     
+                                      
+                                      <div class="col-6 mt-4">
+                                        @if ($export->export_engines->count() > 0)
+                                          <h4 class="ps-4 border-bottom border-top border-dark border-2">ENGINS</h4>
+                                          <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
+                                              <tbody>
+                                                  @foreach ($export->export_engines as $engine)
+                                                      <tr class="p-0 m-0">
+                                                          <td class="p-0 top-border text-uppercase">{{$engine->series}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> {{$engine->model}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> &yen;{{number_format($engine->price)}}</td>
+                                                      </tr>
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                          @endif
+                                      </div>
+                                      
 
                                     </div>
-                                    <div class="col-3">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Order Booker</p>
-                                        <h5 class="fs-14 mb-0">{{$sale->orderbooker->name}}</h5>
-                                    </div>
-                                    <div class="col-2">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Date</p>
-                                        <h5 class="fs-14 mb-0">{{date("d M Y" ,strtotime($sale->date))}}</h5>
-                                    </div>
-                                    <!--end col-->
-                                    <!--end col-->
-                                </div>
-                                <!--end row-->
-                            </div>
-                            <!--end card-body-->
-                        </div><!--end col-->
-                        <div class="col-lg-12">
-                            <div class="card-body p-4">
-                                <div class="table-responsive">
-                                    <table class="table table-borderless text-center table-nowrap align-middle mb-0">
-                                        <thead>
-                                            <tr class="table-active">
-                                                <th scope="col" style="width: 50px;">#</th>
-                                                <th scope="col" class="text-start">Product</th>
-                                                <th scope="col" class="text-end">Unit</th>
-                                                <th scope="col" class="text-end">Qty</th>
-                                                <th scope="col" class="text-end">Bonus</th>
-                                                <th scope="col" class="text-end">Price</th>
-                                                <th scope="col" class="text-end">Discount</th>
-                                                <th scope="col" class="text-end">Tax (Inc)</th>
-                                                <th scope="col" class="text-end">RP</th>
-                                                <th scope="col" class="text-end">GST {{$sale->details[0]->gst}}%</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="products-list">
-                                            @php
-                                                $totalQty = 0;
-                                                $totalBonus = 0;
-                                                $discount= 0;
-                                            @endphp
-                                           @foreach ($sale->details as $key => $product)
-                                           @php
-                                                $discount += $product->qty * $product->discount;
-                                               $totalQty += $product->qty / $product->unitValue;
-                                               $totalBonus += $product->bonus;
-                                           @endphp
-                                               <tr class="border-1 border-dark">
-                                                <td class="m-1 p-1 border-1 border-dark">{{$key+1}}</td>
-                                                <td class="text-start m-1 p-1 border-1 border-dark">{{$product->product->name}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{$product->unit->name}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->qty / $product->unitValue)}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->bonus)}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->price, 2)}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->discount, 2)}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->ti, 2)}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->tp, 2)}}</td>
-                                                <td class="text-end m-1 p-1 border-1 border-dark">{{number_format($product->gstValue, 2)}}</td>
-                                               </tr>
-                                           @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            @php
-                                                $totalDisc = $sale->details->sum('discount');
-                                                $totalTi = $sale->details->sum('ti');
-                                                $totalGstVal = $sale->details->sum('gstValue');
-                                                $due = $sale->net - $sale->payments->sum('amount');
-                                                $paid = $sale->payments->sum('amount');
-                                            @endphp
-                                            <tr class="border-1 border-dark">
-                                                <th colspan="3" class="text-end">Total</th>
-                                                <th class="text-end">{{number_format($totalQty)}}</th>
-                                                <th class="text-end">{{number_format($totalBonus)}}</th>
-                                                <th></th>
-                                                <th class="text-end">{{number_format($discount,2)}}</th>
-                                                <th class="text-end">{{number_format($totalTi,2)}}</th>
-                                                <th class="text-end"></th>
-                                                <th class="text-end">{{number_format($totalGstVal,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Tax Exclusive</th>
-                                                <th class="text-end p-0 m-0">{{number_format($totalTi - $totalGstVal,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Sales Tax</th>
-                                                <th class="text-end p-0 m-0">{{number_format($totalGstVal,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Gross</th>
-                                                <th class="text-end p-0 m-0 border-2 border-start-0 border-end-0 border-dark">{{number_format($totalTi,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">WH Tax {{$sale->wh}}% (+)</th>
-                                                <th class="text-end p-0 m-0">{{number_format($sale->whValue,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Discount (-)</th>
-                                                <th class="text-end p-0 m-0 ">{{number_format($sale->discount,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Fright (-)</th>
-                                                <th class="text-end p-0 m-0 ">{{number_format($sale->fright,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Fright (+)</th>
-                                                <th class="text-end p-0 m-0 ">{{number_format($sale->fright1,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Net Bill</th>
-                                                <th class="text-end p-0 m-0 border-2 border-start-0 border-end-0 border-dark">{{number_format($sale->net,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Paid</th>
-                                                <th class="text-end p-0 m-0">{{number_format($paid,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Due</th>
-                                                <th class="text-end p-0 m-0">{{number_format($due,2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Previous Balance</th>
-                                                <th class="text-end p-0 m-0">{{number_format(spotBalanceBefore($sale->customerID, $sale->refID),2)}}</th>
-                                            </tr>
-                                            <tr class="m-0 p-0">
-                                                <th colspan="9" class="text-end p-0 m-0">Net Account Balance</th>
-                                                <th class="text-end p-0 m-0">{{number_format(spotBalance($sale->customerID, $sale->refID),2)}}</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table><!--end table-->
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                @if ($sale->notes != "")
-                                <p><strong>Notes: </strong>{{$sale->notes}}</p>
-                                @endif
-                               <p class="text-center urdu"><strong>نوٹ: مال آپ کے آرڈر کے مطابق بھیجا جا رہا ہے۔ مال ایکسپائر یا خراب ہونے کی صورت میں واپس نہیں لیا جائے گا۔ دکاندار سیلزمین کے ساتھ کسی قسم کے ذاتی لین دین کا ذمہ دار خود ہوگا۔</strong></p>
+                                  </div><!--end col-->
 
-                            </div>
-                            <!--end card-body-->
+                                <div class="row">
+                                    <div class="col-6">
+                                        <table class="table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td> <h4>CONSIGNEE:</h4></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->title}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>ADDRESS:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->address_one}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->address_two}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>LICENSE NO:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->license_no}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>P.O BOX:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->po_box}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>TEL:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->tel}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>EMAIL:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->consignee->email}}</h4></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="col-6" >
+                                        <table class="table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td> <h4>INFO PARTY:</h4></td>
+                                                    <td></td>
+                                                </tr>
+                                                @if ($export->info_party != $export->consignee)
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->title}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>ADDRESS:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->address_one}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->address_two}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>LICENSE NO:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->license_no}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>P.O BOX:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->po_box}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>TEL:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->tel}}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-end"> <h4>EMAIL:</h4></td>
+                                                    <td> <h4 class="text-uppercase">{{$export->info_party->email}}</h4></td>
+                                                </tr>
+                                                @else
+                                                <tr>
+                                                    <td></td>
+                                                    <td> <h4 class="text-uppercase">Same as Consignee</h4></td>
+                                                </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                </div>
+                                
+                               </div>
                         </div><!--end col-->
+                     
 
                     </div><!--end row-->
                 </div>
@@ -193,6 +221,14 @@
 <style>
     .urdu {
         font-family: 'Noto Nastaliq Urdu';font-size: 12px;
+    }
+
+    .top-border {
+        border-top: 1px dotted black !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Arial';
     }
     </style>
 @endsection
