@@ -248,7 +248,7 @@
                         html += '<td class="no-padding text-start">' + product.chassis + '</td>';
                         html += '<td class="no-padding text-start">' + product.model + '</td>';
                         html +=
-                            '<td class="no-padding"><input type="number" name="car_price[]" oninput="updateTotal()" required step="any" value="0" min="0" class="form-control text-center" id="price_' +
+                            '<td class="no-padding"><input type="number" name="car_price[]" oninput="updateTotal()" required step="any" value="'+product.total+'" min="0" class="form-control text-center" id="price_' +
                             id + '"></td>';
                         html += `<td class="no-padding">
                            <select name="car_remarks[]" class="form-control text-center" id="remarks_${id}">
