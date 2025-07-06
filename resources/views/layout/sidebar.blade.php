@@ -120,6 +120,29 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#stock" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Stock</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="stock">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('stock.index', 'All') }}" class="nav-link"
+                                    data-key="t-chat">All</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('stock.index', 'Available') }}" class="nav-link"
+                                    data-key="t-chat">Available</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('stock.index', 'Exported') }}" class="nav-link"
+                                    data-key="t-chat">Exported</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#settings" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-settings-2-line"></i><span data-key="t-apps">Settings</span>
