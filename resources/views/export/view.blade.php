@@ -116,36 +116,36 @@
                                         <table class="table-borderless">
                                             <tbody>
                                                 <tr>
-                                                    <td> <h4>CONSIGNEE:</h4></td>
-                                                    <td></td>
+                                                    <td colspan="2"> <h5>CONSIGNEE:</h5></td>
+                                                    
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->title}}</h4></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->title}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>ADDRESS:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->address_one}}</h4></td>
+                                                    <td class="text-end"> <h5>ADDRESS:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->address_one}}</h5></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->address_two}}</h4></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->address_two}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>LICENSE NO:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->license_no}}</h4></td>
+                                                    <td class="text-end"> <h5>LICENSE NO:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->license_no}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>P.O BOX:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->po_box}}</h4></td>
+                                                    <td class="text-end"> <h5>P.O BOX:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->po_box}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>TEL:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->tel}}</h4></td>
+                                                    <td class="text-end"> <h5>TEL:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->tel}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>EMAIL:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->consignee->email}}</h4></td>
+                                                    <td class="text-end"> <h5>EMAIL:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->consignee->email}}</h5></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -154,42 +154,40 @@
                                         <table class="table-borderless">
                                             <tbody>
                                                 <tr>
-                                                    <td> <h4>INFO PARTY:</h4></td>
-                                                    <td></td>
+                                                    <td colspan="2"> <h5>INFO PARTY:</h5></td>
                                                 </tr>
                                                 @if ($export->info_party != $export->consignee)
                                                 <tr>
                                                     <td></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->title}}</h4></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->title}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>ADDRESS:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->address_one}}</h4></td>
+                                                    <td class="text-end"> <h5>ADDRESS:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->address_one}}</h5></td>
                                                 </tr>
                                                 <tr>
                                                     <td></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->address_two}}</h4></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->address_two}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>LICENSE NO:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->license_no}}</h4></td>
+                                                    <td class="text-end"> <h5>LICENSE NO:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->license_no}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>P.O BOX:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->po_box}}</h4></td>
+                                                    <td class="text-end"> <h5>P.O BOX:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->po_box}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>TEL:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->tel}}</h4></td>
+                                                    <td class="text-end"> <h5>TEL:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->tel}}</h5></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-end"> <h4>EMAIL:</h4></td>
-                                                    <td> <h4 class="text-uppercase">{{$export->info_party->email}}</h4></td>
+                                                    <td class="text-end"> <h5>EMAIL:</h5></td>
+                                                    <td> <h5 class="text-uppercase">{{$export->info_party->email}}</h5></td>
                                                 </tr>
                                                 @else
                                                 <tr>
-                                                    <td></td>
-                                                    <td> <h4 class="text-uppercase">Same as Consignee</h4></td>
+                                                    <td colspan="2"> <h5 class="text-uppercase">Same as Consignee</h5></td>
                                                 </tr>
                                                 @endif
                                             </tbody>

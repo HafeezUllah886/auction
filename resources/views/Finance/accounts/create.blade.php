@@ -31,6 +31,7 @@
                                     <label for="type">Type</label>
                                     <select name="type" id="type" class="form-control">
                                         <option value="Consignee">Consignee</option>
+                                        <option value="Transportor">Transportor</option>
                                     </select>
                                 </div>
                             </div>
@@ -48,28 +49,28 @@
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-6 mt-2" >
+                            <div class="col-6 mt-2 consignee" >
                                 <div class="form-group">
                                     <label for="address_one">Address Line One</label>
                                     <input type="text" name="address_one" id="address_one" value="{{ old('address_one') }}"
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-6 mt-2" >
+                            <div class="col-6 mt-2 consignee" >
                                 <div class="form-group">
                                     <label for="address_two">Address Line Two</label>
                                     <input type="text" name="address_two" id="address_two" value="{{ old('address_two') }}"
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-6 mt-2" >
+                            <div class="col-6 mt-2 consignee" >
                                 <div class="form-group">
                                     <label for="license">License #</label>
                                     <input type="text" name="license" id="license" value="{{ old('license') }}"
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-6 mt-2" >
+                            <div class="col-6 mt-2 consignee" >
                                 <div class="form-group">
                                     <label for="po_box">PO Box</label>
                                     <input type="text" name="po_box" id="po_box" value="{{ old('po_box') }}"
@@ -100,22 +101,13 @@
         $("#type").on("change",  function (){
             var type = $("#type").find(":selected").val();
 
-            if(type === "Business")
+            if(type === "Consignee")
             {
-                $("#catBox").show();
+                $(".consignee").show();
             }
             else
             {
-                $("#catBox").hide();
-            }
-
-            if(type === "Customer")
-            {
-                $(".customer").show();
-            }
-            else
-            {
-                $(".customer").hide();
+                $(".consignee").hide();
             }
         });
     </script>

@@ -17,11 +17,10 @@ return new class extends Migration
             $table->string('address_one')->nullable();
             $table->string('address_two')->nullable();
             $table->string('license')->nullable();
-            $table->string('contact')->nullable();
             $table->string('email')->nullable();
             $table->string('tel')->nullable();
             $table->string('po_box')->nullable();
-            $table->string('type')->nullable();
+            $table->string('type');
             $table->string('status')->default('Active');
             $table->timestamps();
         });

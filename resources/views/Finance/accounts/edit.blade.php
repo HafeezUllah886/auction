@@ -43,34 +43,36 @@
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-6 mt-2" >
-                                <div class="form-group">
-                                    <label for="address_one">Address Line One</label>
-                                    <input type="text" name="address_one" id="address_one" value="{{ $account->address_one }}"
-                                        class="form-control">
-                                </div>
+                           @if($account->type == 'Consignee')
+                           <div class="col-6 mt-2" >
+                            <div class="form-group">
+                                <label for="address_one">Address Line One</label>
+                                <input type="text" name="address_one" id="address_one" value="{{ $account->address_one }}"
+                                    class="form-control">
                             </div>
-                            <div class="col-6 mt-2" >
-                                <div class="form-group">
-                                    <label for="address_two">Address Line Two</label>
-                                    <input type="text" name="address_two" id="address_two" value="{{ $account->address_two }}"
-                                        class="form-control">
-                                </div>
+                        </div>
+                        <div class="col-6 mt-2" >
+                            <div class="form-group">
+                                <label for="address_two">Address Line Two</label>
+                                <input type="text" name="address_two" id="address_two" value="{{ $account->address_two }}"
+                                    class="form-control">
                             </div>
-                            <div class="col-6 mt-2" >
-                                <div class="form-group">
-                                    <label for="license">License #</label>
-                                    <input type="text" name="license" id="license" value="{{ $account->license }}"
-                                        class="form-control">
-                                </div>
+                        </div>
+                        <div class="col-6 mt-2" >
+                            <div class="form-group">
+                                <label for="license">License #</label>
+                                <input type="text" name="license" id="license" value="{{ $account->license }}"
+                                    class="form-control">
                             </div>
-                            <div class="col-6 mt-2" >
-                                <div class="form-group">
-                                    <label for="po_box">PO Box</label>
-                                    <input type="text" name="po_box" id="po_box" value="{{ $account->po_box }}"
-                                        class="form-control">
-                                </div>
+                        </div>
+                        <div class="col-6 mt-2" >
+                            <div class="form-group">
+                                <label for="po_box">PO Box</label>
+                                <input type="text" name="po_box" id="po_box" value="{{ $account->po_box }}"
+                                    class="form-control">
                             </div>
+                        </div>
+                           @endif
                             <div class="col-12 mt-3">
                                 <button type="submit" class="btn btn-secondary w-100">Update</button>
                             </div>

@@ -60,7 +60,6 @@ class AccountsController extends Controller
                             'address_one' => $request->address_one,
                             'address_two' => $request->address_two,
                             'license' => $request->license,
-                            'contact' => $request->contact,
                             'email' => $request->email,
                             'tel' => $request->tel,
                             'po_box' => $request->po_box,
@@ -69,50 +68,14 @@ class AccountsController extends Controller
                 }
                 else
                 {
-                   if($request->type == "Business")
-                   {
-                        if($request->category == "Cash")
-                        {
-                            $account = accounts::create(
-                                [
-                                    'title' => $request->title,
-                                    'type' => $request->type,
-                                    'contact' => $request->contact,
-                                    'email' => $request->email,
-                                    'category' => $request->category,
-                                    'areaID' => 1,
-                                ]
-                            );
-                        }
-                        else
-                        {
-                            $account = accounts::create(
-                                [
-                                    'title' => $request->title,
-                                    'type' => $request->type,
-                                    'contact' => $request->contact,
-                                    'email' => $request->email,
-                                    'category' => $request->category,
-                                    'cashable' => "no",
-                                    'areaID' => 1,
-                                ]
-                            );
-                        }
-                   }
-                   else
-                   {
-                    $account = accounts::create(
-                        [
-                            'title' => $request->title,
-                            'type' => $request->type,
-                            'contact' => $request->contact,
-                            'email' => $request->email,
-                            'category' => $request->category,
-                            'cashable' => "no",
-                            'areaID' => 1,
-                        ]
-                    );
-                   }
+                  $account = accounts::create(
+                    [
+                        'title' => $request->title,
+                        'type' => $request->type,
+                        'email' => $request->email,
+                        'tel'   => $request->tel,
+                    ]
+                  );
                 }
            DB::commit();
            return back()->with('success', "Account Created Successfully");

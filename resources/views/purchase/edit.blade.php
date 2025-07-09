@@ -24,6 +24,7 @@
                                     <input type="date" name="date" id="date" value="{{ date('Y-m-d', strtotime($purchase->date)) }}" class="form-control">
                                 </div>
                             </div>
+                           
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="auction">Auction</label>
@@ -99,6 +100,17 @@
                                 <div class="form-group mt-2">
                                     <label for="total">Total</label>
                                     <input type="number" name="total" value="{{ old('total', $purchase->total) ?? 0 }}" readonly id="total" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
+                                    <label for="transportor">Transportor</label>
+                                    <select name="transportor" id="transportor" class="form-control">
+                                        <option value="">Select Transportor </option>
+                                        @foreach ($transportors as $transportor)
+                                            <option value="{{$transportor->id}}" @selected(old('transportor', $purchase->transportor_id) == $transportor->id)>{{ $transportor->title }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">

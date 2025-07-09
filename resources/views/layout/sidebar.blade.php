@@ -116,6 +116,11 @@
                                     data-key="t-chat">Consignee</a>
                             </li>
                             
+                            <li class="nav-item">
+                                <a href="{{ route('accountsList', 'Transportor') }}" class="nav-link"
+                                    data-key="t-chat">Transportor</a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </li>
