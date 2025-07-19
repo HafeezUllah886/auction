@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <h3>Payment Receiving</h3>
+                    <h3>Payment Issuing</h3>
                     <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create
                         New</button>
                 </div>
@@ -22,7 +22,7 @@
                         <thead>
                             <th>#</th>
                             <th>Ref #</th>
-                            <th>From</th>
+                            <th>To</th>
                             <th>Category</th>
                             <th>Date</th>
                             <th>Notes</th>
@@ -30,11 +30,11 @@
                             <th>Action</th>
                         </thead>
                         <tbody>
-                            @foreach ($receive_payments as $key => $tran)
+                            @foreach ($issue_payments as $key => $tran)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $tran->refID }}</td>
-                                    <td>{{ $tran->received_from }}</td>
+                                    <td>{{ $tran->issued_to }}</td>
                                     <td>{{ $tran->payment_category->name }}</td>
                                     <td>{{ date('d M Y', strtotime($tran->date)) }}</td>
                                     <td>{{ $tran->notes }}</td>
@@ -47,7 +47,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
                                                 <li>
-                                                    <button class="dropdown-item" onclick="newWindow('{{route('receive_payments.show', $tran->id)}}')"
+                                                    <button class="dropdown-item" onclick="newWindow('{{route('issue_payments.show', $tran->id)}}')"
                                                         onclick=""><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                         View
@@ -80,12 +80,12 @@
                     <h5 class="modal-title" id="myModalLabel">Create Payment Receipt</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                 </div>
-                <form action="{{ route('receive_payments.store') }}" method="post">
+                <form action="{{ route('issue_payments.store') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
-                            <label for="received_from">Received From</label>
-                            <input type="text" name="received_from" required id="received_from" class="form-control">
+                            <label for="issued_to">Issued To</label>
+                            <input type="text" name="issued_to" required id="issued_to" class="form-control">
                         </div>
                         <div class="form-group mt-2">
                             <label for="category">Category</label>

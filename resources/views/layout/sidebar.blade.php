@@ -125,6 +125,29 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#finance" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Finance</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="finance">
+                        <ul class="nav nav-sm flex-column">
+                           
+                            <li class="nav-item">
+                                <a href="{{ route('receive_payments.index') }}" class="nav-link"
+                                    data-key="t-chat">Receive Payment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('issue_payments.index') }}" class="nav-link"
+                                    data-key="t-chat">Issue Payment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('payment_categories.index') }}" class="nav-link"
+                                    data-key="t-chat">Payment Category</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#stock" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-settings-2-line"></i><span data-key="t-apps">Stock</span>
