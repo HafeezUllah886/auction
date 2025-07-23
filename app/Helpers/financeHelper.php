@@ -94,7 +94,7 @@ function createAttachment($file, $ref)
 }
 
 function getAccountBalance($id){
-    $transactions  = transactions::where('accountID', $id);
+    $transactions  = transactions::where('account_id', $id);
 
     $cr = $transactions->sum('cr');
     $db = $transactions->sum('db');

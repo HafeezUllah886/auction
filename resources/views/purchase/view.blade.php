@@ -79,8 +79,8 @@
                                         <h5 class="fs-14 mb-0">{{number_format($purchase->total)}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Transportor</p>
-                                        <h5 class="fs-14 mb-0">{{$purchase->transportor->title}}</h5>
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Transporter</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->transporter->title}}</h5>
                                     </div>
 
                                     <div class="col-lg-3 col-6">

@@ -99,35 +99,10 @@
                         </ul>
                     </div>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#accounts" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Accounts</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="accounts">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('account.create') }}" class="nav-link"
-                                    data-key="t-chat">Create Account</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('accountsList', 'Consignee') }}" class="nav-link"
-                                    data-key="t-chat">Consignee</a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a href="{{ route('accountsList', 'Transportor') }}" class="nav-link"
-                                    data-key="t-chat">Transportor</a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#finance" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Finance</span>
+                        <i class="ri-wallet-2-line"></i><span data-key="t-apps">Finance</span>
                     </a>
                     <div class="collapse menu-dropdown" id="finance">
                         <ul class="nav nav-sm flex-column">
@@ -150,23 +125,23 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#reports" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Reports</span>
+                        <i class="ri-file-list-line"></i><span data-key="t-apps">Reports</span>
                     </a>
                     <div class="collapse menu-dropdown" id="reports">
                         <ul class="nav nav-sm flex-column">
                            
-                            <li class="nav-item">   
+                            {{-- <li class="nav-item">   
                                 <a href="{{ route('reportLedger') }}" class="nav-link"
                                     data-key="t-chat">Ledger</a>
-                            </li>
+                            </li> --}}
                             
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#stock" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Stock</span>
+                        aria-expanded="false" aria-controls="stock">
+                        <i class="ri-car-line"></i><span data-key="t-apps">Stock</span>
                     </a>
                     <div class="collapse menu-dropdown" id="stock">
                         <ul class="nav nav-sm flex-column">
@@ -186,29 +161,46 @@
                         </ul>
                     </div>
                 </li>
+               
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#settings" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-settings-2-line"></i><span data-key="t-apps">Settings</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="settings">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('yards.index') }}" class="nav-link"
-                                    data-key="t-chat">Yards</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('auctions.index') }}" class="nav-link"
-                                    data-key="t-chat">Auctions</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('parts.index') }}" class="nav-link"
-                                    data-key="t-chat">Parts</a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </li>
+                            <a class="nav-link menu-link" href="#settings" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
+                                <i class="ri-settings-2-line"></i> <span data-key="t-multi-level">Settings</span>
+                            </a>
+                            <div class="collapse menu-dropdown" id="settings">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{ route('yards.index') }}" class="nav-link" data-key="t-level-1.1"> Yards </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('auctions.index') }}" class="nav-link" data-key="t-level-1.1"> Auctions </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('parts.index') }}" class="nav-link" data-key="t-level-1.1"> Parts </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2"> 
+                                            Accounts
+                                        </a>
+                                        <div class="collapse menu-dropdown" id="sidebarAccount">
+                                            <ul class="nav nav-sm flex-column">
+                                                <li class="nav-item">
+                                                    <a href="{{ route('account.create') }}" class="nav-link" data-key="t-level-2.1"> Create Account </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('accountsList', 'Bank') }}" class="nav-link" data-key="t-level-2.1"> Bank </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('accountsList', 'Consignee') }}" class="nav-link" data-key="t-level-2.1"> Consignee </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('accountsList', 'Transporter') }}" class="nav-link" data-key="t-level-2.1"> Transporter </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
             </ul>
         </div>
         <!-- Sidebar -->

@@ -31,19 +31,20 @@
                                     <label for="type">Type</label>
                                     <select name="type" id="type" class="form-control">
                                         <option value="Consignee">Consignee</option>
-                                        <option value="Transportor">Transportor</option>
+                                        <option value="Transporter">Transporter</option>
+                                        <option value="Bank">Bank</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6 mt-2" >
-                                <div class="form-group">
+                                <div class="form-group consignee transporter">
                                     <label for="tel">Tel #</label>
                                     <input type="text" name="tel" id="tel" value="{{ old('tel') }}"
                                         class="form-control">
                                 </div>
                             </div>
                             <div class="col-6 mt-2" >
-                                <div class="form-group">
+                                <div class="form-group consignee transporter">
                                     <label for="email">Email #</label>
                                     <input type="email" name="email" id="email" value="{{ old('email') }}"
                                         class="form-control">
@@ -103,11 +104,19 @@
 
             if(type === "Consignee")
             {
+                $(".transporter").hide();
                 $(".consignee").show();
+            }
+            else if(type === "Transporter")
+            {
+               
+                $(".consignee").hide();
+                $(".transporter").show();
             }
             else
             {
                 $(".consignee").hide();
+                $(".transporter").hide();
             }
         });
     </script>

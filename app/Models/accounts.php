@@ -12,4 +12,14 @@ class accounts extends Model
     {
         return $query->where('type', 'Consignee');
     }
+
+    public function scopeTransporter($query)
+    {
+        return $query->where('type', 'Transporter');
+    }
+
+    public function scopeBank($query)
+    {
+        return $query->where('type', 'Bank');
+    }
 }

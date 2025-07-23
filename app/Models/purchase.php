@@ -10,9 +10,9 @@ class purchase extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function transportor()
+    public function transporter()
     {
-        return $this->belongsTo(accounts::class);
+        return $this->belongsTo(accounts::class, 'transporter_id', 'id');
     }
 
 }

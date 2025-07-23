@@ -88,9 +88,16 @@
                             <input type="text" name="received_from" required id="received_from" class="form-control">
                         </div>
                         <div class="form-group mt-2">
+                            <label for="category">Bank</label>
+                            <select name="bankID" id="category" required class="selectize">
+                                @foreach ($banks as $bank)
+                                    <option value="{{ $bank->id }}">{{ $bank->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
                             <label for="category">Category</label>
                             <select name="categoryID" id="category" required class="selectize">
-                                <option value=""></option>
                                 @foreach ($payment_categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach

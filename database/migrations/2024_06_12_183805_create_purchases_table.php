@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transportor_id')->constrained('accounts', 'id')->cascadeOnDelete();
+            $table->foreignId('transporter_id')->constrained('accounts', 'id')->cascadeOnDelete();
             $table->string("year")->nullable();
             $table->string("maker")->nullable();
             $table->string("model")->nullable();

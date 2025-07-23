@@ -104,11 +104,11 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="transportor">Transportor</label>
-                                    <select name="transportor" id="transportor" class="form-control">
-                                        <option value="">Select Transportor </option>
-                                        @foreach ($transportors as $transportor)
-                                            <option value="{{$transportor->id}}" @selected(old('transportor', $purchase->transportor_id) == $transportor->id)>{{ $transportor->title }}</option>
+                                    <label for="transporter">Transporter</label>
+                                    <select name="transporter" id="transporter" class="form-control">
+                                        <option value="">Select Transporter </option>
+                                        @foreach ($transporters as $transporter)
+                                            <option value="{{$transporter->id}}" @selected(old('transporter', $purchase->transporter_id) == $transporter->id)>{{ $transporter->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>

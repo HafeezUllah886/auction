@@ -97,8 +97,21 @@
                             </select>
                         </div>
                         <div class="form-group mt-2">
+                            <label for="category">Bank</label>
+                            <select name="bankID" id="bank" required class="selectize">
+                                @foreach ($banks as $bank)
+                                    <option value="{{ $bank->id }}">{{ $bank->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
                             <label for="amount">Amount</label>
                             <input type="number" step="any" name="amount" required id="amount"
+                                class="form-control">
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="transaction_charges">Transaction Charges</label>
+                            <input type="number" step="any" name="transaction_charges" required id="transaction_charges"
                                 class="form-control">
                         </div>
                         <div class="form-group mt-2">

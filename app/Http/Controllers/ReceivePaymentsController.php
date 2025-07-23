@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\receive_payments;
 use App\Http\Controllers\Controller;
+use App\Models\accounts;
 use App\Models\payment_categories;
 use App\Models\transactions;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class ReceivePaymentsController extends Controller
     {
         $receive_payments = receive_payments::orderBy('date', 'desc')->get();
         $payment_categories = payment_categories::where('for', 'Receive')->get();
-        return view('finance.receiving.index', compact('receive_payments','payment_categories'));
+        $banks = accounts::bank()->get();
+        return view('finance.receiving.index', compact('receive_payments','payment_categories','banks'));
     }
 
     /**
@@ -40,6 +42,7 @@ class ReceivePaymentsController extends Controller
             receive_payments::create(
             [
                 'category_id'    => $request->categoryID,
+                'bank_id'    => $request->bankID,
                 'date'          => $request->date,
                 'received_from' => $request->received_from,
                 'amount'        => $request->amount,
@@ -50,7 +53,7 @@ class ReceivePaymentsController extends Controller
 
         $notes = "Received from $request->received_from category $request->categoryID - Notes: $request->notes";
 
-        createTransaction(1,$request->date,$request->amount,0,$notes, $refID);
+        createTransaction($request->bankID,$request->date,$request->amount,0,$notes, $refID);
         DB::commit();
         return redirect()->route('receive_payments.index')->with('success', 'Payment received successfully');
         } catch (\Exception $th) {

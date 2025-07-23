@@ -45,9 +45,9 @@ class PurchaseController extends Controller
 
         $lastpurchase = purchase::orderby('id', 'desc')->first();
 
-        $transportors = accounts::where('type', 'Transportor')->get();
+        $transporters = accounts::where('type', 'Transporter')->get();
 
-        return view('purchase.create', compact('auctions', 'yards', 'lastpurchase', 'transportors'));
+        return view('purchase.create', compact('auctions', 'yards', 'lastpurchase', 'transporters'));
     }
 
     /**
@@ -69,7 +69,7 @@ class PurchaseController extends Controller
             $ref = getRef();
             $purchase = purchase::create(
                 [
-                    "transportor_id"        =>  $request->transportor,
+                    "transporter_id"        =>  $request->transporter,
                     "year"                  =>  $request->year,
                     "maker"                 =>  $request->maker,
                     "model"                 =>  $request->model,
@@ -121,9 +121,9 @@ class PurchaseController extends Controller
         $yards = yards::all();
         $auctions = auctions::all();
 
-        $transportors = accounts::where('type', 'Transportor')->get();
+        $transporters = accounts::where('type', 'Transporter')->get();
 
-        return view('purchase.edit', compact('purchase', 'yards', 'auctions', 'transportors'));
+        return view('purchase.edit', compact('purchase', 'yards', 'auctions', 'transporters'));
     }
 
     /**
@@ -146,7 +146,7 @@ class PurchaseController extends Controller
             $purchase = purchase::find($id);
             $purchase->update(
                 [
-                    "transportor_id"        =>  $request->transportor,
+                    "transporter_id"        =>  $request->transporter,
                     "year"                  =>  $request->year,
                     "maker"                 =>  $request->maker,
                     "model"                 =>  $request->model,

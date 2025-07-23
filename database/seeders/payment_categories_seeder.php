@@ -14,11 +14,11 @@ class payment_categories_seeder extends Seeder
     public function run(): void
     {
         payment_categories::create([
-            'name'=>'TT Payment',
+            'name'=>'Test Receiving Category',
             'for'=>'Receive',
         ]);
         payment_categories::create([
-            'name'=>'Recycle Payment',
+            'name'=>'Test Payment Category',
             'for'=>'Payment',
         ]);
     }

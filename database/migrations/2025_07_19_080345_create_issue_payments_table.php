@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('issue_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('payment_categories','id');
+            $table->foreignId('bank_id')->constrained('accounts','id');
             $table->date('date');
             $table->string('issued_to');
             $table->float('amount')->default(0);
+            $table->float('transaction_charges')->default(0);
             $table->text('notes')->nullable();
             $table->bigInteger('refID');
             $table->timestamps();

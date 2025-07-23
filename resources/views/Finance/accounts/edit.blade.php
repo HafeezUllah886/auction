@@ -28,7 +28,7 @@
                                         class="form-control">
                                 </div>
                             </div>
-                           
+                            @if($account->type != 'Bank')
                             <div class="col-6 mt-2" >
                                 <div class="form-group">
                                     <label for="tel">Tel #</label>
@@ -43,6 +43,9 @@
                                         class="form-control">
                                 </div>
                             </div>
+                            @endif
+                           
+                           
                            @if($account->type == 'Consignee')
                            <div class="col-6 mt-2" >
                             <div class="form-group">

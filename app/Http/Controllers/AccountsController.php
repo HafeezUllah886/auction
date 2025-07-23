@@ -93,14 +93,14 @@ class AccountsController extends Controller
     {
         $account = accounts::find($id);
 
-        $transactions = transactions::where('accountID', $id)->whereBetween('date', [$from, $to])->get();
+        $transactions = transactions::where('account_id', $id)->whereBetween('date', [$from, $to])->get();
 
-        $pre_cr = transactions::where('accountID', $id)->whereDate('date', '<', $from)->sum('cr');
-        $pre_db = transactions::where('accountID', $id)->whereDate('date', '<', $from)->sum('db');
+        $pre_cr = transactions::where('account_id', $id)->whereDate('date', '<', $from)->sum('cr');
+        $pre_db = transactions::where('account_id', $id)->whereDate('date', '<', $from)->sum('db');
         $pre_balance = $pre_cr - $pre_db;
 
-        $cur_cr = transactions::where('accountID', $id)->sum('cr');
-        $cur_db = transactions::where('accountID', $id)->sum('db');
+        $cur_cr = transactions::where('account_id', $id)->sum('cr');
+        $cur_db = transactions::where('account_id', $id)->sum('db');
 
         $cur_balance = $cur_cr - $cur_db;
 
@@ -135,9 +135,8 @@ class AccountsController extends Controller
                 'address_one' => $request->address_one,
                 'address_two' => $request->address_two,
                 'license' => $request->license,
-                'contact' => $request->contact,
-                'email' => $request->email,
                 'tel' => $request->tel,
+                'email' => $request->email,
                 'po_box' => $request->po_box,
             ]
         );

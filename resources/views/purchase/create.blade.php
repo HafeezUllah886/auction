@@ -26,7 +26,7 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="auction">Auction</label>
-                                    <select name="auction" id="auction" class="form-control">
+                                    <select name="auction" id="auction" required class="form-control">
                                         <option value="">Select Auction</option>
                                         @foreach ($auctions as $auction)
                                             <option value="{{ $auction->name }}" @selected(old('auction') == $auction->name)>{{ $auction->name }}</option>
@@ -43,7 +43,7 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="chessis">Chassis No.</label>
-                                    <input type="text" name="chassis" id="chessis" value="{{ old('chassis') }}" class="form-control">
+                                    <input type="text" name="chassis" id="chessis" required value="{{ old('chassis') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">
@@ -102,11 +102,11 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="transportor">Transportor</label>
-                                    <select name="transportor" id="transportor" class="form-control">
-                                        <option value="">Select Transportor</option>
-                                        @foreach ($transportors as $transportor)
-                                            <option value="{{ $transportor->id }}" @selected(old('transportor') == $transportor->id)>{{ $transportor->title }}</option>
+                                    <label for="transporter">Transporter</label>
+                                    <select name="transporter" id="transporter" required class="form-control">
+                                        <option value="">Select Transporter</option>
+                                        @foreach ($transporters as $transporter)
+                                            <option value="{{ $transporter->id }}" @selected(old('transporter') == $transporter->id)>{{ $transporter->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -114,7 +114,7 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="yard">Yard</label>
-                                    <select name="yard" id="yard" class="form-control">
+                                    <select name="yard" id="yard" required class="form-control">
                                         <option value="">Select Yard</option>
                                         @foreach ($yards as $yard)
                                             <option value="{{ $yard->name }}" @selected(old('yard') == $yard->name)>{{ $yard->name }}</option>

@@ -11,8 +11,13 @@
                         <thead>
                             <th>#</th>
                             <th>Title</th>
-                            <th>Tel</th>
-                            <th>Email</th>
+                            @if ($filter != "Bank")
+                                <th>Tel</th>
+                                <th>Email</th>
+                            @endif
+                            @if ($filter == "Bank")
+                            <th>Balance</th>
+                            @endif
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -20,8 +25,13 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $account->title }}</td>
-                                    <td>{{ $account->tel }}</td>
-                                    <td>{{ $account->email }}</td>
+                                    @if ($filter != "Bank")
+                                        <td>{{ $account->tel }}</td>
+                                        <td>{{ $account->email }}</td>
+                                    @endif
+                                    @if ($filter == "Bank")
+                                    <td>{{ number_format(getAccountBalance($account->id)) }}</td>
+                                    @endif
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -35,6 +45,15 @@
                                                         Edit
                                                     </a>
                                                 </li>
+                                                @if ($filter == "Bank")
+                                                    <li>
+                                                        <button class="dropdown-item" href="javascript:void(0);"
+                                                        onclick="ViewStatment({{ $account->id }})"><i
+                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                        View Statment
+                                                    </button>
+                                                    </li>
+                                                @endif
 
                                             </ul>
                                         </div>
