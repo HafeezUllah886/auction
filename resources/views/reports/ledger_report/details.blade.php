@@ -14,7 +14,7 @@
                                         <h1>{{projectNameHeader()}}</h1>
                                     </div>
                                     <div class="flex-shrink-0 mt-sm-0 mt-3">
-                                        <h3>Account Statement</h3>
+                                        <h3>Banks Ledger</h3>
                                     </div>
                                 </div>
                             </div>
@@ -23,11 +23,6 @@
                         <div class="col-lg-12">
                             <div class="card-body p-4">
                                 <div class="row g-3">
-                                    <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Account Title</p>
-                                        <h5 class="fs-14 mb-0">{{ $account->title }}</h5>
-                                        <h5 class="fs-14 mb-0">{{ $account->type }}</h5>
-                                    </div>
                                     <!--end col-->
                                     <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Dates</p>
@@ -60,6 +55,7 @@
                                             <tr class="table-active">
                                                 <th scope="col" style="width: 50px;">#</th>
                                                 <th scope="col" style="width: 50px;">Ref#</th>
+                                                <th scope="col" style="width: 50px;">Account</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col" class="text-start">Notes</th>
                                                 <th scope="col" class="text-end">Credit</th>
@@ -79,6 +75,7 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td> {{$trans->refID}}</td>
+                                                <td>{{ $trans->account->title }}</td>
                                                 <td>{{ date('d M Y', strtotime($trans->date)) }}</td>
                                                 <td class="text-start" style="max-width: 200px; overflow-wrap: break-word; white-space: normal;">{{ $trans->notes }}</td>
                                                 <td class="text-end">{{ number_format($trans->cr) }}</td>
