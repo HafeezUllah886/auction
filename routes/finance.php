@@ -24,12 +24,14 @@ Route::middleware('auth', adminCheck::class)->group(function () {
 
     Route::resource('payment_categories', PaymentCategoriesController::class);
     Route::resource('receive_payments', ReceivePaymentsController::class);
+    Route::post('receive_payments/import', [ReceivePaymentsController::class, 'import'])->name('receive_payments.import');
     Route::get('receive_payments/delete/{ref}', [ReceivePaymentsController::class, 'delete'])->name('receive_payments.delete')
     ->middleware(confirmPassword::class);
     
     Route::resource('issue_payments', IssuePaymentsController::class);
     Route::get('issue_payments/delete/{ref}', [IssuePaymentsController::class, 'delete'])->name('issue_payments.delete')
     ->middleware(confirmPassword::class);
+    Route::post('issue_payments/import', [IssuePaymentsController::class, 'import'])->name('issue_payments.import');
 
 
     Route::get('/accountbalance/{id}', function ($id) {

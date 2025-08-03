@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\receive_payments;
 use App\Http\Controllers\Controller;
+use App\Imports\receive_payment;
 use App\Models\accounts;
 use App\Models\payment_categories;
 use App\Models\transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReceivePaymentsController extends Controller
 {
@@ -44,14 +46,15 @@ class ReceivePaymentsController extends Controller
                 'category_id'    => $request->categoryID,
                 'bank_id'    => $request->bankID,
                 'date'          => $request->date,
-                'received_from' => $request->received_from,
                 'amount'        => $request->amount,
                 'notes'         => $request->notes,
                 'refID'         => $refID,
             ]
         );
 
-        $notes = "Received from $request->received_from category $request->categoryID - Notes: $request->notes";
+        $category = payment_categories::find($request->categoryID);
+
+        $notes = "Received from $request->received_from category $category->name - Notes: $request->notes";
 
         createTransaction($request->bankID,$request->date,$request->amount,0,$notes, $refID);
         DB::commit();
@@ -105,4 +108,46 @@ class ReceivePaymentsController extends Controller
             return redirect()->route('receive_payments.index')->with('error', $th->getMessage());
         }
     }
+
+    public function import(Request $request)
+    {
+
+        // Step 1: Validate Input
+        $request->validate([
+            'excel_file'   => 'required|file|mimes:xlsx,csv,xls',
+            'category_id'  => 'required|exists:payment_categories,id',
+            'bank_id'      => 'required|exists:accounts,id',
+        ]);
+    
+        // Step 2: Begin DB Transaction
+        DB::beginTransaction();
+    
+       try { 
+            // Step 3: Run Import */
+            Excel::import(
+                new receive_payment(
+                    $request->category_id,
+                    $request->bank_id
+                ),
+                $request->file('excel_file')
+            );
+    
+            // Step 4: Commit transaction
+            DB::commit();
+    
+            return back()->with('success', 'Payments imported successfully.');
+       } catch (\Throwable $e) {
+            // Step 5: Rollback on error
+            DB::rollBack();
+    
+            // Optional: Log the error
+            \Log::error('Excel Import Failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+    
+            return back()->with('error', 'Import failed: ' . $e->getMessage());
+        }
+    }
 }
+

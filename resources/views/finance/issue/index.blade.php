@@ -5,8 +5,11 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Payment Issuing</h3>
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create
-                        New</button>
+                    <div>
+                        <button type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#import">Import</button>
+                        <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create
+                            New</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
@@ -22,7 +25,6 @@
                         <thead>
                             <th>#</th>
                             <th>Ref #</th>
-                            <th>To</th>
                             <th>Category</th>
                             <th>Date</th>
                             <th>Notes</th>
@@ -34,7 +36,6 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $tran->refID }}</td>
-                                    <td>{{ $tran->issued_to }}</td>
                                     <td>{{ $tran->payment_category->name }}</td>
                                     <td>{{ date('d M Y', strtotime($tran->date)) }}</td>
                                     <td>{{ $tran->notes }}</td>
@@ -84,10 +85,6 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
-                            <label for="issued_to">Issued To</label>
-                            <input type="text" name="issued_to" required id="issued_to" class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
                             <label for="category">Category</label>
                             <select name="categoryID" id="category" required class="selectize">
                                 <option value=""></option>
@@ -110,11 +107,6 @@
                                 class="form-control">
                         </div>
                         <div class="form-group mt-2">
-                            <label for="transaction_charges">Transaction Charges</label>
-                            <input type="number" step="any" name="transaction_charges" required id="transaction_charges"
-                                class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
                             <label for="date">Date</label>
                             <input type="date" name="date" required id="date" value="{{ date('Y-m-d') }}"
                                 class="form-control">
@@ -132,6 +124,47 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div id="import" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Import Payment Receipt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+            </div>
+            <form action="{{ route('issue_payments.import') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group mt-2">
+                        <label for="category">Category</label>
+                        <select name="category_id" id="category" required class="selectize">
+                            <option value=""></option>
+                            @foreach ($payment_categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="category">Bank</label>
+                        <select name="bank_id" id="bank" required class="selectize">
+                            @foreach ($banks as $bank)
+                                <option value="{{ $bank->id }}">{{ $bank->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="file">File</label>
+                        <input type="file" name="excel_file" required id="excel_file" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Import</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @endsection
 @section('page-css')
 <link rel="stylesheet" href="{{ asset('assets/libs/datatable/datatable.bootstrap5.min.css') }}" />

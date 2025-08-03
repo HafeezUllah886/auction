@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('payment_categories','id');
             $table->foreignId('bank_id')->constrained('accounts','id');
             $table->date('date');
-            $table->string('received_from');
             $table->float('amount')->default(0);
             $table->text('notes')->nullable();
             $table->bigInteger('refID');

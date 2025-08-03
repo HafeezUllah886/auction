@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\issue_payments;
 use App\Http\Controllers\Controller;
+use App\Imports\issue_payment;
 use App\Models\accounts;
 use App\Models\payment_categories;
 use App\Models\transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IssuePaymentsController extends Controller
 {
@@ -44,21 +46,17 @@ class IssuePaymentsController extends Controller
                 'category_id'    => $request->categoryID,
                 'bank_id'        => $request->bankID,
                 'date'           => $request->date,
-                'issued_to'      => $request->issued_to,
                 'amount'         => $request->amount,
-                'transaction_charges' => $request->transaction_charges,
                 'notes'          => $request->notes,
                 'refID'          => $refID,
             ]
         );
 
-        $notes = "Issued to $request->issued_to category $request->categoryID bank $request->bankID - Notes: $request->notes";
+        $category = payment_categories::find($request->categoryID);
+        $notes = "category $category->name bank $request->bankID - Notes: $request->notes";
 
         createTransaction($request->bankID,$request->date,0,$request->amount,$notes, $refID);
-        if($request->transaction_charges > 0)
-        {
-            createTransaction($request->bankID,$request->date,0,$request->transaction_charges,"Transaction Charges", $refID);
-        }
+       
         DB::commit();
         return redirect()->route('issue_payments.index')->with('success', 'Payment issued successfully');
         } catch (\Exception $th) {
@@ -108,6 +106,47 @@ class IssuePaymentsController extends Controller
             DB::rollBack();
             session()->forget('confirmed_password');
             return redirect()->route('issue_payments.index')->with('error', $th->getMessage());
+        }
+    }
+
+    public function import(Request $request)
+    {
+
+        // Step 1: Validate Input
+        $request->validate([
+            'excel_file'   => 'required|file|mimes:xlsx,csv,xls',
+            'category_id'  => 'required|exists:payment_categories,id',
+            'bank_id'      => 'required|exists:accounts,id',
+        ]);
+    
+        // Step 2: Begin DB Transaction
+        DB::beginTransaction();
+    
+       try { 
+            // Step 3: Run Import */
+            Excel::import(
+                new issue_payment(
+                    $request->category_id,
+                    $request->bank_id
+                ),
+                $request->file('excel_file')
+            );
+    
+            // Step 4: Commit transaction
+            DB::commit();
+    
+            return back()->with('success', 'Payments imported successfully.');
+       } catch (\Throwable $e) {
+            // Step 5: Rollback on error
+            DB::rollBack();
+    
+            // Optional: Log the error
+            \Log::error('Excel Import Failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+    
+            return back()->with('error', 'Import failed: ' . $e->getMessage());
         }
     }
 }

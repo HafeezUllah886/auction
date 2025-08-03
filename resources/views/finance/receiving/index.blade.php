@@ -5,8 +5,11 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Payment Receiving</h3>
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create
-                        New</button>
+                    <div>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import">Import</button>
+                        <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create
+                            New</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
@@ -22,7 +25,6 @@
                         <thead>
                             <th>#</th>
                             <th>Ref #</th>
-                            <th>From</th>
                             <th>Category</th>
                             <th>Date</th>
                             <th>Notes</th>
@@ -34,7 +36,6 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $tran->refID }}</td>
-                                    <td>{{ $tran->received_from }}</td>
                                     <td>{{ $tran->payment_category->name }}</td>
                                     <td>{{ date('d M Y', strtotime($tran->date)) }}</td>
                                     <td>{{ $tran->notes }}</td>
@@ -84,10 +85,6 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mt-2">
-                            <label for="received_from">Received From</label>
-                            <input type="text" name="received_from" required id="received_from" class="form-control">
-                        </div>
-                        <div class="form-group mt-2">
                             <label for="category">Bank</label>
                             <select name="bankID" id="category" required class="selectize">
                                 @foreach ($banks as $bank)
@@ -121,6 +118,48 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="import" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Import Payment Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                </div>
+                <form action="{{ route('receive_payments.import') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group mt-2">
+                            <label for="category">Bank</label>
+                            <select name="bank_id" id="bank_id" required class="selectize">
+                                @foreach ($banks as $bank)
+                                    <option value="{{ $bank->id }}">{{ $bank->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="category">Category</label>
+                            <select name="category_id" id="category_id" required class="selectize">
+                                @foreach ($payment_categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="excel_file">Excel File (CSV, XLSX)</label>
+                            <input type="file" name="excel_file" required id="excel_file"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
