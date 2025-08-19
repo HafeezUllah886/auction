@@ -27,7 +27,7 @@
                     <div>
                         <a id="export-btn" class="btn btn-info">Export to Excel</a>
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">Import from Excel</button>
-                    <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#new">Create New</button>
+                    <button type="button" class="btn btn-primary" onclick="newWindow('{{ route('purchase.create') }}')" >Create New</button>
                     </div>
 
                 </div>

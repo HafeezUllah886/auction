@@ -134,6 +134,10 @@
                                 <a href="{{ route('reportLedger') }}" class="nav-link"
                                     data-key="t-chat">Ledger</a>
                             </li> 
+                            <li class="nav-item">   
+                                <a href="{{ route('reportPurchase') }}" class="nav-link"
+                                    data-key="t-chat">Purchase</a>
+                            </li> 
                             
                         </ul>
                     </div>
