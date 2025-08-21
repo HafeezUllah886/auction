@@ -18,9 +18,10 @@ class purchaseReportController extends Controller
 
         $from = $request->from;
         $to = $request->to;
+        $type = $request->type;
 
         $purchases = purchase::whereBetween('date', [$from, $to])->get();
 
-        return view('reports.purchase.details', compact('purchases', 'from', 'to'));
+        return view('reports.purchase.details', compact('purchases', 'from', 'to', 'type'));
     }
 }

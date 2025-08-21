@@ -16,6 +16,14 @@
                         <label for="to">To</label>
                                 <input type="date" name="to" id="to" value="{{lastDayOfMonth()}}" class="form-control">
                     </div>
+                    <div class="form-group mt-2">
+                        <label for="type">Type</label>
+                        <select name="type" id="type" class="form-control">
+                            <option value="">Select Type</option>
+                            <option value="Tax">Tax</option>
+                            <option value="Recycle">Recycle</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group mt-2">
                         <button class="btn btn-success w-100" id="viewBtn">View Report</button>

@@ -14,7 +14,7 @@
                                         <h1>{{projectNameHeader()}}</h1>
                                     </div>
                                     <div class="flex-shrink-0 mt-sm-0 mt-3">
-                                        <h3>Purchase Ledger</h3>
+                                        <h3>Purchase {{ $type }} Report</h3>
                                     </div>
                                 </div>
                             </div>
@@ -57,12 +57,12 @@
                                                 <th scope="col">Maker</th>
                                                 <th scope="col">Model</th>
                                                 <th scope="col">Year</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Tax</th>
-                                                <th scope="col">Auction Fee</th>
-                                                <th scope="col">Auction Tax</th>
-                                                <th scope="col">Transport Charges</th>
-                                                <th scope="col">Net</th>
+                                               @if ($type == 'Tax')
+                                               <th scope="col">Tax</th>
+                                               @endif
+                                               @if ($type == 'Recycle')
+                                               <th scope="col">Recycle</th>
+                                               @endif
                                             </tr>
                                         </thead>
                                         <tbody id="products-list">
@@ -75,25 +75,24 @@
                                                 <td>{{$purchase->maker}}</td>
                                                 <td>{{$purchase->model}}</td>
                                                 <td>{{$purchase->year}}</td>
-                                                <td class="text-end">{{ number_format($purchase->price) }}</td>
-                                                <td class="text-end">{{ number_format($purchase->ptax) }}</td>
-                                                <td class="text-end">{{ number_format($purchase->afee) }}</td>
-                                                <td class="text-end">{{ number_format($purchase->atax) }}</td>
-                                                <td class="text-end">{{ number_format($purchase->transport_charges) }}</td>
-                                                <td class="text-end">{{ number_format($purchase->total) }}</td>
+                                                @if ($type == 'Tax')
+                                                <td class="text-end">{{ number_format($purchase->ptax + $purchase->atax) }}</td>
+                                                @endif
+                                                @if ($type == 'Recycle')
+                                                <td class="text-end">{{ number_format($purchase->recycle) }}</td>
+                                                @endif                                              
                                             </tr>
                                         @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="6" class="text-end p-1 m-0">Total</th>
-                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('price')) }}</th>
-                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('ptax')) }}</th>
-                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('afee')) }}</th>
-                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('atax')) }}</th>
-                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('transport_charges')) }}</th>
-                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('total')) }}</th>
-                                              
+                                                @if ($type == 'Tax')
+                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('ptax') + $purchases->sum('atax')) }}</th>
+                                                @endif
+                                                @if ($type == 'Recycle')
+                                                <th class="text-end p-1 m-0">{{ number_format($purchases->sum('recycle')) }}</th>
+                                                @endif
                                             </tr>
                                         </tfoot>
                                     </table><!--end table-->
