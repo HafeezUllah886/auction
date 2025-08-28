@@ -25,8 +25,8 @@
                 <div class="card-header d-flex justify-content-between">
                     <h3>Purchases</h3>
                     <div>
-                        <a id="export-btn" class="btn btn-info">Export to Excel</a>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">Import from Excel</button>
+                        <a id="export-btn" class="btn btn-info">Export CSV</a>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">Import CSV</button>
                     <button type="button" class="btn btn-primary" onclick="newWindow('{{ route('purchase.create') }}')" >Create New</button>
                     </div>
 
@@ -118,11 +118,40 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @if(session('import_errors'))
+                        <div class="alert alert-danger mb-3">
+                            <h5 class="alert-heading">Import Errors</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Row</th>
+                                            <th>Chassis</th>
+                                            <th>Error</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(session('import_errors') as $error)
+                                            <tr>
+                                                <td>{{ $error['row'] }}</td>
+                                                <td>{{ $error['chassis'] ?? 'N/A' }}</td>
+                                                <td>{{ $error['message'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
+                    
                     <form action="{{ route('purchases.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="file" class="form-label">Choose Excel File | <a href="{{route('download.sample')}}">Download Sample File</a></label>
-                            <input type="file" required name="excel" id="excel" accept=".xlsx" class="form-control">
+                            <label for="file" class="form-label">Choose CSV File | <a href="{{route('download.sample')}}">Download Sample File</a></label>
+                            <input type="file" required name="excel" id="excel" accept=".csv" class="form-control @error('excel') is-invalid @enderror">
+                            @error('excel')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Import</button>
                     </form>
@@ -143,6 +172,15 @@
 <link rel="stylesheet" href="{{ asset('assets/libs/datatable/buttons.dataTables.min.css') }}">
 @endsection
 @section('page-js')
+    @if(session('import_errors'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var importModal = new bootstrap.Modal(document.getElementById('importModal'));
+            importModal.show();
+        });
+    </script>
+    @endif
+
     <script src="{{ asset('assets/libs/datatable/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{ asset('assets/libs/datatable/dataTables.responsive.min.js')}}"></script>

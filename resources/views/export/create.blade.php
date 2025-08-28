@@ -148,19 +148,19 @@
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="inv_no">Inv #</label>
-                                <input type="text" class="form-control" name="inv_no" value="">
+                                <input type="text" class="form-control" required name="inv_no" value="">
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="c_no">C/No</label>
-                                <input type="text" class="form-control" name="c_no" value="">
+                                <input type="text" class="form-control" required name="c_no" value="">
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="weight">Weight</label>
-                                <input type="number" class="form-control" name="weight" value="">
+                                <input type="number" class="form-control" required name="weight" value="">
                             </div>
                         </div>
                         <div class="col-3">
@@ -260,7 +260,7 @@
                             ')">X</span> </td>';
                         html += '<input type="hidden" name="car_id[]" value="' + id + '">';
                         html += '</tr>';
-                        $("#products_list").prepend(html);
+                        $("#products_list").append(html);
                         updateTotal();
                         existingProducts.push(id);
                     }
@@ -303,6 +303,8 @@
 
         var existingParts = [];
 
+        var partRowId = 0;
+
         function addPart(value) {
             let found = $.grep(existingParts, function(element) {
                 return element === value;
@@ -310,16 +312,16 @@
             if (found.length > 0) {
 
             } else {
-                var rowId = Math.floor(Math.random() * 100000) + 1;
-                var html = '<tr id="row_' + rowId + '">';
+                partRowId++;
+                var html = '<tr id="row_' + partRowId + '">';
                 html += '<td class="no-padding text-start">' + value + '</td>';
                 html += '<td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="1" min="0" class="form-control text-center" id="qty_' +
-                    rowId + '"></td>';
-                html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deletePart(' + rowId +
+                    partRowId + '"></td>';
+                html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deletePart(' + partRowId +
                     ')">X</span> </td>';
                 html += '<input type="hidden" name="part_name[]" value="' + value + '">';
                 html += '</tr>';
-                $("#parts_list").prepend(html);
+                $("#parts_list").append(html);
                 existingParts.push(value);
             }
         }
@@ -330,22 +332,25 @@
                 return value !== partName;
             });
             $('#row_' + id).remove();
+            updateTotal();
         }
 
 
+        var engineRowId = 0;
         function addEngine() {
-            var rowId = 'row_' + Date.now();
-            var html = '<tr id="' + rowId + '">';
+            engineRowId++;
+            var html = '<tr id="row_' + engineRowId + '">';
             html += '<td class="no-padding text-start"><input type="text" class="form-control" name="engine_series[]" value=""></td>';
             html += '<td class="no-padding"><input type="text" class="form-control" name="engine_model[]" value=""></td>';
-            html += '<td class="no-padding"><input type="number" class="form-control" name="engine_price[]" id="engine_price_' + rowId + '" oninput="updateEngineTotal(' + rowId +')" value="0"></td>';
-            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine(\'' + rowId + '\')">X</span> </td>';
+            html += '<td class="no-padding"><input type="number" class="form-control" name="engine_price[]" id="engine_price_' + engineRowId + '" oninput="updateEngineTotal(' + engineRowId +')" value="0"></td>';
+            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine(' + engineRowId +')">X</span> </td>';
             html += '</tr>';
             $("#engines_list").append(html);
         }
         
         function deleteRowEngine(rowId) {
-            $('#' + rowId).remove();
+            $('#row_' + rowId).remove();
+            updateEngineTotal();
         }
 
         function updateEngineTotal(rowId) {
@@ -356,21 +361,25 @@
                 totalEnginePrice += parseFloat(inputValue);
             });
             $("#engineTotalPrice").html(totalEnginePrice.toFixed(2));
+
         }
 
+        var miscRowId = 0;
+
         function addMisc() {
-            var rowId = 'row_' + Date.now();
-            var html = '<tr id="' + rowId + '">';
+            miscRowId++;
+            var html = '<tr id="row_' + miscRowId + '">';
             html += '<td class="no-padding text-start"><input type="text" class="form-control" name="misc_description[]" value=""></td>';
-            html += '<td class="no-padding"><input type="text" class="form-control" name="misc_qty[]" id="misc_qty_' + rowId + '" oninput="updateMiscTotal(' + rowId +')" value=""></td>';
-            html += '<td class="no-padding"><input type="number" class="form-control" name="misc_price[]" id="misc_price_' + rowId + '" oninput="updateMiscTotal(' + rowId +')" value=""></td>';
-            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowMisc(\'' + rowId + '\')">X</span> </td>';
+            html += '<td class="no-padding"><input type="text" class="form-control" name="misc_qty[]" id="misc_qty_' + miscRowId + '" oninput="updateMiscTotal(' + miscRowId +')" value=""></td>';
+            html += '<td class="no-padding"><input type="number" class="form-control" name="misc_price[]" id="misc_price_' + miscRowId + '" oninput="updateMiscTotal(' + miscRowId +')" value=""></td>';
+            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowMisc(' + miscRowId +')">X</span> </td>';
             html += '</tr>';
             $("#misc_list").append(html);
         }
         
         function deleteRowMisc(rowId) {
-            $('#' + rowId).remove();
+            $('#row_' + rowId).remove();
+            updateMiscTotal();
         }
 
         function updateMiscTotal(rowId) {
@@ -381,6 +390,7 @@
                 totalMiscPrice += parseFloat(inputValue);
             });
             $("#miscTotalPrice").html(totalMiscPrice.toFixed(2));
+          
         }
 
         $(".selectize1").selectize();

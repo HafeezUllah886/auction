@@ -20,34 +20,60 @@ class PurchasesExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        return Purchase::select('date','auction','loot','chassis','maker','model','year','price','ptax','afee','atax','transport_charges','recycle','total','yard','ddate','adate','number_plate','nvalidity','notes')
-            ->whereBetween('date', [$this->start, $this->end])
-            ->get();
+        return Purchase::whereBetween('purchases.date', [$this->start, $this->end])
+            ->leftJoin('accounts', 'purchases.transporter_id', '=', 'accounts.id')
+            ->get([
+                'accounts.title as transporter_title',
+                'purchases.date',
+                'purchases.auction',
+                'purchases.category',
+                'purchases.loot',
+                'purchases.chassis',
+                'purchases.maker',
+                'purchases.model',
+                'purchases.year',
+                'purchases.price',
+                'purchases.ptax',
+                'purchases.afee',
+                'purchases.atax',
+                'purchases.transport_charges',
+                'purchases.recycle',
+                'purchases.total',
+                'purchases.yard',
+                'purchases.ddate',
+                'purchases.adate',
+                'purchases.number_plate',
+                'purchases.nvalidity',
+                'purchases.notes',
+                
+            ]);
     }
 
     public function headings(): array
     {
         return [
-            'Purchase Date',
-            'Auction',
-            'Loot No.',
-            'Chassis No.',
-            'Maker',
-            'Model',
-            'Year',
-            'Price',
-            'Purchase Tax',
-            'Auction Fee',
-            'Auction Tax',
-            'Transport Charges',
-            'Recycle',
-            'Total',
-            'Yard',
-            'Document Date',
-            'Arrival Date',
-            'Number Plate',
-            'Number Validity',
-            'Notes'
+            'transporter',
+            'purchase_date',
+            'auction',
+            'category',
+            'loot_no',
+            'chassis_no',
+            'maker',
+            'model',
+            'year',
+            'price',
+            'purchase_tax',
+            'auction_fee',
+            'auction_tax',
+            'transport_charges',
+            'recycle',
+            'total',
+            'yard',
+            'document_date',
+            'arrival_date',
+            'number_plate',
+            'number_validity',
+            'notes'
         ];
     }
 }

@@ -18,7 +18,7 @@ Route::middleware('auth', adminCheck::class)->group(function () {
    
     Route::get('/download/sample', function () {
     
-        $filePath = public_path('/assets/purchase_sample.xlsx');
+        $filePath = public_path('/assets/purchase_sample.csv');
     
         if (file_exists($filePath)) {
             return response()->download($filePath);
@@ -30,7 +30,7 @@ Route::middleware('auth', adminCheck::class)->group(function () {
     Route::get('purchases/export', function () {
         $start = request()->query('start');
         $end = request()->query('end');
-        return Excel::download(new PurchasesExport($start, $end), 'purchases.xlsx');
+        return Excel::download(new PurchasesExport($start, $end), 'purchases.csv');
     })->name('purchases.export');
     
     Route::post('purchases/import', [PurchaseController::class, 'import'])->name('purchases.import');

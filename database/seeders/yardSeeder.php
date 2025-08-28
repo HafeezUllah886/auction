@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\parts;
 use App\Models\warehouses;
 use App\Models\yards;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,5 +21,14 @@ class yardSeeder extends Seeder
             ['name' => "Saitama", 'address' => "1454 Kamichujo, Kumagaya-shi, Saitama-ken 360-0001,Japan", 'contact' => "+8107014550786"],
         ];
         yards::insert($data);
+
+
+        $parts = [
+            ['name' => "Front Bumper"],
+            ['name' => "Rear Bumper"],
+            ['name' => "Axle"],
+        ];
+
+        parts::insert($parts);
     }
 }

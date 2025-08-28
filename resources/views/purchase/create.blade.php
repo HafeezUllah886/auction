@@ -36,6 +36,17 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
+                                    <label for="category">Category</label>
+                                    <select name="category" id="category" required class="form-control">
+                                        <option value="">Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->name }}" @selected(old('category') == $category->name)>{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="form-group mt-2">
                                     <label for="loot">Loot No.</label>
                                     <input type="text" name="loot" id="loot" value="{{ old('loot') }}" class="form-control">
                                 </div>
@@ -49,7 +60,12 @@
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
                                     <label for="maker">Maker</label>
-                                    <input type="text" name="maker" id="maker" value="{{ old('maker') }}" class="form-control">
+                                    <select name="maker" id="maker" required class="form-control">
+                                        <option value="">Select Maker</option>
+                                        @foreach ($makers as $maker)
+                                            <option value="{{ $maker->name }}" @selected(old('maker') == $maker->name)>{{ $maker->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-3">

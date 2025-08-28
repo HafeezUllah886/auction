@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('transporter_id')->constrained('accounts', 'id')->cascadeOnDelete();
             $table->string("year")->nullable();
+            $table->string("category")->nullable();
             $table->string("maker")->nullable();
             $table->string("model")->nullable();
             $table->string("chassis")->unique();

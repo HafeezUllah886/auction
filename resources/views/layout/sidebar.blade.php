@@ -179,6 +179,12 @@
                                         <a href="{{ route('auctions.index') }}" class="nav-link" data-key="t-level-1.1"> Auctions </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="{{ route('makers.index') }}" class="nav-link" data-key="t-level-1.1"> Makers </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('categories.index') }}" class="nav-link" data-key="t-level-1.1"> Categories </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{{ route('parts.index') }}" class="nav-link" data-key="t-level-1.1"> Parts </a>
                                     </li>
                                     <li class="nav-item">

@@ -146,9 +146,15 @@ class ExportController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(export $export)
+    public function edit($id)
     {
-        //
+        $existingProducts = export_cars::where('export_id', $id)->pluck('purchase_id')->toArray();
+        $products = purchase::where('status', 'Available')->orWhereIn('id', $existingProducts)->get();
+        $parts = parts::all();
+        $consignees = accounts::consignee()->get();
+
+        $export = export::find($id);
+        return view('export.edit', compact('products', 'parts', 'consignees', 'export'));
     }
 
     /**

@@ -37,6 +37,10 @@
                                         <h5 class="fs-14 mb-0">{{$purchase->model}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Category</p>
+                                        <h5 class="fs-14 mb-0">{{$purchase->category}}</h5>
+                                    </div>
+                                    <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Chassis #</p>
                                         <h5 class="fs-14 mb-0">{{$purchase->chassis}}</h5>
                                     </div>

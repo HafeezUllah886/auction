@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Imports\PurchasesImport;
 use App\Models\auctions;
+use App\Models\categories;
+use App\Models\category;
+use App\Models\makers;
 use App\Models\yards;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -42,12 +45,14 @@ class PurchaseController extends Controller
     {
         $yards = yards::all();
         $auctions = auctions::all();
+        $makers = makers::all();
+        $categories = category::all();
 
         $lastpurchase = purchase::orderby('id', 'desc')->first();
 
         $transporters = accounts::where('type', 'Transporter')->get();
 
-        return view('purchase.create', compact('auctions', 'yards', 'lastpurchase', 'transporters'));
+        return view('purchase.create', compact('auctions', 'yards', 'lastpurchase', 'transporters', 'makers', 'categories'));
     }
 
     /**
@@ -71,6 +76,7 @@ class PurchaseController extends Controller
                 [
                     "transporter_id"        =>  $request->transporter,
                     "year"                  =>  $request->year,
+                    "category"              =>  $request->category,
                     "maker"                 =>  $request->maker,
                     "model"                 =>  $request->model,
                     "chassis"               =>  $request->chassis,
@@ -206,22 +212,53 @@ class PurchaseController extends Controller
 
     public function import(Request $request)
     {
-        try
-        {
+        $request->validate([
+            'excel' => [
+                'required',
+                'file',
+                'mimetypes:text/plain,text/csv,application/csv,text/comma-separated-values,application/excel,application/vnd.ms-excel,application/vnd.msexcel,application/octet-stream,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            ],
+        ]);
+        
+        try {
             $file = $request->file('excel');
-        $extension = $file->getClientOriginalExtension();
-        if($extension == "xlsx")
-        {
-            Excel::import(new PurchasesImport, $file);
-            return back()->with("success", "Successfully imported");
-        }
-        else
-        {
-            return back()->with("error", "Invalid file extension");
-        }
-        }
-        catch(\Exception $e)
-        {
+            $extension = strtolower($file->getClientOriginalExtension());
+            
+            if (in_array($extension, ['xlsx', 'csv', 'txt'])) {
+                $import = new PurchasesImport();
+                
+                // Import the file
+                Excel::import($import, $file);
+                
+                // Commit the transaction if no errors
+                $import->commit();
+                
+                // Get any errors that occurred during import
+                $errors = $import->getErrors();
+                $errorCount = $import->getErrorCount();
+                
+                if ($errorCount > 0) {
+                    $errorBag = [];
+                    
+                    foreach ($errors as $index => $error) {
+                        $field = 'row_' . $error['row'];
+                        $errorBag[$field] = [
+                            'row' => $error['row'],
+                            'chassis' => $error['chassis'],
+                            'message' => $error['error']
+                        ];
+                    }
+                    
+                    return back()
+                        ->with('import_errors', $errorBag)
+                        ->with('error', "Import completed with $errorCount error(s). Please check the errors below.");
+                }
+                
+                return back()->with("success", "Successfully imported all records");
+            } else {
+                return back()->with("error", "Invalid file extension");
+            }
+        } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
