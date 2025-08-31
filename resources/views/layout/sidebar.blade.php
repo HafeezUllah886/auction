@@ -188,6 +188,9 @@
                                         <a href="{{ route('parts.index') }}" class="nav-link" data-key="t-level-1.1"> Parts </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="{{ route('oil_products.index') }}" class="nav-link" data-key="t-level-1.1"> Oil Products </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2"> 
                                             Accounts
                                         </a>
