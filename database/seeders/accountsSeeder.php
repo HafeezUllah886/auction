@@ -37,6 +37,10 @@ class accountsSeeder extends Seeder
             'status' => "Active",
         ]);
 
-        
+        accounts::create([
+            'title' => "Nippon Oil",
+            'type' => "Vendor",
+            'status' => "Active",
+        ]);
     }
 }

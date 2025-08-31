@@ -33,18 +33,19 @@
                                         <option value="Consignee">Consignee</option>
                                         <option value="Transporter">Transporter</option>
                                         <option value="Bank">Bank</option>
+                                        <option value="Vendor">Vendor</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-6 mt-2" >
-                                <div class="form-group consignee transporter">
+                                <div class="form-group consignee transporter vendor">
                                     <label for="tel">Tel #</label>
                                     <input type="text" name="tel" id="tel" value="{{ old('tel') }}"
                                         class="form-control">
                                 </div>
                             </div>
                             <div class="col-6 mt-2" >
-                                <div class="form-group consignee transporter">
+                                <div class="form-group consignee transporter vendor">
                                     <label for="email">Email #</label>
                                     <input type="email" name="email" id="email" value="{{ old('email') }}"
                                         class="form-control">
@@ -112,6 +113,12 @@
                
                 $(".consignee").hide();
                 $(".transporter").show();
+            }
+            else if(type === "Vendor")
+            {
+                $(".consignee").hide();
+                $(".transporter").hide();
+                $(".vendor").show();
             }
             else
             {

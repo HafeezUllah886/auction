@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('oil_purchases', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('vendorID')->constrained('accounts', 'id');
             $table->date('date');
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->decimal('total', 10, 2);
+            $table->decimal('tax', 10, 2)->nullable();
+            $table->decimal('tax_value', 10, 2)->nullable();
+            $table->decimal('total', 10, 2)->nullable();
+            $table->text('note')->nullable();
+            $table->bigInteger('refID');
             $table->timestamps();
         });
     }

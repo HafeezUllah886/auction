@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('oil_purchase_details', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchaseID')->constrained('oil_purchases', 'id');
             $table->foreignId('productID')->constrained('oil_products', 'id');
-            $table->integer('qty');
-
-            $table->decimal('price', 10, 2);
-            $table->decimal('amount', 10, 2);
-            $table->bigInteger('refID');
             $table->date('date');
+            $table->float('cr')->default(0);
+            $table->float('db')->default(0);
+            $table->text('notes')->nullable();
+            $table->bigInteger('refID');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('oil_purchase_details');
+        Schema::dropIfExists('stocks');
     }
 };

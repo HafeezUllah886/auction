@@ -100,6 +100,30 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#oil" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-file-list-line"></i><span data-key="t-apps">Engine Oil</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="oil">
+                        <ul class="nav nav-sm flex-column">
+                           
+                            <li class="nav-item">   
+                                <a href="{{ route('oil_purchases.index') }}" class="nav-link"
+                                    data-key="t-chat">Purchase</a>
+                            </li> 
+                            <li class="nav-item">   
+                                <a href="{{ route('oil_products.index') }}" class="nav-link"
+                                    data-key="t-chat">Products</a>
+                            </li> 
+                            <li class="nav-item">   
+                                <a href="{{ route('product_stock.index', 'All') }}" class="nav-link"
+                                    data-key="t-chat">Stock</a>
+                            </li> 
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#finance" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-wallet-2-line"></i><span data-key="t-apps">Finance</span>
@@ -122,6 +146,7 @@
                         </ul>
                     </div>
                 </li>
+               
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#reports" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
@@ -187,9 +212,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('parts.index') }}" class="nav-link" data-key="t-level-1.1"> Parts </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('oil_products.index') }}" class="nav-link" data-key="t-level-1.1"> Oil Products </a>
-                                    </li>
+                                 
                                     <li class="nav-item">
                                         <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2"> 
                                             Accounts
@@ -201,6 +224,9 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a href="{{ route('accountsList', 'Bank') }}" class="nav-link" data-key="t-level-2.1"> Bank </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="{{ route('accountsList', 'Vendor') }}" class="nav-link" data-key="t-level-2.1"> Vendor </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a href="{{ route('accountsList', 'Consignee') }}" class="nav-link" data-key="t-level-2.1"> Consignee </a>
