@@ -145,6 +145,44 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="product">Engine Oil</label>
+                                        <select name="product" class="selectize4" id="product">
+                                            <option value="0"></option>
+                                            @foreach ($oils as $oil)
+                                                <option value="{{ $oil->id }}"> {{$oil->code}} - {{ $oil->name }} - {{ $oil->ltr }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <th width="">Description</th>
+                                            <th class="text-center">Price</th>
+                                            <th width="" class="text-center">Qty</th>
+                                            <th class="text-center">Amount</th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody id="oil_list"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="3" class="text-end">Total</th>
+                                                <th class="text-end" id="oilTotalAmount">0.00</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                        </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="inv_no">Inv #</label>
@@ -394,5 +432,80 @@
         }
 
         $(".selectize1").selectize();
+
+
+        $(".selectize4").selectize({
+            onChange: function(value) {
+                if (!value.length) return;
+                if (value != 0) {
+                    getSingleOil(value);
+                    this.clear();
+                    this.focus();
+                }
+
+            },
+        });
+
+
+        var existingOils = [];
+
+function getSingleOil(id) {
+    $.ajax({
+        url: "{{ url('oilpurchase/getproduct/') }}/" + id,
+        method: "GET",
+        success: function(product) {
+            let found = $.grep(existingOils, function(element) {
+                return element === product.id;
+            });
+            if (found.length > 0) {
+
+            } else {
+
+                var id = product.id;
+                var html = '<tr id="rowOil_' + id + '">';
+                html += '<td class="">' + product.code + ' - ' + product.name +  ' - ' + product.ltr +'</td>';
+                html += '<td class=""><input type="number" name="priceOil[]" oninput="updateChangesOil(' + id + ')" step="any" value="'+product.pprice+'" min="1" class="form-control text-center" id="priceOil_' + id + '"></td>';
+                html += '<td class=""><div class="input-group"><input type="number" name="qtyOil[]" oninput="updateChangesOil(' + id + ')" min="0" step="any" value="1" class="form-control text-center" id="qtyOil_' + id + '"><div class="input-group-append"><span class="input-group-text">'+product.packing+'</span></div></div></td>';
+                html += '<td class=""><input type="number" name="amountOil[]" min="0.1" readonly required step="any" value="1" class="form-control text-center" id="amountOil_' + id + '"></td>';
+                html += '<td class=""> <span class="btn btn-sm btn-danger" onclick="deleteRowOil('+id+')">X</span> </td>';
+                html += '<input type="hidden" name="idOil[]" value="' + id + '">';
+                html += '</tr>';
+                $("#oil_list").prepend(html);
+                existingOils.push(id);
+                updateChanges(id);
+            }
+        }
+    });
+}
+
+function updateChangesOil(id) {
+    var qty = parseFloat($('#qtyOil_' + id).val());
+    var price = parseFloat($('#priceOil_' + id).val());
+
+    var amount = qty * price;
+    $("#amountOil_"+id).val(amount.toFixed(2));
+    updateTotalOil();
+}
+
+function updateTotalOil() {
+    var total = 0;
+    $("input[id^='amountOil_']").each(function() {
+        var inputId = $(this).attr('id');
+        var inputValue = $(this).val();
+        total += parseFloat(inputValue);
+    });
+
+    $("#oilTotalAmount").html(total.toFixed(2));
+
+}
+
+function deleteRowOil(id) {
+    existingOils = $.grep(existingOils, function(value) {
+        return value !== id;
+    });
+    $('#rowOil_'+id).remove();
+    updateTotalOil();
+}
+
     </script>
 @endsection

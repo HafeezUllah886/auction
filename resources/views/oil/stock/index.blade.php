@@ -15,10 +15,18 @@
                             <th>Grade</th>
                             <th>Packing</th>
                             <th>Stock</th>
+                            <th>Stock Value</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
+                            @php
+                               $totalValue = 0;
+                            @endphp
                             @foreach ($products as $key => $product)
+                            @php
+                            $value = productStockValue($product->id);
+                                $totalValue += $value;
+                            @endphp
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $product->code }}</td>
@@ -26,6 +34,7 @@
                                         <td>{{ $product->grade }}</td>
                                         <td>{{ $product->packing }}</td>
                                         <td>{{ number_format(getStock($product->id), 2) }}</td>
+                                        <td>{{ number_format($value, 2) }}</td>
                                         <td>
                                             <button class="btn btn-info" onclick="ViewDetails({{ $product->id }})">
                                                 Details
@@ -33,6 +42,11 @@
                                         </td>
                                     </tr>
                             @endforeach
+                            <tr>
+                                <td colspan="6" class="text-end">Total</td>
+                                <td>{{ number_format($totalValue, 2) }}</td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

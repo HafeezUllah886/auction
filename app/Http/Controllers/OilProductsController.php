@@ -35,7 +35,6 @@ class OilProductsController extends Controller
             'name' => 'required',
             'packing' => 'required',
             'pprice' => 'required',
-            'eprice' => 'required',
         ]);
         OilProducts::create($request->all());
         return redirect()->route('oil_products.index')->with('success', 'Oil Product Created Successfully');
@@ -68,7 +67,6 @@ class OilProductsController extends Controller
             'name' => 'required',
             'packing' => 'required',
             'pprice' => 'required',
-            'eprice' => 'required',
         ]);
         OilProducts::findOrFail($id)->update($request->all());
         return redirect()->route('oil_products.index')->with('success', 'Oil Product Updated Successfully');

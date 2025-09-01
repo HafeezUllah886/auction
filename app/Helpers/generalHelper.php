@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\material_stock;
+use App\Models\OilPurchaseDetails;
 use App\Models\products;
 use App\Models\purchase_details;
 use App\Models\ref;
@@ -108,10 +109,10 @@ function avgSalePrice($from, $to, $id)
 
 function avgPurchasePrice($from, $to, $id)
 {
-    $purchases = purchase_details::where('productID', $id);
+    $purchases = OilPurchaseDetails::where('productID', $id);
     if($from != 'all' && $to != 'all')
     {
-        $purchases->whereBetween('date', [$from, $to]);
+        $purchases->orderBy('id', 'desc')->take(10);
     }
     $purchase_amount = $purchases->sum('amount');
     $purchase_qty = $purchases->sum('qty');

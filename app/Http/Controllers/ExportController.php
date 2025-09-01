@@ -9,6 +9,7 @@ use App\Models\export_cars;
 use App\Models\export_engines;
 use App\Models\export_misc;
 use App\Models\export_parts;
+use App\Models\OilProducts;
 use App\Models\parts;
 use App\Models\purchase;
 use Illuminate\Http\Request;
@@ -34,8 +35,9 @@ class ExportController extends Controller
     {
         $products = purchase::where('status', 'Available')->get();
         $parts = parts::all();
+        $oils = OilProducts::all();
         $consignees = accounts::consignee()->get();
-        return view('export.create', compact('products', 'parts', 'consignees'));
+        return view('export.create', compact('products', 'parts', 'consignees', 'oils'));
     }
 
     /**

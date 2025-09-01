@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('grade');
             $table->string('packing');
             $table->string('pprice');
-            $table->string('eprice');
             $table->timestamps();
         });
     }

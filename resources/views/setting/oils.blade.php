@@ -27,7 +27,6 @@
                             <th>Grade</th>
                             <th>Packing</th>
                             <th>Purchase Price</th>
-                            <th>Export Price</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -40,7 +39,6 @@
                                     <td>{{ $item->grade }}</td>
                                     <td>{{ $item->packing }}</td>
                                     <td>{{ $item->pprice }}</td>
-                                    <td>{{ $item->eprice }}</td>
                                     <td>
                                         <button type="button" class="btn btn-info " data-bs-toggle="modal"
                                             data-bs-target="#edit_{{ $item->id }}">Edit</button>
@@ -94,12 +92,7 @@
                                                             value="{{ $item->pprice }}" min="0" id="pprice"
                                                             class="form-control">
                                                     </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="eprice">Export Price</label>
-                                                        <input type="number" step="any" name="eprice" required
-                                                            value="{{ $item->eprice }}" min="0" id="eprice"
-                                                            class="form-control">
-                                                    </div>
+                                                   
                                                 </div>
                                         
                                             <div class="modal-footer">
@@ -154,11 +147,7 @@
                             <input type="number" step="any" name="pprice" required value="" min="0"
                                 id="pprice" class="form-control">
                         </div>
-                        <div class="form-group mt-2">
-                            <label for="eprice">Export Price</label>
-                            <input type="number" step="any" name="eprice" required value="" min="0"
-                                id="eprice" class="form-control">
-                        </div>
+                       
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
