@@ -44,21 +44,24 @@
                             <div class="card-body">
                                 <div class="col-lg-12 ">
                                     <div class="row">
+                                      @if($export->export_cars->count() > 0)
                                       <div class="col-6">
-                                          <h4 class="ps-4 border-bottom border-top border-dark border-2">CAR COMPLETE</h4>
-                                          <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
-                                              <tbody>
-                                                  @foreach ($export->export_cars as $car)
-                                                      <tr class="p-0 m-0">
-                                                          <td class="p-0 top-border text-uppercase">{{$car->purchase->model}}</td>
-                                                          <td class="p-0 top-border text-uppercase"> {{$car->chassis}}</td>
-                                                          <td class="p-0 top-border text-uppercase"> &yen;{{number_format($car->price)}}</td>
-                                                          <td class="p-0 m-0 border-0 text-uppercase">({{$car->remarks}})</td>
-                                                      </tr>
-                                                  @endforeach
-                                              </tbody>
-                                          </table>
-                                      </div>
+                                        <h4 class="ps-4 border-bottom border-top border-dark border-2">CAR COMPLETE</h4>
+                                        <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
+                                            <tbody>
+                                                @foreach ($export->export_cars as $car)
+                                                    <tr class="p-0 m-0">
+                                                        <td class="p-0 top-border text-uppercase">{{$car->purchase->model}}</td>
+                                                        <td class="p-0 top-border text-uppercase"> {{$car->chassis}}</td>
+                                                        <td class="p-0 top-border text-uppercase"> &yen;{{number_format($car->price)}}</td>
+                                                        <td class="p-0 m-0 border-0 text-uppercase">({{$car->remarks}})</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                      @endif
+                                      @if($export->export_parts->count() > 0)
                                       <div class="col-6">
                                           <h4 class="ps-4 border-bottom border-top border-dark border-2">PARTS</h4>
                                           <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
@@ -72,6 +75,8 @@
                                               </tbody>
                                           </table>
                                       </div>
+                                      @endif
+                                      @if($export->export_misc->count() > 0)
                                       <div class="col-6 mt-4">
                                         @if ($export->export_misc->count() > 0)
                                           <h4 class="ps-4 border-bottom border-top border-dark border-2">MISC ITEMS</h4>
@@ -88,10 +93,9 @@
                                           </table>
                                           @endif
                                       </div>
-                                     
-                                      
+                                      @endif
+                                      @if($export->export_engines->count() > 0)
                                       <div class="col-6 mt-4">
-                                        @if ($export->export_engines->count() > 0)
                                           <h4 class="ps-4 border-bottom border-top border-dark border-2">ENGINS</h4>
                                           <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
                                               <tbody>
@@ -104,8 +108,25 @@
                                                   @endforeach
                                               </tbody>
                                           </table>
-                                          @endif
                                       </div>
+                                      @endif
+                                      @if($export->export_oils->count() > 0)
+                                      <div class="col-6 mt-4">
+                                          <h4 class="ps-4 border-bottom border-top border-dark border-2">ENGIN OILS</h4>
+                                          <table class="table table-borderless" style="border-bottom: 2px solid black !important;">
+                                              <tbody>
+                                                  @foreach ($export->export_oils as $oil)
+                                                      <tr class="p-0 m-0">
+                                                          <td class="p-0 top-border text-uppercase">{{$oil->product->code}} {{$oil->product->name}} {{$oil->product->grade}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> {{$oil->qty}} {{$oil->product->packing}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> &yen;{{number_format($oil->price)}}</td>
+                                                          <td class="p-0 top-border text-uppercase"> &yen;{{number_format($oil->amount)}}</td>
+                                                      </tr>
+                                                  @endforeach
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      @endif
                                       
 
                                     </div>

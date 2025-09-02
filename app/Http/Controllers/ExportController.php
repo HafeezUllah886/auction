@@ -138,7 +138,7 @@ class ExportController extends Controller
                         'qty' => $request->qtyOil[$key],
                         'price' => $request->priceOil[$key],
                         'amount' => $request->amountOil[$key],
-                        'ref' => $ref,
+                        'refID' => $ref,
                     ]
                 );
                 $amount += $request->amountOil[$key];

@@ -37,5 +37,10 @@ class export extends Model
     {
         return $this->hasMany(export_misc::class);
     }
+
+    public function export_oils()
+    {
+        return $this->hasMany(export_oils::class);
+    }
     
 }

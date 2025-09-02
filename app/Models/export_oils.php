@@ -15,6 +15,6 @@ class export_oils extends Model
 
     public function product()
     {
-        return $this->belongsTo(oil_products::class);
+        return $this->belongsTo(OilProducts::class);
     }
 }
