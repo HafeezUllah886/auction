@@ -351,7 +351,7 @@
 
             } else {
                 partRowId++;
-                var html = '<tr id="row_' + partRowId + '">';
+                var html = '<tr id="rowpart_' + partRowId + '">';
                 html += '<td class="no-padding text-start">' + value + '</td>';
                 html += '<td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="1" min="0" class="form-control text-center" id="qty_' +
                     partRowId + '"></td>';
@@ -365,11 +365,11 @@
         }
 
         function deletePart(id) {
-            var partName = $('#row_' + id + ' input[name="part_name[]"]').val();
+            var partName = $('#rowpart_' + id + ' input[name="part_name[]"]').val();
             existingParts = $.grep(existingParts, function(value) {
                 return value !== partName;
             });
-            $('#row_' + id).remove();
+            $('#rowpart_' + id).remove();
             updateTotal();
         }
 
@@ -377,7 +377,7 @@
         var engineRowId = 0;
         function addEngine() {
             engineRowId++;
-            var html = '<tr id="row_' + engineRowId + '">';
+            var html = '<tr id="rowengine_' + engineRowId + '">';
             html += '<td class="no-padding text-start"><input type="text" class="form-control" name="engine_series[]" value=""></td>';
             html += '<td class="no-padding"><input type="text" class="form-control" name="engine_model[]" value=""></td>';
             html += '<td class="no-padding"><input type="number" class="form-control" name="engine_price[]" id="engine_price_' + engineRowId + '" oninput="updateEngineTotal(' + engineRowId +')" value="0"></td>';
@@ -387,7 +387,7 @@
         }
         
         function deleteRowEngine(rowId) {
-            $('#row_' + rowId).remove();
+            $('#rowengine_' + rowId).remove();
             updateEngineTotal();
         }
 
@@ -406,7 +406,7 @@
 
         function addMisc() {
             miscRowId++;
-            var html = '<tr id="row_' + miscRowId + '">';
+            var html = '<tr id="rowmisc_' + miscRowId + '">';
             html += '<td class="no-padding text-start"><input type="text" class="form-control" name="misc_description[]" value=""></td>';
             html += '<td class="no-padding"><input type="text" class="form-control" name="misc_qty[]" id="misc_qty_' + miscRowId + '" oninput="updateMiscTotal(' + miscRowId +')" value=""></td>';
             html += '<td class="no-padding"><input type="number" class="form-control" name="misc_price[]" id="misc_price_' + miscRowId + '" oninput="updateMiscTotal(' + miscRowId +')" value=""></td>';
@@ -416,7 +416,7 @@
         }
         
         function deleteRowMisc(rowId) {
-            $('#row_' + rowId).remove();
+            $('#rowmisc_' + rowId).remove();
             updateMiscTotal();
         }
 

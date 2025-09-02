@@ -9,6 +9,7 @@ use App\Models\export_cars;
 use App\Models\export_engines;
 use App\Models\export_misc;
 use App\Models\export_parts;
+use App\Models\export_oils;
 use App\Models\OilProducts;
 use App\Models\parts;
 use App\Models\purchase;
@@ -122,6 +123,28 @@ class ExportController extends Controller
             $amount += $request->misc_price[$key];
 
         }
+        }
+
+
+        if ($request->idOil) {
+            $ref = getref();
+            $oil_ids = $request->idOil;
+            foreach ($oil_ids as $key => $oil_id) {
+                $oil = OilProducts::find($oil_id);
+                export_oils::create(
+                    [
+                        'export_id' => $export->id,
+                        'product_id' => $oil_id,
+                        'qty' => $request->qtyOil[$key],
+                        'price' => $request->priceOil[$key],
+                        'amount' => $request->amountOil[$key],
+                        'ref' => $ref,
+                    ]
+                );
+                $amount += $request->amountOil[$key];
+
+                createStock($oil_id, 0, $request->qtyOil[$key], $request->date, 'Exported in Export Inv No. ' . $export->inv_no, $ref);
+            }
         }
   
         $export->update([
