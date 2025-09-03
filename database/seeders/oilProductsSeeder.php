@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\oilProducts;
+use App\Models\OilProducts;
 
 class oilProductsSeeder extends Seeder
 {
@@ -28,6 +28,6 @@ class oilProductsSeeder extends Seeder
             'pprice' => '1800',],
         ];
       
-        oilProducts::insert($data);
+        OilProducts::insert($data);
     }
 }
