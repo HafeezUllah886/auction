@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
        $this->call(userSeeder::class);
        $this->call(auctionSeeder::class);
        $this->call(payment_categories_seeder::class);
+       $this->call(oilProductsSeeder::class);
 
     }
 }

@@ -45,7 +45,7 @@
                                         <h5 class="fs-14 mb-0">{{$purchase->chassis}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">
-                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Loot No.</p>
+                                        <p class="text-muted mb-2 text-uppercase fw-semibold">Lot No.</p>
                                         <h5 class="fs-14 mb-0">{{$purchase->loot}}</h5>
                                     </div>
                                     <div class="col-lg-3 col-6">

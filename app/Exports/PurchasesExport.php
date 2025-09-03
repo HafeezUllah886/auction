@@ -56,7 +56,7 @@ class PurchasesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'purchase_date',
             'auction',
             'category',
-            'loot_no',
+            'lot_no',
             'chassis_no',
             'maker',
             'model',

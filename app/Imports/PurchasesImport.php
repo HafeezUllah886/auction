@@ -69,7 +69,7 @@ class PurchasesImport implements ToModel, WithHeadingRow, WithEvents
                 'category' => $row['category'] ?? null,
                 'maker' => $row['maker'] ?? null,
                 'chassis' => $row['chassis_no'] ?? null,
-                'loot' => $row['loot_no'] ?? null,
+                'loot' => $row['lot_no'] ?? null,
                 'yard' => $row['yard'] ?? null,
                 'date' => $this->transformDate($row['purchase_date'] ?? null),
                 'auction' => $row['auction'] ?? null,

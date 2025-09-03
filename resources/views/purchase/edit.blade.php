@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-12 col-md-3">
                                 <div class="form-group mt-2">
-                                    <label for="loot">Loot No.</label>
+                                    <label for="loot">Lot No.</label>
                                     <input type="text" name="loot" id="loot" value="{{ old('loot', $purchase->loot) }}" class="form-control">
                                 </div>
                             </div>
