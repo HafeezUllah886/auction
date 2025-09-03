@@ -10,4 +10,14 @@ class payment_categories extends Model
         'name',
         'for',
     ];
+
+    public function scopeReceive($query)
+    {
+        return $query->where('for', 'Receive');
+    }
+
+    public function scopePayment($query)
+    {
+        return $query->where('for', 'Payment');
+    }
 }

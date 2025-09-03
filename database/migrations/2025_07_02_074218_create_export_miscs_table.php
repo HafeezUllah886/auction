@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('qty');
             $table->float('price');
+            $table->date('date');
             $table->timestamps();
         });
     }

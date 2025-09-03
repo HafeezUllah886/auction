@@ -163,6 +163,10 @@
                                 <a href="{{ route('reportPurchase') }}" class="nav-link"
                                     data-key="t-chat">Purchase</a>
                             </li> 
+                            <li class="nav-item">   
+                                <a href="{{ route('reportEngineOil') }}" class="nav-link"
+                                    data-key="t-chat">Engine Oil</a>
+                            </li> 
                             
                         </ul>
                     </div>

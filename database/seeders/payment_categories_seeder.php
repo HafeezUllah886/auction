@@ -21,5 +21,12 @@ class payment_categories_seeder extends Seeder
             'name'=>'Test Payment Category',
             'for'=>'Payment',
         ]);
+
+        payment_categories::create([
+            'name'=>'Engine Oil TT',
+            'for'=>'Payment',
+        ]);
+
+        
     }
 }

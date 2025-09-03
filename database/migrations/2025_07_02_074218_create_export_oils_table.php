@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->decimal('amount', 10, 2);
             $table->bigInteger('refID');
+            $table->date('date');
             $table->timestamps();
         });
     }

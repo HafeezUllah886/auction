@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('export_id')->constrained('exports')->cascadeOnDelete();
             $table->string('part_name');
             $table->float('qty');
+            $table->date('date');
             $table->timestamps();
         });
     }

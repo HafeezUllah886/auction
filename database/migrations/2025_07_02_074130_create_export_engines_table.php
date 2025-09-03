@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('series')->nullable();
             $table->string('model')->nullable();
             $table->float('price')->nullable();
+            $table->date('date');
             $table->timestamps();
         });
     }

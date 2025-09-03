@@ -77,6 +77,7 @@ class ExportController extends Controller
                     'chassis' => $purchase->chassis,
                     'price' => $request->car_price[$key],
                     'remarks' => $request->car_remarks[$key],
+                    'date' => $request->date,
                 ]
             );
             $amount += $request->car_price[$key];
@@ -90,6 +91,7 @@ class ExportController extends Controller
                     'export_id' => $export->id,
                     'part_name' => $part,
                     'qty' => $request->part_qty[$key],
+                    'date' => $request->date,
                 ]
             );
         }
@@ -103,6 +105,7 @@ class ExportController extends Controller
                     'series' => $engine,
                     'model' => $request->engine_model[$key],
                     'price' => $request->engine_price[$key],
+                    'date' => $request->date,
                 ]
             );
             $amount += $request->engine_price[$key];
@@ -118,6 +121,7 @@ class ExportController extends Controller
                     'description' => $misc,
                     'qty' => $request->misc_qty[$key],
                     'price' => $request->misc_price[$key],
+                    'date' => $request->date,
                 ]
             );
             $amount += $request->misc_price[$key];
@@ -139,6 +143,7 @@ class ExportController extends Controller
                         'price' => $request->priceOil[$key],
                         'amount' => $request->amountOil[$key],
                         'refID' => $ref,
+                        'date' => $request->date,
                     ]
                 );
                 $amount += $request->amountOil[$key];
