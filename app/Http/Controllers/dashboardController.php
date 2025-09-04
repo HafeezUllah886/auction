@@ -6,6 +6,7 @@ use App\Models\export;
 use App\Models\purchase;
 use App\Models\OilPurchase;
 use App\Models\OilProducts;
+use App\Models\ReceiveTT;
 use Illuminate\Http\Request;
 
 class dashboardController extends Controller
@@ -40,7 +41,10 @@ class dashboardController extends Controller
             $oil_stock += $product->stock;
         }
 
+        $tt = ReceiveTT::whereBetween('date', [$from, $to]);
+        $tt_amount = $tt->sum('amount');
 
-        return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle'));
+
+        return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle', 'tt_amount'));
     }
 }

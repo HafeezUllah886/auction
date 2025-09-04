@@ -143,6 +143,10 @@
                                 <a href="{{ route('payment_categories.index') }}" class="nav-link"
                                     data-key="t-chat">Payment Category</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('receive_t_t_s.index') }}" class="nav-link"
+                                    data-key="t-chat">Receive TT</a>
+                            </li>
                         </ul>
                     </div>
                 </li>

@@ -10,6 +10,7 @@ use App\Http\Controllers\PaymentCategoriesController;
 use App\Http\Controllers\PaymentReceivingController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\ReceivePaymentsController;
+use App\Http\Controllers\ReceiveTTController;
 use App\Http\Controllers\TransferController;
 use App\Http\Middleware\adminCheck;
 use App\Http\Middleware\confirmPassword;
@@ -33,6 +34,8 @@ Route::middleware('auth', adminCheck::class)->group(function () {
     ->middleware(confirmPassword::class);
     Route::post('issue_payments/import', [IssuePaymentsController::class, 'import'])->name('issue_payments.import');
 
+    Route::resource('receive_t_t_s', ReceiveTTController::class);
+    Route::get('receive_t_t_s/delete/{id}', [ReceiveTTController::class, 'delete'])->name('receive_t_t_s.delete')->middleware(confirmPassword::class);
 
     Route::get('/accountbalance/{id}', function ($id) {
         $result = getAccountBalance($id);

@@ -35,7 +35,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Amount in Words</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">Rupees {{numberToWords($issue->amount,2)}} Only</td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">Yen {{numberToWords($issue->amount,2)}} Only</td>
                                 </tr>
                                 <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Received For</strong></td>
