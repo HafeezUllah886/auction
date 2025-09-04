@@ -1,22 +1,30 @@
 @extends('layout.popups')
+
+@section('content')
 <script>
     var existingProducts = [];
-    var existingParts = [];
-
 
     @foreach ($export->export_cars as $car)
-    existingProducts.push({{$car->purchase_id }});
+        @php
+            $productID = $car->purchase_id;
+        @endphp
+        existingProducts.push({{$productID}});
     @endforeach
 
-    var = rowId = 0;
+    var existingParts = [];
+
+    var partRowId = 0;
     @foreach ($export->export_parts as $part)
-    existingParts.push({{$part->part_name }});
-    rowId++;
+        partRowId++;
+        existingParts.push(partRowId);
     @endforeach
 
+    var existingOils = [];
+    @foreach ($export->export_oils as $oil)
+        existingOils.push({{$oil->product_id}});
+    @endforeach
 
 </script>
-@section('content')
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card" id="demo">
@@ -36,12 +44,13 @@
                 <div class="card-body">
                     <form action="{{ route('export.update', $export->id) }}" method="post">
                         @csrf
-                       <div class="row">
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="product">Cars</label>
+                        @method('PUT')
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="product">Cars</label>
                                         <select name="product" class="selectize" id="product">
                                             <option value="0"></option>
                                             @foreach ($products as $product)
@@ -63,29 +72,31 @@
                                             <th></th>
                                         </thead>
                                         <tbody id="products_list">
-                                          @foreach ($export->export_cars as $car)
-                                          @php
-                                              $id = $car->purchase_id;
-                                          @endphp
-                                          <tr id="row_{{ $id }}">
-                                            <td class="no-padding text-start">{{ $car->chassis }}</td>
-                                            <td class="no-padding text-start">{{ $car->purchase->model }}</td>
-                                            <td class="no-padding"><input type="number" name="car_price[]" oninput="updateTotal()" required step="any" value="{{ $car->price }}" min="0" class="form-control text-center" id="price_{{ $id }}"></td>
-                                            <td class="no-padding">
-                                               <select name="car_remarks[]" class="form-control text-center" id="remarks_{{ $id }}">
-                                                <option value="Complete" @selected($car->remarks == 'Complete')>Complete</option>
-                                                <option value="Roof Cut" @selected($car->remarks == 'Roof Cut')>Roof Cut</option>
-                                               </select>
-                                            </td>
-                                            <td> <span class="btn btn-sm btn-danger" onclick="deleteRow({{ $id }})">X</span> </td>
-                                            <input type="hidden" name="car_id[]" value="{{ $id }}">
-                                          </tr>
-                                          @endforeach
+                                            @foreach ($export->export_cars as $car)
+                                            @php
+                                                $row_id = $car->purchase_id;
+                                            @endphp
+                                            <tr id="row_{{ $row_id }}">
+                                                <td class="no-padding text-start">{{ $car->purchase->chassis }}</td>
+                                                <td class="no-padding text-start">{{ $car->purchase->model }}</td>
+                                                <td class="no-padding"><input type="number" name="car_price[]" oninput="updateTotal()" required step="any" value="{{ $car->price }}" min="0" class="form-control text-center" id="price_{{ $row_id }}"></td>
+                                                <td class="no-padding">
+                                                   <select name="car_remarks[]" class="form-control text-center" id="remarks_{{ $row_id }}">
+                                                    <option value="Complete" @selected($car->remarks == 'Complete')>Complete</option>
+                                                    <option value="Roof Cut" @selected($car->remarks == 'Roof Cut')>Roof Cut</option>
+                                                   </select>
+                                                </td>
+                                                <td> <span class="btn btn-sm btn-danger" onclick="deleteRow({{ $row_id }})">X</span> </td>
+                                                <input type="hidden" name="car_id[]" value="{{ $row_id }}">
+                                            </tr>
+                                           
+                                            @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th colspan="2" class="text-end">Total</th>
-                                                <th class="text-end" id="totalPrice">0.00</th>
+                                                <th class="text-end" id="totalPrice">{{$export->export_cars->sum('price')
+                                                    }}</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -119,15 +130,16 @@
                                         <tbody id="parts_list">
                                             @foreach ($export->export_parts as $key => $part)
                                             @php
-                                                $id = $key + 1;
+                                                $row_id = $key+1;
                                             @endphp
-                                            <tr id="row_{{ $id }}">
+                                            <tr id="rowpart_{{ $row_id }}">
                                                 <td class="no-padding text-start">{{ $part->part_name }}</td>
-                                                <td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="{{ $part->qty }}" min="0" class="form-control text-center" id="qty_{{ $id }}"></td>
-                                                <td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deletePart({{ $id }})">X</span> </td>
-                                                <input type="hidden" name="part_name[]" value="{{ $part->part_name }}">
+                                                <td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="{{ $part->qty }}" min="0" class="form-control text-center" id="qty_{{ $row_id }}"></td>
+                                                <td> <span class="btn btn-sm btn-danger" onclick="deletePart({{ $row_id }})">X</span> </td>
+                                                <input type="hidden" name="part_name[]" value="{{ $row_id }}">
                                             </tr>
-                                        @endforeach
+                                            
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -152,7 +164,20 @@
                                             <th class="text-center">Price</th>
                                             <th></th>
                                         </thead>
-                                        <tbody id="engines_list"></tbody>
+                                        <tbody id="engines_list">
+                                           @foreach ($export->export_engines as $key => $engine)
+                                           @php
+                                               $row_id = $key+1;
+                                           @endphp
+                                           <tr id="rowengine_{{ $row_id }}">
+                                                <td class="no-padding text-start">{{ $engine->series }}</td>
+                                                <td class="no-padding text-start">{{ $engine->model }}</td>
+                                                <td class="no-padding"><input type="number" name="engine_price[]" oninput="updateEngineTotal({{ $row_id }})" required step="any" value="{{ $engine->price }}" min="0" class="form-control text-center" id="engine_price_{{ $row_id }}"></td>
+                                                <td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine({{ $row_id }})">X</span> </td>
+                                                <input type="hidden" name="engine_id[]" value="{{ $row_id }}">
+                                            </tr>
+                                           @endforeach
+                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2" class="text-end">Total:</td>
@@ -181,7 +206,16 @@
                                             <th class="text-center">Price</th>
                                             <th></th>
                                         </thead>
-                                        <tbody id="misc_list"></tbody>
+                                        <tbody id="misc_list">
+                                            @foreach ($export->export_misc as $key => $misc)
+                                            <tr id="rowmisc_{{ $key+1 }}">
+                                                <td class="no-padding text-start"><input type="text" class="form-control" name="misc_description[]" value="{{ $misc->description }}"></td>
+                                                <td class="no-padding"><input type="text" class="form-control" name="misc_qty[]" id="misc_qty_{{ $key+1 }}" oninput="updateMiscTotal({{ $key+1 }})" value="{{ $misc->qty }}"></td>
+                                                <td class="no-padding"><input type="number" class="form-control" name="misc_price[]" id="misc_price_{{ $key+1 }}" oninput="updateMiscTotal({{ $key+1 }})" value="{{ $misc->price }}"></td>
+                                                <td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowMisc({{ $key+1 }})">X</span> </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2" class="text-end">Total:</td>
@@ -193,28 +227,80 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="product">Engine Oil</label>
+                                        <select name="product" class="selectize4" id="product">
+                                            <option value="0"></option>
+                                            @foreach ($oils as $oil)
+                                                <option value="{{ $oil->id }}"> {{$oil->code}} - {{ $oil->name }} - {{ $oil->ltr }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <th width="">Description</th>
+                                            <th class="text-center">Price</th>
+                                            <th width="" class="text-center">Qty</th>
+                                            <th class="text-center">Amount</th>
+                                            <th></th>
+                                        </thead>
+                                        <tbody id="oil_list">
+                                            @foreach ($export->export_oils as $key => $oil)
+                                            @php
+                                                $productRowID = $oil->product_id;
+                                            @endphp
+                                            <tr id="rowOil_{{ $productRowID }}">
+                                            <td class="">{{ $oil->product->code}} - {{ $oil->product->name}} - {{ $oil->product->ltr}}</td>
+                                            <td class=""><input type="number" name="priceOil[]" oninput="updateChangesOil({{ $productRowID }})" step="any" value="{{ $oil->price }}" min="1" class="form-control text-center" id="priceOil_{{ $productRowID }}"></td>
+                                            <td class=""><div class="input-group"><input type="number" name="qtyOil[]" oninput="updateChangesOil({{ $productRowID }})" min="0" step="any" value="{{ $oil->qty }}" class="form-control text-center" id="qtyOil_{{ $productRowID }}"><div class="input-group-append"><span class="input-group-text">{{ $oil->product->packing }}</span></div></div></td>
+                                            <td class=""><input type="number" name="amountOil[]" min="0.1" readonly required step="any" value="{{ $oil->price * $oil->qty }}" class="form-control text-center" id="amountOil_{{ $productRowID }}"></td>
+                                            <td class=""> <span class="btn btn-sm btn-danger" onclick="deleteRowOil({{ $productRowID }})">X</span> </td>
+                                            <input type="hidden" name="idOil[]" value="{{ $productRowID }}">
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="3" class="text-end">Total</th>
+                                                <th class="text-end" id="oilTotalAmount">0.00</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                        </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="inv_no">Inv #</label>
-                                <input type="text" class="form-control" name="inv_no" value="">
+                                <input type="text" class="form-control"  required name="inv_no" value="{{ $export->inv_no }}">
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="c_no">C/No</label>
-                                <input type="text" class="form-control" name="c_no" value="">
+                                <input type="text" class="form-control" required name="c_no" value="{{ $export->c_no }}">
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="weight">Weight</label>
-                                <input type="number" class="form-control" name="weight" value="">
+                                <input type="number" class="form-control" required name="weight" value="{{ $export->weight }}">
                             </div>
                         </div>
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="date">Date</label>
-                                <input type="date" class="form-control" required name="date" value="{{ date('Y-m-d') }}">
+                                <input type="date" class="form-control" required name="date" value="{{ date('Y-m-d', strtotime($export->date)) }}">
                             </div>
                         </div>
                         <div class="col-3">
@@ -223,7 +309,7 @@
                                 <select name="consignee" required class="selectize1" id="consignee">
                                     <option value=""></option>
                                     @foreach ($consignees as $consignee)
-                                        <option value="{{ $consignee->id }}">{{ $consignee->title }}</option>
+                                        <option value="{{ $consignee->id }}" @selected($consignee->id == $export->consignee_id)>{{ $consignee->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -234,7 +320,7 @@
                                 <select name="info_party" required class="selectize1" id="info_party">
                                     <option value=""></option>
                                     @foreach ($consignees as $consignee)
-                                        <option value="{{ $consignee->id }}">{{ $consignee->title }}</option>
+                                        <option value="{{ $consignee->id }}" @selected($consignee->id == $export->info_party_id)>{{ $consignee->title }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -274,11 +360,9 @@
                     this.clear();
                     this.focus();
                 }
-
             },
         });
 
-        
         function getSingleProduct(id) {
             $.ajax({
                 url: "{{ url('export/getproduct/') }}/" + id,
@@ -307,7 +391,7 @@
                             ')">X</span> </td>';
                         html += '<input type="hidden" name="car_id[]" value="' + id + '">';
                         html += '</tr>';
-                        $("#products_list").prepend(html);
+                        $("#products_list").append(html);
                         updateTotal();
                         existingProducts.push(id);
                     }
@@ -329,7 +413,6 @@
         }
 
         function deleteRow(id) {
-            console.log(id);
             existingProducts = $.grep(existingProducts, function(value) {
                 return value !== id;
             });
@@ -349,52 +432,52 @@
             },
         });
 
-        
-
+    
         function addPart(value) {
             let found = $.grep(existingParts, function(element) {
                 return element === value;
             });
             if (found.length > 0) {
-
             } else {
-                rowId++;
-                var html = '<tr id="row_' + rowId + '">';
+                partRowId++;
+                var html = '<tr id="rowpart_' + partRowId + '">';
                 html += '<td class="no-padding text-start">' + value + '</td>';
                 html += '<td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="1" min="0" class="form-control text-center" id="qty_' +
-                    rowId + '"></td>';
-                html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deletePart(' + rowId +
+                    partRowId + '"></td>';
+                html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deletePart(' + partRowId +
                     ')">X</span> </td>';
                 html += '<input type="hidden" name="part_name[]" value="' + value + '">';
                 html += '</tr>';
-                $("#parts_list").prepend(html);
+                $("#parts_list").append(html);
                 existingParts.push(value);
             }
         }
 
         function deletePart(id) {
-            console.log(id);
-            var partName = $('#row_' + id + ' input[name="part_name[]"]').val();
+            var partName = $('#rowpart_' + id + ' input[name="part_name[]"]').val();
             existingParts = $.grep(existingParts, function(value) {
                 return value !== partName;
             });
-            $('#row_' + id).remove();
+            $('#rowpart_' + id).remove();
+            updateTotal();
         }
 
 
+        var engineRowId = {{ $export->export_engines->count() }};
         function addEngine() {
-            var rowId = 'row_' + Date.now();
-            var html = '<tr id="' + rowId + '">';
+            engineRowId++;
+            var html = '<tr id="rowengine_' + engineRowId + '">';
             html += '<td class="no-padding text-start"><input type="text" class="form-control" name="engine_series[]" value=""></td>';
             html += '<td class="no-padding"><input type="text" class="form-control" name="engine_model[]" value=""></td>';
-            html += '<td class="no-padding"><input type="number" class="form-control" name="engine_price[]" id="engine_price_' + rowId + '" oninput="updateEngineTotal(' + rowId +')" value="0"></td>';
-            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine(\'' + rowId + '\')">X</span> </td>';
+            html += '<td class="no-padding"><input type="number" class="form-control" name="engine_price[]" id="engine_price_' + engineRowId + '" oninput="updateEngineTotal(' + engineRowId +')" value="0"></td>';
+            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine(' + engineRowId +')">X</span> </td>';
             html += '</tr>';
             $("#engines_list").append(html);
         }
         
         function deleteRowEngine(rowId) {
-            $('#' + rowId).remove();
+            $('#rowengine_' + rowId).remove();
+            updateEngineTotal();
         }
 
         function updateEngineTotal(rowId) {
@@ -405,21 +488,25 @@
                 totalEnginePrice += parseFloat(inputValue);
             });
             $("#engineTotalPrice").html(totalEnginePrice.toFixed(2));
+
         }
 
+        var miscRowId = 0;
+
         function addMisc() {
-            var rowId = 'row_' + Date.now();
-            var html = '<tr id="' + rowId + '">';
+            miscRowId++;
+            var html = '<tr id="rowmisc_' + miscRowId + '">';
             html += '<td class="no-padding text-start"><input type="text" class="form-control" name="misc_description[]" value=""></td>';
-            html += '<td class="no-padding"><input type="text" class="form-control" name="misc_qty[]" id="misc_qty_' + rowId + '" oninput="updateMiscTotal(' + rowId +')" value=""></td>';
-            html += '<td class="no-padding"><input type="number" class="form-control" name="misc_price[]" id="misc_price_' + rowId + '" oninput="updateMiscTotal(' + rowId +')" value=""></td>';
-            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowMisc(\'' + rowId + '\')">X</span> </td>';
+            html += '<td class="no-padding"><input type="text" class="form-control" name="misc_qty[]" id="misc_qty_' + miscRowId + '" oninput="updateMiscTotal(' + miscRowId +')" value=""></td>';
+            html += '<td class="no-padding"><input type="number" class="form-control" name="misc_price[]" id="misc_price_' + miscRowId + '" oninput="updateMiscTotal(' + miscRowId +')" value=""></td>';
+            html += '<td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowMisc(' + miscRowId +')">X</span> </td>';
             html += '</tr>';
             $("#misc_list").append(html);
         }
         
         function deleteRowMisc(rowId) {
-            $('#' + rowId).remove();
+            $('#rowmisc_' + rowId).remove();
+            updateMiscTotal();
         }
 
         function updateMiscTotal(rowId) {
@@ -430,14 +517,86 @@
                 totalMiscPrice += parseFloat(inputValue);
             });
             $("#miscTotalPrice").html(totalMiscPrice.toFixed(2));
+          
         }
 
         $(".selectize1").selectize();
 
-       @foreach ($export->export_cars as $car)
-       existingProducts.push({{ $car->purchase_id }});
-       @endforeach
-       
-    </script>
+
+        $(".selectize4").selectize({
+            onChange: function(value) {
+                if (!value.length) return;
+                if (value != 0) {
+                    getSingleOil(value);
+                    this.clear();
+                    this.focus();
+                }
+
+            },
+        });
+
+function getSingleOil(id) {
+    $.ajax({
+        url: "{{ url('oilpurchase/getproduct/') }}/" + id,
+        method: "GET",
+        success: function(product) {
+            let found = $.grep(existingOils, function(element) {
+                return element === product.id;
+            });
+            if (found.length > 0) {
+
+            } else {
+
+                var id = product.id;
+                var html = '<tr id="rowOil_' + id + '">';
+                html += '<td class="">' + product.code + ' - ' + product.name +  ' - ' + product.ltr +'</td>';
+                html += '<td class=""><input type="number" name="priceOil[]" oninput="updateChangesOil(' + id + ')" step="any" value="'+product.pprice+'" min="1" class="form-control text-center" id="priceOil_' + id + '"></td>';
+                html += '<td class=""><div class="input-group"><input type="number" name="qtyOil[]" oninput="updateChangesOil(' + id + ')" min="0" step="any" value="1" class="form-control text-center" id="qtyOil_' + id + '"><div class="input-group-append"><span class="input-group-text">'+product.packing+'</span></div></div></td>';
+                html += '<td class=""><input type="number" name="amountOil[]" min="0.1" readonly required step="any" value="1" class="form-control text-center" id="amountOil_' + id + '"></td>';
+                html += '<td class=""> <span class="btn btn-sm btn-danger" onclick="deleteRowOil('+id+')">X</span> </td>';
+                html += '<input type="hidden" name="idOil[]" value="' + id + '">';
+                html += '</tr>';
+                $("#oil_list").prepend(html);
+                existingOils.push(id);
+                updateChanges(id);
+            }
+        }
+    });
+}
+
+function updateChangesOil(id) {
+    var qty = parseFloat($('#qtyOil_' + id).val());
+    var price = parseFloat($('#priceOil_' + id).val());
+
+    var amount = qty * price;
+    $("#amountOil_"+id).val(amount.toFixed(2));
+    updateTotalOil();
+}
+
+function updateTotalOil() {
+    var total = 0;
+    $("input[id^='amountOil_']").each(function() {
+        var inputId = $(this).attr('id');
+        var inputValue = $(this).val();
+        total += parseFloat(inputValue);
+    });
+
+    $("#oilTotalAmount").html(total.toFixed(2));
+
+}
+
+function deleteRowOil(id) {
+    existingOils = $.grep(existingOils, function(value) {
+        return value !== id;
+    });
+    $('#rowOil_'+id).remove();
+    updateTotalOil();
+
     
+}
+
+updateEngineTotal();
+updateMiscTotal();
+updateTotalOil();
+    </script>
 @endsection

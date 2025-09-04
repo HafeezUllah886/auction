@@ -182,9 +182,9 @@ class ExportController extends Controller
         $products = purchase::where('status', 'Available')->orWhereIn('id', $existingProducts)->get();
         $parts = parts::all();
         $consignees = accounts::consignee()->get();
-
+        $oils = OilProducts::all();
         $export = export::find($id);
-        return view('export.edit', compact('products', 'parts', 'consignees', 'export'));
+        return view('export.edit', compact('products', 'parts', 'consignees', 'export', 'oils'));
     }
 
     /**
