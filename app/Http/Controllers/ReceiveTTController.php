@@ -11,11 +11,13 @@ class ReceiveTTController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tts = ReceiveTT::orderBy('id', 'desc')->get();
+        $start = $request->start ?? firstDayOfMonth();
+        $end = $request->end ?? date('Y-m-d');
+        $tts = ReceiveTT::orderBy('id', 'desc')->whereBetween('date', [$start, $end])->get();
         $banks = accounts::where('type', 'bank')->get();
-        return view('finance.receive_tt.index', compact('tts', 'banks'));
+        return view('finance.receive_tt.index', compact('tts', 'banks', 'start', 'end'));
     }
 
     /**

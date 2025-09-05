@@ -2,6 +2,25 @@
 @section('content')
     <div class="row">
         <div class="col-12">
+            <form>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">From</span>
+                            <input type="date" class="form-control" placeholder="Username" name="start" value="{{$start}}" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">To</span>
+                            <input type="date" class="form-control" placeholder="Username" name="end" value="{{$end}}" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                       <input type="submit" value="Filter" class="btn btn-success w-100">
+                    </div>
+                </div>
+            </form>
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>TT Receiving</h3>
@@ -24,6 +43,7 @@
                         <thead>
                             <th>#</th>
                             <th>From</th>
+                            <th>Date</th>
                             <th>Bank</th>
                             <th>Dirham</th>
                             <th>Yen</th>
@@ -36,6 +56,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $tt->received_from }}</td>
+                                    <td>{{date('d-m-Y', strtotime($tt->date)) }}</td>
                                     <td>{{ $tt->bank->title }}</td>
                                     <td>{{ number_format($tt->dirham) }}</td>
                                     <td>{{ number_format($tt->yen) }}</td>
@@ -68,7 +89,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="6" class="text-end">Total:</td>
+                                <td colspan="7" class="text-end">Total:</td>
                                 <td>{{ number_format($tts->sum('amount')) }}</td>
                             </tr>
                         </tfoot>
