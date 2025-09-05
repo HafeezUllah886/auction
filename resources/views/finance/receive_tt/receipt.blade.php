@@ -14,9 +14,9 @@
                                         <h1>{{projectNameHeader()}}</h1>
                                     </div>
                                     <div class="flex-shrink-0 mt-sm-0 mt-3">
-                                        <h3>Payment Receiving Receipt</h3>
-                                        <p> <span class="text-muted text-uppercase fw-semibold mt-0 m-0 p-0">Receipt Ref # </span><span class="fs-14 m-0 p-0">{{$receiving->refID}}</span></p>
-                                        <p> <span class="text-muted text-uppercase fw-semibold mt-0 m-0 p-0">Date : </span><span class="fs-14 m-0 p-0">{{date("d M Y" ,strtotime($receiving->date))}}</span></p>
+                                        <h3>TT Receiving Receipt</h3>
+                                        <p> <span class="text-muted text-uppercase fw-semibold mt-0 m-0 p-0">Receipt Ref # </span><span class="fs-14 m-0 p-0">{{$tt->refID}}</span></p>
+                                        <p> <span class="text-muted text-uppercase fw-semibold mt-0 m-0 p-0">Date : </span><span class="fs-14 m-0 p-0">{{date("d M Y" ,strtotime($tt->date))}}</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -27,19 +27,35 @@
                                <table style="width:100%;">
                                 <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Received with thanks from</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{$receiving->received_from}}</td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{$tt->received_from}}</td>
                                 </tr>
                                 <tr>
-                                    <td style="width:30%;" class="p-4 pb-1"><strong>Receiving Amount</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($receiving->amount,2)}}</td>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Received Dirham</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->dirham,2)}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Conversion Rate</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->rate,2)}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Received Yen</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->yen,2)}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Bank Charges</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->bank_charges,2)}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Amount</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->amount,2)}}</td>
                                 </tr>
                                 <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Amount in Words</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">Rupees {{numberToWords($receiving->amount,2)}} Only</td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">Yen {{numberToWords($tt->amount,2)}} Only</td>
                                 </tr>
                                 <tr>
-                                    <td style="width:30%;" class="p-4 pb-1"><strong>Received For</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{$receiving->payment_category->name}}</td>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Received In</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{$tt->bank->title}}</td>
                                 </tr>
                                </table>
 
@@ -54,7 +70,7 @@
                             </div>
                             <div class="card-footer">
 
-                                <p><strong>Notes: </strong> {{$receiving->notes}}</p>
+                                <p><strong>Notes: </strong> {{$tt->notes}}</p>
 
 
                             </div>

@@ -26,11 +26,9 @@
                             <th>From</th>
                             <th>Bank</th>
                             <th>Dirham</th>
-                            <th>Rate</th>
                             <th>Yen</th>
                             <th>Charges</th>
                             <th>Amount</th>
-                            <th>Notes</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -40,11 +38,9 @@
                                     <td>{{ $tt->received_from }}</td>
                                     <td>{{ $tt->bank->title }}</td>
                                     <td>{{ number_format($tt->dirham) }}</td>
-                                    <td>{{ number_format($tt->rate) }}</td>
                                     <td>{{ number_format($tt->yen) }}</td>
                                     <td>{{ number_format($tt->bank_charges) }}</td>
                                     <td>{{ number_format($tt->amount) }}</td>
-                                    <td>{{ $tt->notes }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -52,6 +48,12 @@
                                                 <i class="ri-more-fill align-middle"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a class="dropdown-item text-info" href="{{route('receive_t_t_s.show', $tt->id)}}">
+                                                        <i class="ri-eye-fill align-bottom me-2 text-info"></i>
+                                                        View
+                                                    </a>
+                                                </li>
                                                 <li>
                                                     <a class="dropdown-item text-danger" href="{{route('receive_t_t_s.delete', $tt->id)}}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>
@@ -64,6 +66,12 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6" class="text-end">Total:</td>
+                                <td>{{ number_format($tts->sum('amount')) }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

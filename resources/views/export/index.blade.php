@@ -90,6 +90,12 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-end">Total:</td>
+                                <td>{{ number_format($exports->sum('amount')) }}</td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
 

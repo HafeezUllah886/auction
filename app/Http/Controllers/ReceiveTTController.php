@@ -38,9 +38,10 @@ class ReceiveTTController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ReceiveTT $receiveTT)
+    public function show($id)
     {
-        //
+        $tt = ReceiveTT::find($id);
+        return view('finance.receive_tt.receipt', compact('tt'));
     }
 
     /**
