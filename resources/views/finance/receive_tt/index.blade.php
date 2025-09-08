@@ -45,10 +45,10 @@
                             <th>From</th>
                             <th>Date</th>
                             <th>Bank</th>
-                            <th>Dirham</th>
-                            <th>Yen</th>
-                            <th>Charges</th>
-                            <th>Amount</th>
+                            <th>Total Dirham</th>
+                            <th>Dirham Received</th>
+                            <th>Total Yen</th>
+                          
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -58,10 +58,9 @@
                                     <td>{{ $tt->received_from }}</td>
                                     <td>{{date('d-m-Y', strtotime($tt->date)) }}</td>
                                     <td>{{ $tt->bank->title }}</td>
-                                    <td>{{ number_format($tt->dirham) }}</td>
-                                    <td>{{ number_format($tt->yen) }}</td>
-                                    <td>{{ number_format($tt->bank_charges) }}</td>
-                                    <td>{{ number_format($tt->amount) }}</td>
+                                    <td>{{ number_format($tt->total_dirham) }}</td>
+                                    <td>{{ number_format($tt->dirham_received) }}</td>
+                                    <td>{{ number_format($tt->total_yen) }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -89,8 +88,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="7" class="text-end">Total:</td>
-                                <td>{{ number_format($tts->sum('amount')) }}</td>
+                                <td colspan="6" class="text-end">Total:</td>
+                                <td>{{ number_format($tts->sum('total_yen')) }}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -131,22 +130,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group mt-2">
-                                    <label for="dirham">Dirham</label>
-                                    <input type="number" step="any" oninput="calculateAmount()" name="dirham" required id="dirham"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group mt-2">
-                                    <label for="rate">Rate</label>
-                                    <input type="number" step="any" oninput="calculateAmount()" value="1" name="rate" required id="rate"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group mt-2">
-                                    <label for="yen">Yen</label>
-                                    <input type="number" step="any" readonly name="yen" required id="yen"
+                                    <label for="total_dirham">Total Dirham</label>
+                                    <input type="number" step="any" oninput="calculateAmount()" name="total_dirham" required id="total_dirham"
                                         class="form-control">
                                 </div>
                             </div>
@@ -159,8 +144,22 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group mt-2">
-                                    <label for="amount">Amount</label>
-                                    <input type="number" step="any" readonly name="amount" required id="amount"
+                                    <label for="dirham_received">Dirham Received</label>
+                                    <input type="number" step="any" oninput="calculateAmount()" name="dirham_received" required id="dirham_received"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group mt-2">
+                                    <label for="rate">Rate</label>
+                                    <input type="number" step="any" oninput="calculateAmount()" value="1" name="rate" required id="rate"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group mt-2">
+                                    <label for="total_yen">Total Yen Received</label>
+                                    <input type="number" step="any" readonly name="total_yen" required id="total_yen"
                                         class="form-control">
                                 </div>
                             </div>
@@ -220,13 +219,16 @@
 
     <script>
         function calculateAmount() {
-            var dirham = parseFloat(document.getElementById('dirham').value);
-            var rate = parseFloat(document.getElementById('rate').value);
-            var yen = dirham * rate;
-            document.getElementById('yen').value = yen;
+            var dirham = parseFloat(document.getElementById('total_dirham').value);
             var bank_charges = parseFloat(document.getElementById('bank_charges').value);
-            var amount = yen + bank_charges;
-            document.getElementById('amount').value = amount;
+            var rate = parseFloat(document.getElementById('rate').value);
+         
+            var total_dirham = dirham - bank_charges;
+            var yen = total_dirham / rate;
+           
+            document.getElementById('dirham_received').value = total_dirham;
+
+            document.getElementById('total_yen').value = yen;
         }
     </script>
 

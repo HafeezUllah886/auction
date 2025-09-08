@@ -42,7 +42,7 @@ class dashboardController extends Controller
         }
 
         $tt = ReceiveTT::whereBetween('date', [$from, $to]);
-        $tt_amount = $tt->sum('amount');
+        $tt_amount = $tt->sum('total_yen');
 
 
         return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle', 'tt_amount'));

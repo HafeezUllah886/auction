@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('received_from');
             $table->foreignId('bank_id')->constrained('accounts', 'id')->cascadeOnDelete();
             $table->date('date');
-            $table->decimal('dirham', 10, 2)->default(0);
-            $table->decimal('rate', 10, 2)->default(0);
-            $table->decimal('yen', 10, 2)->default(0);
+            $table->decimal('total_dirham', 10, 2)->default(0);
             $table->decimal('bank_charges', 10, 2)->default(0);
-            $table->decimal('amount', 10, 2)->default(0);
+            $table->decimal('dirham_received', 10, 2)->default(0);
+            $table->decimal('rate', 10, 7)->default(0);
+            $table->decimal('total_yen', 10, 2)->default(0);
             $table->text('notes')->nullable();
             $table->timestamps();
         });

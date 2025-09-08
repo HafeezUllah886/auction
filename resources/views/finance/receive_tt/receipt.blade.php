@@ -30,28 +30,29 @@
                                     <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{$tt->received_from}}</td>
                                 </tr>
                                 <tr>
-                                    <td style="width:30%;" class="p-4 pb-1"><strong>Received Dirham</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->dirham,2)}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width:30%;" class="p-4 pb-1"><strong>Conversion Rate</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->rate,2)}}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width:30%;" class="p-4 pb-1"><strong>Received Yen</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->yen,2)}}</td>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Total Dirham</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->total_dirham,2)}}</td>
                                 </tr>
                                 <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Bank Charges</strong></td>
                                     <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->bank_charges,2)}}</td>
                                 </tr>
                                 <tr>
-                                    <td style="width:30%;" class="p-4 pb-1"><strong>Amount</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->amount,2)}}</td>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Dirham Received</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->dirham_received,2)}}</td>
                                 </tr>
                                 <tr>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Conversion Rate</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->rate,5)}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:30%;" class="p-4 pb-1"><strong>Total Yen</strong></td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">{{number_format($tt->total_yen,2)}}</td>
+                                </tr>
+                               
+                                <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Amount in Words</strong></td>
-                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">Yen {{numberToWords($tt->amount,2)}} Only</td>
+                                    <td class="border-2 border-top-0 border-start-0 border-end-0 text-center p-4 pb-1">Yen {{numberToWords($tt->total_yen,2)}} Only</td>
                                 </tr>
                                 <tr>
                                     <td style="width:30%;" class="p-4 pb-1"><strong>Received In</strong></td>

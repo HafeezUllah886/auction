@@ -147,6 +147,9 @@
                                 <a href="{{ route('receive_t_t_s.index') }}" class="nav-link"
                                     data-key="t-chat">Receive TT</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('accountsList', 'Bank') }}" class="nav-link" data-key="t-level-2.1"> Bank </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
