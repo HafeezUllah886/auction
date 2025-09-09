@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <h3>Create Account</h3>
+                    <h3>Create {{ $_GET['filter'] }} Account</h3>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
@@ -18,6 +18,10 @@
                     @endif
                     <form action="{{ route('account.store') }}" method="post">
                         @csrf
+                        @php
+                            $filter = $_GET['filter'];
+                        @endphp
+                        <input type="hidden" name="type" value="{{ $filter }}">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -26,17 +30,9 @@
                                         class="form-control">
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group mt-2">
-                                    <label for="type">Type</label>
-                                    <select name="type" id="type" class="form-control">
-                                        <option value="Consignee">Consignee</option>
-                                        <option value="Transporter">Transporter</option>
-                                        <option value="Bank">Bank</option>
-                                        <option value="Vendor">Vendor</option>
-                                    </select>
-                                </div>
-                            </div>
+
+                            @if($filter != "Consignee" || $filter != "Transporter" || $filter != "Vendor")
+                            
                             <div class="col-6 mt-2" >
                                 <div class="form-group consignee transporter vendor">
                                     <label for="tel">Tel #</label>
@@ -51,6 +47,8 @@
                                         class="form-control">
                                 </div>
                             </div>
+                            @endif
+                            @if($filter == "Consignee")
                             <div class="col-6 mt-2 consignee" >
                                 <div class="form-group">
                                     <label for="address_one">Address Line One</label>
@@ -79,6 +77,7 @@
                                         class="form-control">
                                 </div>
                             </div>
+                            @endif
                             <div class="col-12 mt-3">
                                 <button type="submit" class="btn btn-secondary w-100">Create</button>
                             </div>

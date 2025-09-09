@@ -147,8 +147,28 @@
                                 <a href="{{ route('receive_t_t_s.index') }}" class="nav-link"
                                     data-key="t-chat">Receive TT</a>
                             </li>
+                           
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#accounts" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="accounts">
+                        <i class="ri-bank-line"></i><span data-key="t-apps">Accounts</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="accounts">
+                        <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('accountsList', 'Bank') }}" class="nav-link" data-key="t-level-2.1"> Bank </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('accountsList', 'Vendor') }}" class="nav-link" data-key="t-level-2.1"> Vendor </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('accountsList', 'Consignee') }}" class="nav-link" data-key="t-level-2.1"> Consignee </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('accountsList', 'Transporter') }}" class="nav-link" data-key="t-level-2.1"> Transporter </a>
                             </li>
                         </ul>
                     </div>
@@ -224,30 +244,7 @@
                                         <a href="{{ route('parts.index') }}" class="nav-link" data-key="t-level-1.1"> Parts </a>
                                     </li>
                                  
-                                    <li class="nav-item">
-                                        <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2"> 
-                                            Accounts
-                                        </a>
-                                        <div class="collapse menu-dropdown" id="sidebarAccount">
-                                            <ul class="nav nav-sm flex-column">
-                                                <li class="nav-item">
-                                                    <a href="{{ route('account.create') }}" class="nav-link" data-key="t-level-2.1"> Create Account </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="{{ route('accountsList', 'Bank') }}" class="nav-link" data-key="t-level-2.1"> Bank </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="{{ route('accountsList', 'Vendor') }}" class="nav-link" data-key="t-level-2.1"> Vendor </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="{{ route('accountsList', 'Consignee') }}" class="nav-link" data-key="t-level-2.1"> Consignee </a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="{{ route('accountsList', 'Transporter') }}" class="nav-link" data-key="t-level-2.1"> Transporter </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                         </li>

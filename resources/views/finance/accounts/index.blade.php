@@ -5,6 +5,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>{{ $filter }} Accounts</h3>
+                    <a class="btn btn-primary" href="{{ route('account.create' , ['filter' => $filter]) }}">Create Account</a>
                 </div>
                 <div class="card-body">
                     <table class="table" id="buttons-datatables">
@@ -21,6 +22,9 @@
                             <th>Action</th>
                         </thead>
                         <tbody>
+                            @php
+                                $total = 0;
+                            @endphp
                             @foreach ($accounts as $key => $account)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
@@ -30,6 +34,9 @@
                                         <td>{{ $account->email }}</td>
                                     @endif
                                     @if ($filter == "Bank")
+                                    @php
+                                        $total += getAccountBalance($account->id);
+                                    @endphp
                                     <td>{{ number_format(getAccountBalance($account->id)) }}</td>
                                     @endif
                                     <td>
@@ -62,6 +69,14 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        @if ($filter == "Bank")
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="text-end">Total Balance</th>
+                                <th>{{ number_format($total) }}</th>
+                            </tr>
+                        </tfoot>
+                        @endif
                     </table>
                 </div>
             </div>
