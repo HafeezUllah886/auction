@@ -13,6 +13,7 @@ use App\Models\export_oils;
 use App\Models\OilProducts;
 use App\Models\parts;
 use App\Models\purchase;
+use App\Models\stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -190,9 +191,135 @@ class ExportController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, export $export)
+    public function update(Request $request, $id)
     {
-        //
+
+        $export = export::find($id);
+        try {
+            DB::beginTransaction(); 
+
+            $export->export_cars()->delete();
+            $export->export_engines()->delete();
+            $export->export_parts()->delete();
+            $ref = $export->export_oils()->first()->refID;
+            $export->export_oils()->delete();
+            $export->export_misc()->delete();
+
+            stock::where('refID', $ref)->delete();
+
+            $export->update(
+                [
+                    'consignee_id'      => $request->consignee,
+                    'date'              => $request->date,
+                    'inv_no'            => $request->inv_no,
+                    'info_party_id'     => $request->info_party,
+                    'c_no'              => $request->c_no,
+                    'weight'            => $request->weight,
+                ]
+            );
+    
+            $amount = 0;
+    
+            if ($request->car_id) {
+    
+            $car_ids = $request->car_id;
+            foreach ($car_ids as $key => $car_id) {
+                $purchase = purchase::find($car_id);
+                $purchase->update([
+                    'status' => 'Exported',
+                ]);
+                export_cars::create(
+                    [
+                        'export_id' => $export->id,
+                        'purchase_id' => $car_id,
+                        'chassis' => $purchase->chassis,
+                        'price' => $request->car_price[$key],
+                        'remarks' => $request->car_remarks[$key],
+                        'date' => $request->date,
+                    ]
+                );
+                $amount += $request->car_price[$key];
+            }
+            }
+            if ($request->part_name) {
+            $parts = $request->part_name;
+            foreach ($parts as $key => $part) {
+                export_parts::create(
+                    [
+                        'export_id' => $export->id,
+                        'part_name' => $part,
+                        'qty' => $request->part_qty[$key],
+                        'date' => $request->date,
+                    ]
+                );
+            }
+            }
+            if ($request->engine_series) {  
+            $engines = $request->engine_series;
+            foreach ($engines as $key => $engine) {
+                export_engines::create(
+                    [
+                        'export_id' => $export->id,
+                        'series' => $engine,
+                        'model' => $request->engine_model[$key],
+                        'price' => $request->engine_price[$key],
+                        'date' => $request->date,
+                    ]
+                );
+                $amount += $request->engine_price[$key];
+            }
+            }
+            if ($request->misc_description) {
+    
+            $miscs = $request->misc_description;
+            foreach ($miscs as $key => $misc) {
+                export_misc::create(
+                    [
+                        'export_id' => $export->id,
+                        'description' => $misc,
+                        'qty' => $request->misc_qty[$key],
+                        'price' => $request->misc_price[$key],
+                        'date' => $request->date,
+                    ]
+                );
+                $amount += $request->misc_price[$key];
+    
+            }
+            }
+    
+    
+            if ($request->idOil) {
+                $ref = getref();
+                $oil_ids = $request->idOil;
+                foreach ($oil_ids as $key => $oil_id) {
+                    $oil = OilProducts::find($oil_id);
+                    export_oils::create(
+                        [
+                            'export_id' => $export->id,
+                            'product_id' => $oil_id,
+                            'qty' => $request->qtyOil[$key],
+                            'price' => $request->priceOil[$key],
+                            'amount' => $request->amountOil[$key],
+                            'refID' => $ref,
+                            'date' => $request->date,
+                        ]
+                    );
+                    $amount += $request->amountOil[$key];
+    
+                    createStock($oil_id, 0, $request->qtyOil[$key], $request->date, 'Exported in Export Inv No. ' . $export->inv_no, $ref);
+                }
+            }
+      
+            $export->update([
+                'amount' => $amount,
+            ]);
+    
+            DB::commit();
+            return redirect()->route('export.index')->with('success', 'Export updated successfully');
+          } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+          }
     }
 
     /**

@@ -326,7 +326,7 @@
                             </div>
                         </div>
                         <div class="col-12 mt-2">
-                            <button type="submit" class="btn btn-primary w-100">Create Export</button>
+                            <button type="submit" class="btn btn-primary w-100">Update Export</button>
                         </div>
                     </div>
                 </form>

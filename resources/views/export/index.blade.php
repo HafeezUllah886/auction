@@ -92,8 +92,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5" class="text-end">Total:</td>
-                                <td>{{ number_format($exports->sum('amount')) }}</td>
+                                <th colspan="5" class="text-end">Total:</th>
+                                <th>{{ number_format($exports->sum('amount')) }}</th>
                             </tr>
                         </tfoot>
                     </table>
