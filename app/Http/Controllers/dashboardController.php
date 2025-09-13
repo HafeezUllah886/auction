@@ -44,7 +44,10 @@ class dashboardController extends Controller
         $tt = ReceiveTT::whereBetween('date', [$from, $to]);
         $tt_amount = $tt->sum('total_yen');
 
+        $car_stock = purchase::where('status', 'Available')->count();
+        $car_stock_value = purchase::where('status', 'Available')->sum('total');
 
-        return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle', 'tt_amount'));
+
+        return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle', 'tt_amount', 'car_stock', 'car_stock_value'));
     }
 }
