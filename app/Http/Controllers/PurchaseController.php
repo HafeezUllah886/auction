@@ -33,7 +33,7 @@ class PurchaseController extends Controller
         $start = $request->start ?? firstDayOfMonth();
         $end = $request->end ?? lastDayOfMonth();
 
-        $purchases = purchase::whereBetween("date", [$start, $end])->orderby('id', 'desc')->get();
+        $purchases = purchase::whereBetween("date", [$start, $end])->orderby('date', 'desc')->get();
 
         return view('purchase.index', compact('purchases', 'start', 'end'));
     }
