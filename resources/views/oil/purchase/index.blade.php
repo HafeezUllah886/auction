@@ -76,7 +76,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item text-danger" href="{{route('purchases.delete', $purchase->id)}}">
+                                                    <a class="dropdown-item text-danger" href="{{route('oil_purchases.delete', $purchase->refID)}}">
                                                         <i class="ri-delete-bin-2-fill align-bottom me-2 text-danger"></i>
                                                         Delete
                                                     </a>
@@ -111,7 +111,6 @@
     <script src="{{ asset('assets/libs/datatable/vfs_fonts.js')}}"></script>
     <script src="{{ asset('assets/libs/datatable/pdfmake.min.js')}}"></script>
     <script src="{{ asset('assets/libs/datatable/jszip.min.js')}}"></script>
-
     <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 @endsection
 

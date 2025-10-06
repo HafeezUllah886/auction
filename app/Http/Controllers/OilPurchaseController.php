@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\accounts;
 use App\Models\OilProducts;
 use App\Models\OilPurchaseDetails;
+use App\Models\stock;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -122,25 +123,115 @@ class OilPurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OilPurchase $oilPurchase)
+    public function edit($id)
     {
-        //
+        $purchase = OilPurchase::find($id);
+        $vendors = accounts::where('type', 'Vendor')->get();
+        $products = OilProducts::all();
+        return view('oil.purchase.edit', compact('purchase', 'vendors', 'products'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OilPurchase $oilPurchase)
+    public function update(Request $request, $id)
     {
-        //
+        
+        try
+        {
+            if($request->isNotFilled('id'))
+            {
+                throw new Exception('Please Select Atleast One Product');
+            }
+            DB::beginTransaction();
+
+            $purchase = oilpurchase::find($id);
+            $ref = $purchase->refID;
+            OilPurchaseDetails::where('refID', $ref)->delete();
+            stock::where('refID', $ref)->delete();
+
+            $purchase->update(
+                [
+                  'vendorID'        => $request->vendorID,
+                  'date'            => $request->date,
+                  'note'           => $request->notes,
+                  'tax'             => $request->tax,
+                ]
+            );
+
+            $ids = $request->id;
+            $total = 0;
+            foreach($ids as $key => $id)
+            {
+                if($request->qty[$key] > 0)
+                {
+                    $qty = $request->qty[$key];
+                    $price = $request->price[$key];
+                    $amount = $price * $qty;
+                    $total += $amount;
+
+                OilPurchaseDetails::create(
+                    [
+                        'purchaseID'    => $purchase->id,
+                        'productID'     => $id,
+                        'price'         => $price,
+                        'qty'           => $qty,
+                        'amount'        => $amount,
+                        'date'          => $request->date,
+                        'refID'         => $ref,
+                    ]
+                );
+                createStock($id, $qty, 0, $request->date, "Purchased", $ref);
+
+                $product = OilProducts::find($id);
+                $product->update(
+                    [
+                        'pprice'  => $price,
+                    ]
+                );
+                }
+            }
+            $taxValue = $total * ($request->tax / 100);
+
+            $net = $total + $taxValue;
+
+            $purchase->update(
+                [
+                    'total'       => $net,
+                    'tax_value'   => $taxValue,
+                ]
+            );
+
+            DB::commit();
+            return back()->with('success', "Purchase Updated");
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OilPurchase $oilPurchase)
+    public function destroy($ref)
     {
-        //
+        try
+        {
+            DB::beginTransaction();
+            OilPurchaseDetails::where('refID', $ref)->delete();
+            OilPurchase::where('refID', $ref)->delete();
+           
+            stock::where('refID', $ref)->delete();
+            DB::commit();
+            return to_route('oil_purchases.index')->with('success', "Purchase Deleted");
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            return to_route('oil_purchases.index')->with('error', $e->getMessage());
+        }
     }
 
     public function getProduct($id)
