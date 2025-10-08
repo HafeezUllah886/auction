@@ -136,7 +136,7 @@
                                                 <td class="no-padding text-start">{{ $part->part_name }}</td>
                                                 <td class="no-padding"><input type="number" name="part_qty[]" required step="any" value="{{ $part->qty }}" min="0" class="form-control text-center" id="qty_{{ $row_id }}"></td>
                                                 <td> <span class="btn btn-sm btn-danger" onclick="deletePart({{ $row_id }})">X</span> </td>
-                                                <input type="hidden" name="part_name[]" value="{{ $row_id }}">
+                                                <input type="hidden" name="part_name[]" value="{{ $part->part_name}}">
                                             </tr>
                                             
                                             @endforeach
@@ -169,13 +169,12 @@
                                            @php
                                                $row_id = $key+1;
                                            @endphp
-                                           <tr id="rowengine_{{ $row_id }}">
-                                                <td class="no-padding text-start">{{ $engine->series }}</td>
-                                                <td class="no-padding text-start">{{ $engine->model }}</td>
-                                                <td class="no-padding"><input type="number" name="engine_price[]" oninput="updateEngineTotal({{ $row_id }})" required step="any" value="{{ $engine->price }}" min="0" class="form-control text-center" id="engine_price_{{ $row_id }}"></td>
-                                                <td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine({{ $row_id }})">X</span> </td>
-                                                <input type="hidden" name="engine_id[]" value="{{ $row_id }}">
-                                            </tr>
+                                                <tr id="rowengine_{{$row_id}}">
+                                                <td class="no-padding text-start"><input type="text" class="form-control" name="engine_series[]" value="{{$engine->series}}"></td>
+                                                <td class="no-padding"><input type="text" class="form-control" name="engine_model[]" value="{{$engine->model}}"></td>
+                                                <td class="no-padding"><input type="number" class="form-control" name="engine_price[]" id="engine_price_{{$row_id}}" oninput="updateEngineTotal({{$row_id}})" value="{{$engine->price}}"></td>
+                                                <td class="no-padding"> <span class="btn btn-sm btn-danger" onclick="deleteRowEngine({{$row_id}})">X</span> </td>
+                                                </tr>
                                            @endforeach
                                         </tbody>
                                         <tfoot>

@@ -89,7 +89,7 @@
                     <div class="collapse menu-dropdown" id="export">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a onclick="newWindow('{{ route('export.create') }}')" class="nav-link"
+                                <a href="{{ route('export.create') }}" class="nav-link"
                                     data-key="t-chat">Create Export</a>
                             </li>
                             <li class="nav-item">

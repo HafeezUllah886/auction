@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\export;
+use App\Models\export_oils;
 use App\Models\purchase;
 use App\Models\OilPurchase;
 use App\Models\OilProducts;
@@ -47,7 +48,7 @@ class dashboardController extends Controller
         $car_stock = purchase::where('status', 'Available')->count();
         $car_stock_value = purchase::where('status', 'Available')->sum('total');
 
-
-        return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle', 'tt_amount', 'car_stock', 'car_stock_value'));
+        $totalOilExportAmount = export_oils::whereBetween('date', [$from, $to])->sum('amount');
+        return view('dashboard.index', compact('purchase_amount', 'export_amount', 'oil_purchase_amount', 'from', 'to', 'oil_stock', 'total_tax', 'recycle', 'tt_amount', 'car_stock', 'car_stock_value', 'totalOilExportAmount'));
     }
 }
