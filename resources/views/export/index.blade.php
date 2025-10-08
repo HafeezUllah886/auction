@@ -24,6 +24,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Exports</h3>
+                    <a href="{{ route('export.edit', $last_export) }}" class="btn btn-info">Edit Last Export</a>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())

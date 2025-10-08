@@ -27,7 +27,8 @@ class ExportController extends Controller
         $start = $request->start ?? firstDayOfMonth();
         $end = $request->end ?? lastDayOfMonth();
         $exports = export::whereBetween('date', [$start, $end])->get();
-        return view('export.index', compact('exports', 'start', 'end'));
+        $last_export = export::orderBy('id', 'desc')->first();  
+        return view('export.index', compact('exports', 'start', 'end', 'last_export'));
     }
 
     /**
