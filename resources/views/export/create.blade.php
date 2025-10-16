@@ -292,6 +292,7 @@
                            <select name="car_remarks[]" class="form-control text-center" id="remarks_${id}">
                             <option value="Complete">Complete</option>
                             <option value="Roof Cut">Roof Cut</option>
+                            <option value="Parts">Parts</option>
                            </select>
                         </td>`;
                         html += '<td> <span class="btn btn-sm btn-danger" onclick="deleteRow(' + id +

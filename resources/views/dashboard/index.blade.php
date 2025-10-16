@@ -263,7 +263,7 @@
             var from = $('#from').val();
             var to = $('#to').val();
             
-            window.location.href = `{{ route('dashboard', ['from' => '']).'&to=' }}${to}`.replace('from=&', `from=${from}&`);
+            window.location.href = `{{ route('dashboard', ['from' => '', 'to' => '']) }}&from=${from}&to=${to}`;
         }
        </script>
 @endsection
