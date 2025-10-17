@@ -73,7 +73,7 @@
                                                 </li>
                                                
                                                 <li>
-                                                    <a class="dropdown-item" onclick="newWindow('{{route('export.edit', $export->id)}}')">
+                                                    <a class="dropdown-item" href="{{route('export.edit', $export->id)}}">
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit
                                                     </a>
