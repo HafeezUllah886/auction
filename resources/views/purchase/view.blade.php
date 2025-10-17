@@ -86,7 +86,6 @@
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Transporter</p>
                                         <h5 class="fs-14 mb-0">{{$purchase->transporter->title}}</h5>
                                     </div>
-
                                     <div class="col-lg-3 col-6">
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Arrival Date</p>
                                         <h5 class="fs-14 mb-0">{{$purchase->adate == null ? "-" : date("d M Y", strtotime($purchase->adate))}}</h5>
@@ -103,9 +102,7 @@
                                         <p class="text-muted mb-2 text-uppercase fw-semibold">Number Plate Validity</p>
                                         <h5 class="fs-14 mb-0">{{$purchase->nvalidity ? date("d M Y", strtotime($purchase->nvalidity)) : "-"}}</h5>
                                     </div>
-
                                 </div>
-                                <!--end row-->
                             </div>
                             <div class="card-footer">
                                 <p><strong>Notes: </strong>{{$purchase->notes}}</p>

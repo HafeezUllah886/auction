@@ -202,7 +202,7 @@ class ExportController extends Controller
             $export->export_cars()->delete();
             $export->export_engines()->delete();
             $export->export_parts()->delete();
-            $ref = $export->export_oils()->first()->refID;
+            $ref = $export->export_oils()->first()->refID ?? null;
             $export->export_oils()->delete();
             $export->export_misc()->delete();
 
