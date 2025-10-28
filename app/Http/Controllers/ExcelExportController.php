@@ -292,7 +292,7 @@ class ExcelExportController extends Controller
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => 'https://chaman.janbrothers.com//api/purchase/store',
+        CURLOPT_URL => 'https://chaman.janbrothers.com/api/purchase/store',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
