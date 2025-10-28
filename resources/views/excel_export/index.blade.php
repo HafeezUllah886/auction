@@ -23,7 +23,7 @@
             </form>
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <h3>Excel Export</h3>
+                    <h3>Chaman Purchase</h3>
                 </div>
                 <div class="card-body">
                     @if ($errors->any())
@@ -68,9 +68,9 @@
                                                     </button>
                                                 </li> 
                                                 <li>
-                                                    <a class="dropdown-item" href="{{route('excel_export.export', $export->id)}}"><i
-                                                            class="ri-download-fill align-bottom me-2 text-muted"></i>
-                                                        Export
+                                                    <a class="dropdown-item" href="{{route('excel_export.send', $export->id)}}"><i
+                                                            class="ri-send-plane-2-line align-bottom me-2 text-muted"></i>
+                                                        Send 
                                                     </a>
                                                 </li> 
                                                

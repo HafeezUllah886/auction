@@ -2205,6 +2205,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $key
      * @property string $date
      * @property float $conversion_rate
      * @property float $net_amount
@@ -2227,6 +2228,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export whereNetAmount($value)
      * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export whereConversionRate($value)
      * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export whereDate($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export whereKey($value)
      * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<excel_export>|excel_export newModelQuery()
@@ -3166,6 +3168,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $key
      * @property float $amount
      * @property string|null $weight
      * @property string|null $c_no
@@ -3194,6 +3197,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<export>|export whereCNo($value)
      * @method static \Illuminate\Database\Eloquent\Builder<export>|export whereWeight($value)
      * @method static \Illuminate\Database\Eloquent\Builder<export>|export whereAmount($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<export>|export whereKey($value)
      * @method static \Illuminate\Database\Eloquent\Builder<export>|export whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<export>|export whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<export>|export newModelQuery()

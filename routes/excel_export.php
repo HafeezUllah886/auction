@@ -12,9 +12,6 @@ Route::middleware('auth', adminCheck::class)->group(function () {
     
     Route::resource('excel_export', ExcelExportController::class)->middleware(adminCheck::class);
 
-    Route::get("excel_export/delete/{id}", [ExcelExportController::class, 'destroy'])->name('purchases.delete')->middleware(confirmPassword::class);
+    Route::get("excel_export/send/{id}", [ExcelExportController::class, 'send_purchase'])->name('excel_export.send');
 
-    Route::get('excel_export/export/{id}', [ExcelExportController::class, 'export'])->name('excel_export.export');
-    
-    Route::post('excel_export/import', [ExcelExportController::class, 'import'])->name('excel_export.import');
 });

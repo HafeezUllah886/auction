@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('c_no')->nullable();
             $table->string('weight')->nullable();
             $table->float('amount');
+           
             $table->timestamps();
         });
     }

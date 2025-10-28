@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="hstack gap-2 justify-content-end d-print-none p-2 mt-4">
-                                <a href="{{ route('excel_export.export', $export->id) }}" class="btn btn-primary"><i class="ri-file-excel-2-line"></i> Export to Excel</a>
+                                <a href="{{ route('excel_export.send', $export->id) }}" class="btn btn-primary"><i class="ri-send-plane-2-line"></i> Send</a>
                                 <a href="javascript:window.print()" class="btn btn-success"><i class="ri-printer-line"></i> Print</a>
                             </div>
                             <div class="card-header border-bottom-dashed p-4">
@@ -15,7 +15,7 @@
                                         <h1>{{projectNameHeader()}}</h1>
                                     </div>
                                     <div class="flex-shrink-0 mt-sm-0 mt-3">
-                                        <h3>Excel Export</h3>
+                                        <h3>Chaman Purchase</h3>
                                     </div>
                                 </div>
                             </div>

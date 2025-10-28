@@ -102,16 +102,16 @@
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#excel_export" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-file-excel-2-line"></i><span data-key="t-apps">Excel Export</span>
+                        <i class="ri-file-excel-2-line"></i><span data-key="t-apps">Chaman Purchase</span>
                     </a>
                     <div class="collapse menu-dropdown" id="excel_export">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a href="{{ route('excel_export.create') }}" class="nav-link"
-                                    data-key="t-chat">Create Export</a>
+                                    data-key="t-chat">Create Chaman Purchase</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('excel_export.index')}}" class="nav-link" data-key="t-chat"> Export
+                                <a href="{{ route('excel_export.index')}}" class="nav-link" data-key="t-chat"> Chaman Purchase
                                     History </a>
                             </li>
                         </ul>

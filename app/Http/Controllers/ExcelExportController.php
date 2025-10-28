@@ -53,7 +53,7 @@ class ExcelExportController extends Controller
                     'bl_amount' => $request->bl_amount,
                     'bl_amount_pkr' => $request->bl_amount_pkr,
                     'conversion_rate' => $request->ex_rate,
-        
+                    'key' => $request->key,
                 ]
             );
 
@@ -242,4 +242,85 @@ class ExcelExportController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+   public function send_purchase($id)
+{
+    $purchase = excel_export::find($id);
+
+    $cars = [];
+    foreach ($purchase->cars as $car) {
+        $cars[] = [
+            'purchase_id' => $purchase->id,
+            'model' => $car->model,
+            'maker' => $car->maker,
+            'chassis_no' => $car->chassis_no,
+            'auction' => $car->auction,
+            'year' => $car->year,
+            'color' => $car->color,
+            'grade' => $car->grade,
+            'price' => $car->price,
+            'price_pkr' => $car->price_pkr,
+            'remarks' => $car->remarks,
+        ];
+    }
+
+    $parts = [];
+    foreach ($purchase->parts as $part) {
+        $parts[] = [
+            'purchase_id' => $purchase->id,
+            'description' => $part->description,
+            'weight_ltr' => $part->weight_ltr,
+            'grade' => $part->grade,
+            'qty' => $part->qty,
+            'price' => $part->price,
+            'price_pkr' => $part->price_pkr,
+        ];
+    }
+
+    $postData = [
+        'date' => $purchase->date,
+        'cno' => $purchase->c_no,
+        'bl_no' => $purchase->bl_no,
+        'bl_amount' => $purchase->bl_amount,
+        'bl_amount_pkr' => $purchase->bl_amount_pkr,
+        'ex_rate' => $purchase->conversion_rate,
+        'cars' => $cars,
+        'parts' => $parts,
+        'key' => $purchase->key,
+    ];
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, [
+        CURLOPT_URL => 'auction_chaman.test/api/purchase/store',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($postData),
+        CURLOPT_HTTPHEADER => [
+            'Accept: application/json',
+            'Content-Type: application/json',
+        ],
+    ]);
+
+    $response = curl_exec($curl);
+    $error = curl_error($curl);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    
+    curl_close($curl);
+
+    if ($error) {
+        return back()->with('error', 'Error: ' . $error);
+    }
+
+    $responseData = json_decode($response, true);
+    $status = $responseData['status'] ?? 'success';
+    $message = $responseData['message'] ?? 'Operation completed successfully';
+    
+    return back()->with($status, $message);
+}
 }

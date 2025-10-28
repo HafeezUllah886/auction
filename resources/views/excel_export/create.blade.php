@@ -8,7 +8,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-6">
-                                    <h3> Create Excel Export </h3>
+                                    <h3> Create Chaman Purchase </h3>
                                 </div>
                                 <div class="col-6 d-flex flex-row-reverse"><a href="{{ route('excel_export.index') }}"
                                         class="btn btn-danger">Close</a></div>
@@ -19,6 +19,7 @@
                 <div class="card-body">
                     <form action="{{ route('excel_export.store') }}" method="post">
                         @csrf
+                        <input type="hidden" name="key" value="{{ now() }}">
                         <div class="row">
                             <div class="col-6">
                                 <h4>Cars</h4>

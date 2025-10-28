@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal("net_amount", 15,2)->default(0);
             $table->decimal("conversion_rate", 15,5)->default(1);
             $table->date("date");
+             $table->string('key');
             $table->timestamps();
         });
     }
