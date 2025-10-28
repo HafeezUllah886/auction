@@ -12,6 +12,7 @@ require __DIR__ . '/stock.php';
 require __DIR__ . '/reports.php';
 require __DIR__ . '/setups.php';
 require __DIR__ . '/oil_products.php';
+require __DIR__ . '/excel_export.php';
 
 
 Route::middleware('auth')->group(function () {

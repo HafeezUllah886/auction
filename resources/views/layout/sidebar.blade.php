@@ -100,6 +100,24 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#excel_export" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-file-excel-2-line"></i><span data-key="t-apps">Excel Export</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="excel_export">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('excel_export.create') }}" class="nav-link"
+                                    data-key="t-chat">Create Export</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('excel_export.index')}}" class="nav-link" data-key="t-chat"> Export
+                                    History </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="#oil" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-file-list-line"></i><span data-key="t-apps">Engine Oil</span>
